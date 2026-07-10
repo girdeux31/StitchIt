@@ -4,8 +4,9 @@ from pathlib import Path
 
 from legend import Legend
 from pattern import Pattern
+from thread import Thread
 
-MAX_STITCHES_PER_ROW_RECOMMENDED = 125
+MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
 
 
 # TODO:
@@ -14,6 +15,8 @@ MAX_STITCHES_PER_ROW_RECOMMENDED = 125
 #  3. help function
 #  4. backstitch function
 #  5. change readme
+#  6. LAB distance
+#  7. add numbers multiple of 10 in outer square
 
 if __name__ == '__main__':
 
@@ -31,7 +34,9 @@ if __name__ == '__main__':
     input_file = Path('examples/bird.jpg')
     colors = 3
     stitches_per_row = 60  # FIX there is one less stitch in output
-    scale = 2.0
+    scale = 2.0  # png scale
+    fabric_count = 14  # aida or squares per inch
+    strands_for_stitching = 2  # strands for stitching
 
     # input_file = Path('examples/ita.jpg')
     # colors = 3
@@ -70,3 +75,9 @@ if __name__ == '__main__':
     legend = Legend(color=True, symbols=True)
     legend.generate(pattern)
     legend.save(out_legend_file)
+
+    # Print thread info
+
+    thread = Thread(fabric_count, strands_for_stitching)
+    thread.import_pattern(pattern)
+    thread.print_info()
