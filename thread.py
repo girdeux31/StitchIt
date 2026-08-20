@@ -36,7 +36,7 @@ class Thread:
             raise ValueError(f'Allowed values for \'thread_count\' parameters are: {", ".join(FABRIC_COUNT_TO_STITCH_LENGTH.keys())}')
         self.length_per_stitch = FABRIC_COUNT_TO_STITCH_LENGTH[fabric_count]
 
-    def import_pattern(self, pattern: Pattern):
+    def import_pattern(self, pattern: Pattern, method: str):
         """Import pattern"""
         dmc = DMC()
         self.pattern_size = {
@@ -51,7 +51,7 @@ class Thread:
             ),
         }
         for c_idx, rgb in enumerate(pattern.dmc_palette):
-            code = dmc.get_most_similar_code_by_rgb(rgb, corrected=True)
+            code = dmc.get_most_similar_code_by_rgb(rgb, method=method)
             name = dmc.get_color_name_by_code(code)
             stitches = len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
             length = stitches * self.length_per_stitch / 100  # m

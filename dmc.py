@@ -1,8 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import csv
-import math
+
+from color_tool import ColorTool
 
 
 class DMC:
@@ -30,21 +28,12 @@ class DMC:
 
         return dmc_dict
 
-    @staticmethod
-    def _euclidean_distance(c1: tuple[int], c2: tuple[int], corrected: bool) -> float:
-        """Compute euclidean distance between two RGB colors w or wo 'correction'"""
-        r1, g1, b1 = c1
-        r2, g2, b2 = c2
-        mr, mg, mb = (2, 4, 3) if corrected else (1, 1, 1)
-
-        return math.sqrt(mr*((r1-r2)**2) + mg*((g1-g2)**2) + mb*((b1-b2)**2))
-
-    def get_most_similar_code_by_rgb(self, rgb: tuple[int], corrected: bool=True) -> str:
+    def get_most_similar_code_by_rgb(self, rgb: tuple[int], method: str) -> str:
         """Get DMC color code from an RGB tuple. To get the code, the closest rgb is chosen from the list,
         correction to the distance can be applied with corrected bool argument"""
         temp_dist = 99999999
         for code, info in self.dmc_dict.items():
-            dist = self._euclidean_distance(info['rgb'], rgb, corrected)
+            dist = ColorTool.compute_color_distance(info['rgb'], rgb, method)
             if dist < temp_dist:
                 temp_dist = dist
                 new_code = code
@@ -57,7 +46,7 @@ class DMC:
             raise KeyError(f'Code {code} not found in \'{self.csv_file}\' file')
         return self.dmc_dict[code]['name']
     
-    def get_most_similar_rgb_by_rgb(self, rgb: tuple[int], corrected: bool=True) -> tuple[int]:
+    def get_most_similar_rgb_by_rgb(self, rgb: tuple[int], method: str) -> tuple[int]:
         """"""
-        code = self.get_most_similar_code_by_rgb(rgb, corrected=corrected)
+        code = self.get_most_similar_code_by_rgb(rgb, method=method)
         return self.dmc_dict[code]['rgb']

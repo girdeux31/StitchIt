@@ -7,6 +7,7 @@ from pattern import Pattern
 from thread import Thread
 
 MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
+ALLOWED_DISTANCE_METHODS = ['euclidian', 'compuphase', 'de76', 'de00']
 
 
 # TODO:
@@ -15,7 +16,6 @@ MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much les
 #  3. help function
 #  4. backstitch function
 #  5. change readme
-#  6. LAB distance
 #  7. add numbers multiple of 10 in outer square
 
 if __name__ == '__main__':
@@ -34,19 +34,20 @@ if __name__ == '__main__':
     input_file = Path('examples/bird.jpg')
     colors = 3
     stitches_per_row = 60  # FIX there is one less stitch in output
-    scale = 2.0  # png scale
+    png_scale = 2.0  # png scale
     fabric_count = 14  # aida or squares per inch
     strands_for_stitching = 2  # strands for stitching
+    distance_method = 'de00'  # 'euclidian', 'compuphase', 'de76', 'de00'
 
     # input_file = Path('examples/ita.jpg')
     # colors = 3
     # stitches_per_row = 100
-    # scale = 2.0
+    # png_scale = 2.0
 
     # input_file = Path('examples/waves.jpg')
     # colors = 10
     # stitches_per_row = 140
-    # scale = 1.0
+    # png_scale = 1.0
 
     if not input_file.exists():
         raise FileNotFoundError(f'File \'{input_file}\' not found')
@@ -57,6 +58,8 @@ if __name__ == '__main__':
             f'Parameter \'stitches_per_row\' is over the recommended limit of {MAX_STITCHES_PER_ROW_RECOMMENDED}, '
             f'this make take some time'
         )
+    if distance_method not in ALLOWED_DISTANCE_METHODS:
+        raise ValueError(f'Allowed distance methods are {", ".join(ALLOWED_DISTANCE_METHODS)}')
 
     # Generate file paths
 
@@ -66,18 +69,18 @@ if __name__ == '__main__':
     # Generate pattern svg
 
     pattern = Pattern(color=True, symbols=True)
-    pattern.process_image(input_file, colors, stitches_per_row)
+    pattern.process_image(input_file, colors, stitches_per_row, distance_method)
     pattern.generate()
-    pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=scale)
+    pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
 
     # Generate legend svg
 
     legend = Legend(color=True, symbols=True)
-    legend.generate(pattern)
+    legend.generate(pattern, distance_method)
     legend.save(out_legend_file)
 
     # Print thread info
 
     thread = Thread(fabric_count, strands_for_stitching)
-    thread.import_pattern(pattern)
+    thread.import_pattern(pattern, distance_method)
     thread.print_info()

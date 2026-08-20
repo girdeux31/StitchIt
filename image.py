@@ -62,13 +62,13 @@ class Image:
             dither=PILImage.Dither.NONE,
         )
 
-    def _get_dmc_palette(self, colors: int) -> list[tuple[int]]:
+    def _get_dmc_palette(self, colors: int, method: str) -> list[tuple[int]]:
         """Get a list of dmc colors most used in image"""
         dmc = DMC()
         dmc_palette = []
         predominant_rgbs = self._get_predominant_colors(colors)
         for rgb in predominant_rgbs:
-            dmc_rgb = dmc.get_most_similar_rgb_by_rgb(rgb)
+            dmc_rgb = dmc.get_most_similar_rgb_by_rgb(rgb, method)
             dmc_palette.append(dmc_rgb)
         return dmc_palette
 
@@ -112,7 +112,7 @@ class Image:
 
         return neighbors
 
-    def process(self, colors: int, stitches_per_row: int):
+    def process(self, colors: int, stitches_per_row: int, method: str):
         """Process image:
         1. Resize image to be stitches_per_row x stitches_per_column, this shape is not changed anymore
         2. Compute the dmc palette based on the predominant image colors
@@ -121,7 +121,7 @@ class Image:
         self._resize(stitches_per_row)
         if DEBUG:
             self.show('After resize')
-        dmc_palette = self._get_dmc_palette(colors)
+        dmc_palette = self._get_dmc_palette(colors, method)
         self._quantize(dmc_palette)
         if DEBUG:
             self.show('After quantize')

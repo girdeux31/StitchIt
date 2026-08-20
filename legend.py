@@ -19,12 +19,12 @@ class Legend:
         self.height = 0
         self.legend_composer = LegendComposer(color, symbols)
 
-    def _get_color_info(self, pattern: Pattern):
+    def _get_color_info(self, pattern: Pattern, method: str):
         """Get dict with dmc color info"""
         dmc = DMC()
         color_info = []
         for c_idx, rgb in enumerate(pattern.dmc_palette):
-            code = dmc.get_most_similar_code_by_rgb(rgb, corrected=True)
+            code = dmc.get_most_similar_code_by_rgb(rgb, method=method)
             name = dmc.get_color_name_by_code(code)
             stitches = len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
             color_info.append(
@@ -37,9 +37,9 @@ class Legend:
             )
         return color_info
 
-    def generate(self, pattern: Pattern) -> None:
+    def generate(self, pattern: Pattern, method: str) -> None:
         """Generate SVG info"""
-        color_info = self._get_color_info(pattern)
+        color_info = self._get_color_info(pattern, method)
         colors = len(color_info)
         x_pos = [0] + [sum(COLUMN_WIDTHS[:i+1]) for i in range(len(COLUMN_WIDTHS[:-1]))]
         widths = COLUMN_WIDTHS
