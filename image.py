@@ -62,26 +62,27 @@ class Image:
             dither=PILImage.Dither.NONE,
         )
 
-    def _get_dmc_palette(self, colors: int, method: str) -> list[tuple[int]]:
+    def _get_dmc_palette(self, n_colors: int, method: str) -> list[tuple[int]]:
         """Get a list of dmc colors most used in image"""
         dmc = DMC()
         dmc_palette = []
-        predominant_rgbs = self._get_predominant_colors(colors)
+        predominant_rgbs = self._get_predominant_colors(n_colors)
         for rgb in predominant_rgbs:
             dmc_rgb = dmc.get_most_similar_rgb_by_rgb(rgb, method)
             dmc_palette.append(dmc_rgb)
         return dmc_palette
 
-    def _get_predominant_colors(self, colors: int) -> list[tuple[int]]:
+    def _get_predominant_colors(self, n_colors: int) -> list[tuple[int]]:
         """Get a list of colors most used in image"""
         count_rgbs = self.pil_image.getcolors(maxcolors=self.width*self.height)
+        # TODO change RGB to LAB if method is 76 or 00
         count_rgbs.sort(reverse=True) # sort by count
         img_rbgs = [c_rgb[1] for c_rgb in count_rgbs]
         output_rgbs = []
         for base_rgb in img_rbgs:
             if all(dist(base_rgb, rgb) >= SIMILAR_COLOR_THRESHOLD for rgb in output_rgbs):
                 output_rgbs.append(base_rgb)
-        return output_rgbs[:colors]  # return only the n most predominant colors
+        return output_rgbs[:n_colors]  # return only the n most predominant colors
 
     def _get_dmc_pattern(self) -> np.ndarray[int]:
         """Convert the image into a np array"""
@@ -112,7 +113,7 @@ class Image:
 
         return neighbors
 
-    def process(self, colors: int, stitches_per_row: int, method: str):
+    def process(self, n_colors: int, stitches_per_row: int, method: str):
         """Process image:
         1. Resize image to be stitches_per_row x stitches_per_column, this shape is not changed anymore
         2. Compute the dmc palette based on the predominant image colors
@@ -121,7 +122,7 @@ class Image:
         self._resize(stitches_per_row)
         if DEBUG:
             self.show('After resize')
-        dmc_palette = self._get_dmc_palette(colors, method)
+        dmc_palette = self._get_dmc_palette(n_colors, method)
         self._quantize(dmc_palette)
         if DEBUG:
             self.show('After quantize')

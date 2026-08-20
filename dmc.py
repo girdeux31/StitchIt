@@ -23,6 +23,7 @@ class DMC:
                 
                 code = row[0]
                 rgb = (int(row[1]), int(row[2]), int(row[3]))
+                # TODO change RGB to LAB if method is 76 or 00
                 name = row[4]
                 dmc_dict[code] = {'rgb': rgb, 'name': name}
 

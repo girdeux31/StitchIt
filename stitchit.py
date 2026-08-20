@@ -27,12 +27,12 @@ if __name__ == '__main__':
     #     sys.exit(0)
 
     # input_file = Path(sys.argv[1])       # input file name, has to be a jpg
-    # colors = int(sys.argv[2])    # number of colors to use in the pattern
+    # n_colors = int(sys.argv[2])    # number of colors to use in the pattern
     # stitches_per_row = int(sys.argv[3])   # stitch count, number of stitches in x axis
 
     # Just for debugging
     input_file = Path('examples/bird.jpg')
-    colors = 3
+    n_colors = 3
     stitches_per_row = 60  # FIX there is one less stitch in output
     png_scale = 2.0  # png scale
     fabric_count = 14  # aida or squares per inch
@@ -40,19 +40,19 @@ if __name__ == '__main__':
     distance_method = 'de00'  # 'euclidian', 'compuphase', 'de76', 'de00'
 
     # input_file = Path('examples/ita.jpg')
-    # colors = 3
+    # n_colors = 3
     # stitches_per_row = 100
     # png_scale = 2.0
 
     # input_file = Path('examples/waves.jpg')
-    # colors = 10
+    # n_colors = 10
     # stitches_per_row = 140
     # png_scale = 1.0
 
     if not input_file.exists():
         raise FileNotFoundError(f'File \'{input_file}\' not found')
-    if not 2 <= colors <= 256:
-        raise ValueError('Parameter \'colors\' must be in range [2, 256]')
+    if not 2 <= n_colors <= 256:
+        raise ValueError('Parameter \'n_colors\' must be in range [2, 256]')
     if stitches_per_row > MAX_STITCHES_PER_ROW_RECOMMENDED:
         warn(
             f'Parameter \'stitches_per_row\' is over the recommended limit of {MAX_STITCHES_PER_ROW_RECOMMENDED}, '
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     # Generate pattern svg
 
     pattern = Pattern(color=True, symbols=True)
-    pattern.process_image(input_file, colors, stitches_per_row, distance_method)
+    pattern.process_image(input_file, n_colors, stitches_per_row, distance_method)
     pattern.generate()
     pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
 
