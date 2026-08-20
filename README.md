@@ -1,5 +1,8 @@
 # Python Cross Stitch Patterns!
 
+WORK IN PROGRESS, SEE [ORIGINAL REPO](https://github.com/PaulMakesStuff/Python_Cross_Stitch)
+
+
 Takes a .jpg image file and generates a cross stitch pattern using a user specified number of DMC colors.
 
 Prior to using this script you will need to install [Python Imaging Library - PIL](http://www.pythonware.com/products/pil/). 
