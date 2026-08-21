@@ -19,7 +19,8 @@ class PatternComposer(SVGComposer):
     idx_to_fill = [2, 6, 7, 10]
     arrow_color = 'black'
     arrow_width = 2
-    arrow_fill = 'none'
+    arrow_fill = 'black'
+    arrow_gap = 2
     major_grid_color = 'black'
     major_grid_width = 2
     minor_grid_color = 'rgb(20,20,20)'
@@ -29,20 +30,19 @@ class PatternComposer(SVGComposer):
 
     def add_arrows(self, size: int, width: int, height: int) -> None:
         """Add midpoint arrows"""
-        h = str(size/2)
-        f = str(size)
+        gap = -1*self.arrow_gap
         style = {
             'stroke': self.arrow_color,
             'stroke-width': self.arrow_width,
             'fill': self.arrow_fill,
-            'transform': f'translate(0 {height/2})',
+            'transform': f'translate({width/2} {gap}) scale({size/15.0})',
         }
         # vertical arrow looking down
-        code = f'M0 {h}L{f} {h}M{h} 0L{f} {h} {h} {f}'
+        code = "M4 4L10 16L16 4 Z"  # triangle, upside down, filled black
         self.svg.add_xml_path(code, style)
         # horizontal arrow looking right
-        style['transform'] = f'translate({width/2} 0)'
-        code = f'M{h} 0L{h} {f} M{f} {h}L{h} {f} 0 {h}'
+        style['transform'] = f'translate({gap} {height/2}) scale({size/15.0})'
+        code = "M4 4L16 10L4 16 Z"  # triangle, looking right, filled black
         self.svg.add_xml_path(code, style)
 
     def add_gridlines(self, size: int, width: int, height: int) -> None:
