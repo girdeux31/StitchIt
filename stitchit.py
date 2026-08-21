@@ -18,7 +18,6 @@ ALLOWED_DISTANCE_METHODS = ['euclidian', 'compuphase', 'de76', 'de00']
 #  - change readme
 #  - way to change format options, yml or by optional arguments
 #  - fix: one stitch is missing in pattern
-#  - add minor grid in outer rim
 
 if __name__ == '__main__':
 
