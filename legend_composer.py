@@ -46,7 +46,7 @@ class LegendComposer(SVGComposer):
             'stroke-width': self.stroke_width,
         }
         self.svg.add_xml_rect(x_pos, y_pos, width, height, rect_style)
-        self.svg.add_xml_text(x_pos + 0.5*height, y_pos + height/1.5, {}, color_info['name'], self.svg_text_class_name)
+        self.svg.add_xml_text(x_pos + 0.5*height, y_pos + height/1.5, {}, color_info['name'], self.svg_legend_text_class_name)
 
     def add_color_code(self, x_pos: int, y_pos: int, width: int, height: int, color_info: dict[str, tuple | str]) -> None:
         """Add color code in third column"""
@@ -56,7 +56,7 @@ class LegendComposer(SVGComposer):
             'stroke-width': self.stroke_width,
         }
         self.svg.add_xml_rect(x_pos, y_pos, width, height, rect_style)
-        self.svg.add_xml_text(x_pos + 0.5*height, y_pos + height/1.5, {}, color_info['code'], self.svg_text_class_name)
+        self.svg.add_xml_text(x_pos + 0.5*height, y_pos + height/1.5, {}, color_info['code'], self.svg_legend_text_class_name)
 
     def add_stitches(self, x_pos: int, y_pos: int, width: int, height: int, color_info: dict[str, tuple | str]) -> None:
         """Add stitches in forth column"""
@@ -66,4 +66,4 @@ class LegendComposer(SVGComposer):
             'stroke-width': self.stroke_width,
         }
         self.svg.add_xml_rect(x_pos, y_pos, width, height, rect_style)
-        self.svg.add_xml_text(x_pos + 0.5*height, y_pos + height/1.5, {}, f'x{color_info["stitches"]}', self.svg_text_class_name)
+        self.svg.add_xml_text(x_pos + 0.5*height, y_pos + height/1.5, {}, f'x{color_info["stitches"]}', self.svg_legend_text_class_name)

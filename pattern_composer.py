@@ -24,6 +24,7 @@ class PatternComposer(SVGComposer):
     major_grid_width = 2
     minor_grid_color = 'rgb(20,20,20)'
     minor_grid_width = 1
+    ref_number_step = 10
 
     def add_arrows(self, size: int, width: int, height: int) -> None:
         """Add midpoint arrows"""
@@ -45,30 +46,56 @@ class PatternComposer(SVGComposer):
 
     def add_gridlines(self, size: int, width: int, height: int) -> None:
         """Add major and minor gridlines"""
-        self.add_minor_gridlines(size, width, height)
-        self.add_major_gridlines(size, width, height)
+        self._add_minor_gridlines(size, width, height)
+        self._add_major_gridlines(size, width, height)
 
-    def add_major_gridlines(self, size: int, width: int, height: int) -> None:
+    def _add_major_gridlines(self, size: int, width: int, height: int) -> None:
         """Add major gridlines"""
         style = {
             'stroke': self.major_grid_color,
             'stroke-width': self.major_grid_width,
         }
+        # horizontal lines
         for x in range(11*size, width, 10*size):
             self.svg.add_xml_line(x, size, x, height, style)
+        # vertical lines
         for y in range(11*size, height, 10*size):
             self.svg.add_xml_line(size, y, width, y, style)
 
-    def add_minor_gridlines(self, size: int, width: int, height: int) -> None:
+    def _add_minor_gridlines(self, size: int, width: int, height: int) -> None:
         """Add minor gridlines"""
         style = {
             'stroke': self.minor_grid_color,
             'stroke-width': self.minor_grid_width,
         }
+        # horizontal lines
         for x in range(2*size, width, size):
             self.svg.add_xml_line(x, size, x, height, style)
+        # vertical lines
         for y in range(2*size, height, size):
             self.svg.add_xml_line(size, y, width, y, style)
+
+    def add_numbers(self, size: int, width: int, height: int) -> None:
+        """Add numbers in top and left margins"""
+        self._add_top_numbers(size, width)
+        self._add_left_numbers(size, height)
+
+    def _add_top_numbers(self, size: int, width: int) -> None:
+        """Add numbers in top margin"""
+        y_pos = size
+        for idx, x_pos in enumerate(range(size*(self.ref_number_step+1), width, size*self.ref_number_step)):
+            ref_number = (idx+1) * self.ref_number_step
+            self.svg.add_xml_text(x_pos, y_pos, {}, ref_number, self.svg_pattern_text_class_name)
+
+    def _add_left_numbers(self, size: int, height: int) -> None:
+        """Add numbers in left margin"""
+        x_pos = size
+        for idx, y_pos in enumerate(range(size*(self.ref_number_step+1), height, size*self.ref_number_step)):
+            ref_number = (idx+1) * self.ref_number_step
+            style = {
+                'transform': f'rotate(-90 {x_pos} {y_pos})',
+            }
+            self.svg.add_xml_text(x_pos, y_pos, style, ref_number, self.svg_pattern_text_class_name)
     
     def add_color(self, palette: list[dict[str, tuple | str]], idx: int, x: int, y: int, size: int) -> None:
         """Add colors as "pixels" """

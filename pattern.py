@@ -36,7 +36,6 @@ class Pattern:
         width = self.width * SVG_UNIT_SIZE
         height = self.height * SVG_UNIT_SIZE
         self.pattern_composer.add_header(width, height)
-        self.pattern_composer.add_arrows(SVG_UNIT_SIZE, width, height)
         for y_idx, row in enumerate(self.dmc_pattern):  # TODO: these loops take a long time for stitches_per_row > 100
             y_pos = (y_idx+1) * SVG_UNIT_SIZE  # +1 allows space for midpoint arrows
             for x_idx, c_idx in enumerate(row):
@@ -44,6 +43,8 @@ class Pattern:
                 self.pattern_composer.add_color(self.dmc_palette, c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
                 self.pattern_composer.add_symbol(c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
         self.pattern_composer.add_gridlines(SVG_UNIT_SIZE, width, height)
+        self.pattern_composer.add_numbers(SVG_UNIT_SIZE, width, height)
+        self.pattern_composer.add_arrows(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_tail()
 
     def save(self, out_file: Path, formats: list[str]=['pdf'], png_scale: float=1.0) -> None:

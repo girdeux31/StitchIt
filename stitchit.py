@@ -11,12 +11,14 @@ ALLOWED_DISTANCE_METHODS = ['euclidian', 'compuphase', 'de76', 'de00']
 
 
 # TODO:
-#  1. average pixel colors "by hand"
-#  2. user arguments: codes_wo_symbols, backstich_codes
-#  3. help function
-#  4. backstitch function
-#  5. change readme
-#  7. add numbers multiple of 10 in outer square
+#  - change rgb to lab once the image and the dmc colors are read if method is de76 or de00
+#  - user arguments: codes_wo_symbols, backstich_codes
+#  - help function
+#  - backstitch function
+#  - change readme
+#  - way to change format options, yml or by optional arguments
+#  - fix: one stitch is missing in pattern
+#  - add minor grid in outer rim
 
 if __name__ == '__main__':
 
