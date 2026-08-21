@@ -21,22 +21,24 @@ class LegendComposer(SVGComposer):
     stroke_color = 'black'
     stroke_width = 1
 
-    def add_symbol(self, x_pos: int, y_pos: int, width: int, height: int, idx: int, color_info: dict[str, tuple | str]) -> None:
-        """Add symbol in first column"""
+    def add_color_rgb(self, x_pos: int, y_pos: int, width: int, height: int, color_info: dict[str, tuple | str]) -> None:
+        """Add color in first column"""
         r, g, b = color_info['rgb'] if self.color else (255, 255, 255)
-        rect_style = {
+        style = {
             'fill': f'rgb({r},{g},{b})',
             'stroke': self.stroke_color,
             'stroke-width': self.stroke_width,
         }
-        self.svg.add_xml_rect(x_pos, y_pos, width, height, rect_style)
-        if self.symbols:
-            code = self.idx_to_code.get(idx, '')
-            path_style = {
-                'transform': f'translate({0} {y_pos}) scale({height/20.0})',
-                'fill': self.symbol_color if idx in self.idx_to_fill else "none",
-            }
-            self.svg.add_xml_path(code, path_style, self.svg_symbol_class_name)
+        self.svg.add_xml_rect(x_pos, y_pos, width, height, style)
+
+    def add_symbol(self, x_pos: int, y_pos: int, height: int, idx: int) -> None:
+        """Add symbol in first column"""
+        code = self.idx_to_code.get(idx, '')
+        style = {
+            'transform': f'translate({x_pos} {y_pos}) scale({height/20.0})',
+            'fill': self.symbol_color if idx in self.idx_to_fill else "none",
+        }
+        self.svg.add_xml_path(code, style, self.svg_symbol_class_name)
 
     def add_color_name(self, x_pos: int, y_pos: int, width: int, height: int, color_info: dict[str, tuple | str]) -> None:
         """Add color name in second column"""

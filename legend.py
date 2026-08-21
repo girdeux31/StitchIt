@@ -46,10 +46,13 @@ class Legend:
         height = SVG_UNIT_SIZE
         self.width = sum(COLUMN_WIDTHS)
         self.height = colors*SVG_UNIT_SIZE
+        background_idx = pattern._get_background_idx() if pattern.background_wo_symbols else None
         self.legend_composer.add_header(self.width, self.height)
-        for idx, c_info in enumerate(color_info):
-            y_pos = idx*SVG_UNIT_SIZE
-            self.legend_composer.add_symbol(x_pos[0], y_pos, widths[0], height, idx, c_info)
+        for c_idx, c_info in enumerate(color_info):
+            y_pos = c_idx*SVG_UNIT_SIZE
+            self.legend_composer.add_color_rgb(x_pos[0], y_pos, widths[0], height, c_info)
+            if self.symbols and background_idx is not None and c_idx != background_idx:
+                self.legend_composer.add_symbol(x_pos[0], y_pos, height, c_idx)
             self.legend_composer.add_color_name(x_pos[1], y_pos, widths[1], height, c_info)
             self.legend_composer.add_color_code(x_pos[2], y_pos, widths[2], height, c_info)
             self.legend_composer.add_stitches(x_pos[3], y_pos, widths[3], height, c_info)

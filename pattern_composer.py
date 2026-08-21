@@ -110,10 +110,9 @@ class PatternComposer(SVGComposer):
 
     def add_symbol(self, idx: int, x: int, y: int, size: int) -> None:
         """Add symbols"""
-        if self.symbols:
-            code = self.idx_to_symbol_code.get(idx, '')
-            style = {
-                'transform': f'translate({x} {y}) scale({size/20.0})',
-                'fill': self.symbol_color if idx in self.idx_to_fill else "none",
-            }
-            self.svg.add_xml_path(code, style, self.svg_symbol_class_name)
+        code = self.idx_to_symbol_code.get(idx, '')
+        style = {
+            'transform': f'translate({x} {y}) scale({size/20.0})',
+            'fill': self.symbol_color if idx in self.idx_to_fill else "none",
+        }
+        self.svg.add_xml_path(code, style, self.svg_symbol_class_name)

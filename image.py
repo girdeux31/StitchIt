@@ -147,7 +147,7 @@ class Image:
             mode = int(max(neighbors, key=neighbors.count))
             self.pil_image.putpixel((col, row), mode)
 
-    def process(self, n_colors: int, stitches_per_row: int, method: str):
+    def process(self, n_colors: int, stitches_per_row: int, method: str) -> tuple[list[tuple[int]], np.ndarray[int]]:
         """Process image:
         1. Resize image to be stitches_per_row x stitches_per_column, this shape is not changed anymore
         2. Compute the dmc palette based on the predominant image colors
