@@ -3,7 +3,7 @@ from svg_composer import SVGComposer
 
 class PatternComposer(SVGComposer):
 
-    idx_to_code = {
+    idx_to_symbol_code = {
         0: "M4 4L16 16", # backslash
         1: "M4 16L16 4M4 10L 16 10", # forward slash
         2: "M7 7L7 13 13 13 13 7Z", # little square, filled black
@@ -111,7 +111,7 @@ class PatternComposer(SVGComposer):
     def add_symbol(self, idx: int, x: int, y: int, size: int) -> None:
         """Add symbols"""
         if self.symbols:
-            code = self.idx_to_code.get(idx, '')
+            code = self.idx_to_symbol_code.get(idx, '')
             style = {
                 'transform': f'translate({x} {y}) scale({size/20.0})',
                 'fill': self.symbol_color if idx in self.idx_to_fill else "none",
