@@ -1,4 +1,5 @@
 import math
+from pathlib import Path
 from tabulate import tabulate
 
 from pattern import Pattern
@@ -18,7 +19,7 @@ CM_PER_INCH = 2.54  # cm/inch
 # strand: hebra
 
 
-class Statistics:
+class InfoFile:
 
     def __init__(self, fabric_count: int, strands_for_stitching: int) -> None:
         """Init object"""
@@ -59,26 +60,21 @@ class Statistics:
             self.thread_info['length'].append(length)
             self.thread_info['skeins'].append(skeins)
 
-    def print_info(self) -> None:
-        """Print design and thread info"""
-        self._print_design_info()
-        self._print_thread_info()
-
-    def _print_design_info(self):
-        """Print design info"""
-        print('Design information:')
-        print('')
-        print(f'  Fabric count or Aida count: {self.fabric_count} (ct or stitches per inch)')
-        print(f'  Strands for stitching: {self.strands_for_stitching} strands')
-        print(
+    def _write_design_info(self, f):
+        """Write design info"""
+        f.write('Design information:\n')
+        f.write('\n')
+        f.write(f'  Fabric count or Aida count: {self.fabric_count} (ct or stitches per inch)\n')
+        f.write(f'  Strands for stitching: {self.strands_for_stitching} strands\n')
+        f.write(
             f'  Size (width x height): {self.pattern_size["cm"][0]:.2f}x{self.pattern_size["cm"][1]:.2f} (cm) or '
-            f'{self.pattern_size["inch"][0]:.2f}x{self.pattern_size["inch"][1]:.2f} (\'\')'
+            f'{self.pattern_size["inch"][0]:.2f}x{self.pattern_size["inch"][1]:.2f} (\'\')\n'
         )
-        print(f'  Stitches (width x height): {self.pattern_size["stitches"][0]}x{self.pattern_size["stitches"][1]}')
-        print('')
+        f.write(f'  Stitches (width x height): {self.pattern_size["stitches"][0]}x{self.pattern_size["stitches"][1]}\n')
+        f.write('\n')
 
-    def _print_thread_info(self):
-        """Print thread info"""
+    def _write_thread_info(self, f):
+        """Write thread info"""
         headers = [
             'DMC code',
             'DMC color',
@@ -86,7 +82,13 @@ class Statistics:
             'Length (m)',
             'Skeins',
         ]
-        print('Thread information:')
-        print('')
-        print(tabulate(self.thread_info, headers=headers, tablefmt='simple'))
-        print('')
+        f.write('Thread information:\n')
+        f.write('\n')
+        f.write(tabulate(self.thread_info, headers=headers, tablefmt='simple'))
+        f.write('\n')
+
+    def save(self, file: Path):
+        """Write design and thread info into file"""
+        with open(file, 'w') as f:
+            self._write_design_info(f)
+            self._write_thread_info(f)

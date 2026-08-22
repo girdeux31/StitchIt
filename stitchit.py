@@ -2,9 +2,8 @@ import sys
 from warnings import warn
 from pathlib import Path
 
-from legend import Legend
 from pattern import Pattern
-from statistics import Statistics
+from info_file import InfoFile
 
 MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
 ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
@@ -17,7 +16,6 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - way to change format options, yml or by optional arguments
 #  - change readme
 #  - introduce error color metrics, for example mean of deltaE
-#  - move info to txt file
 
 
 if __name__ == '__main__':
@@ -67,7 +65,7 @@ if __name__ == '__main__':
     # Generate file paths
 
     out_pattern_file = input_file.with_stem(f'{input_file.stem}_pattern').with_suffix('')
-    out_legend_file = input_file.with_stem(f'{input_file.stem}_legend').with_suffix('')
+    out_info_file = input_file.with_stem(f'{input_file.stem}_info').with_suffix('.txt')
 
     # Generate pattern svg
 
@@ -78,6 +76,6 @@ if __name__ == '__main__':
 
     # Print thread info
 
-    thread = Statistics(fabric_count, strands_for_stitching)
-    thread.import_pattern(pattern, distance_method)
-    thread.print_info()
+    info_file = InfoFile(fabric_count, strands_for_stitching)
+    info_file.import_pattern(pattern, distance_method)
+    info_file.save(out_info_file)
