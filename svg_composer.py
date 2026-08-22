@@ -5,15 +5,15 @@ from svg import SVG
 
 class SVGComposer:
 
-    legend_font_size = '20px'
-    legend_font_color = 'black'
-    pattern_font_size = '10px'
-    pattern_font_color = 'black'
+    title_font_size = '12px'
+    title_font_color = 'black'
+    text_font_size = '10px'
+    text_font_color = 'black'
     symbol_color = 'black'
     symbol_width = 1
     svg_fill = 'none'
-    svg_legend_text_class_name = 'legend_text'
-    svg_pattern_text_class_name = 'pattern_text'
+    svg_title_class_name = 'title_text'
+    svg_text_class_name = 'pattern_text'
     svg_symbol_class_name = 'glyph'
 
     def __init__(self, color: bool=True, symbols: bool=True) -> None:
@@ -28,14 +28,13 @@ class SVGComposer:
             'fill': self.svg_fill,
         }
         classes = {
-            self.svg_legend_text_class_name: {
-                'font-size': self.legend_font_size,
-                'fill': self.legend_font_color,
+            self.svg_title_class_name: {
+                'font-size': self.title_font_size,
+                'fill': self.title_font_color,
             },
-            self.svg_pattern_text_class_name: {
-                'font-size': self.pattern_font_size,
-                'fill': self.pattern_font_color,
-                'text-anchor': 'middle',
+            self.svg_text_class_name: {
+                'font-size': self.text_font_size,
+                'fill': self.text_font_color,
             },
             self.svg_symbol_class_name: {
                 'stroke': self.symbol_color,

@@ -1,21 +1,23 @@
-import numpy as np
 from pathlib import Path
 
+from dmc import DMC
 from image import Image
 from pattern_composer import PatternComposer
 
 SVG_UNIT_SIZE = 10
 BACKGROUND_INDEX = 99  # must be between n_colors and 255 inclusive since pattern is uint8
+LEGEND_TITLE = 'Mouliné DMC'
 
 
 class Pattern:
 
     background_wo_symbols = True
 
-    def __init__(self, color: bool=True, symbols: bool=True) -> None:
+    def __init__(self, color: bool=True, symbols: bool=True, legend: bool=True) -> None:
         """Init object"""
         self.color = color
         self.symbols = symbols
+        self.legend = legend
         self.dmc_palette = None
         self.width = 0
         self.height = 0
@@ -30,11 +32,21 @@ class Pattern:
     
     def generate(self):
         """Generate SVG info"""
-        width = (self.width+1) * SVG_UNIT_SIZE  # +1 because of outer margin
-        height = (self.height+1) * SVG_UNIT_SIZE
-        self.pattern_composer.add_header(width, height)
+        pattern_width = (self.width+1) * SVG_UNIT_SIZE  # +1 because of outer margin
+        pattern_height = (self.height+1) * SVG_UNIT_SIZE
+        legend_height = (3 + 2.5*len(self.dmc_palette)) * SVG_UNIT_SIZE  # title + legend entries
+        image_width = pattern_width
+        image_height = pattern_height + legend_height
+        self.pattern_composer.add_header(image_width, image_height)
         if self.background_wo_symbols:
             self._set_background_index()
+        self._generate_pattern(pattern_width, pattern_height)
+        if self.legend:
+            self._generate_legend(pattern_height)
+        self.pattern_composer.add_tail()
+
+    def _generate_pattern(self, width: int, height: int) -> None:
+        """Generate pattern as SVG"""
         for y_idx, row in enumerate(self.dmc_pattern):  # TODO: these loops take a long time for stitches_per_row > 100
             y_pos = (y_idx+1) * SVG_UNIT_SIZE  # +1 allows space for midpoint arrows
             for x_idx, c_idx in enumerate(row):
@@ -45,7 +57,33 @@ class Pattern:
         self.pattern_composer.add_grids(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_numbers(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_arrows(SVG_UNIT_SIZE, width, height)
-        self.pattern_composer.add_tail()
+
+    def _generate_legend(self, start_height: int) -> None:
+        """Generate legend as SVG next to pattern"""
+        box_x_pos = 2*SVG_UNIT_SIZE
+        code_x_pos = box_x_pos + 2*SVG_UNIT_SIZE
+        title_y_pos = start_height+2*SVG_UNIT_SIZE
+        y_pos = start_height+3*SVG_UNIT_SIZE
+        color_info = self._get_color_info('de00')  # TODO refactor
+        self.pattern_composer.add_title(box_x_pos, title_y_pos, LEGEND_TITLE)
+        for c_idx, c_info in color_info.items():
+            self.pattern_composer.add_color(self.dmc_palette, c_idx, box_x_pos, y_pos, 1.5*SVG_UNIT_SIZE, box=True)
+            if self.symbols:
+                self.pattern_composer.add_symbol(c_idx, box_x_pos, y_pos, 1.5*SVG_UNIT_SIZE)
+            self.pattern_composer.add_text(code_x_pos, y_pos+SVG_UNIT_SIZE, c_info['code'])
+            y_pos += 2.5*SVG_UNIT_SIZE
+
+    def _get_color_info(self, method: str) -> dict[int, dict[str, tuple[int] | str]]:
+        """Get dict with dmc color info"""
+        dmc = DMC()
+        color_info = {}
+        for c_idx, rgb in self.dmc_palette.items():
+            code = dmc.get_most_similar_code_by_rgb(rgb, method=method)
+            color_info[c_idx] = {
+                'rgb': rgb,
+                'code': code,
+            }
+        return color_info
 
     def _set_background_index(self) -> None:
         """Set color index of background to special index, also reduce in 1 indexes bigger than original 

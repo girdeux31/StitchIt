@@ -28,6 +28,8 @@ class PatternComposer(SVGComposer):
     minor_grid_width = 1
     ref_number_step = 10
     ref_number_gap = 2
+    stroke_color = 'black'
+    stroke_width = 1
 
     def add_arrows(self, size: int, width: int, height: int) -> None:
         """Add midpoint arrows"""
@@ -88,8 +90,9 @@ class PatternComposer(SVGComposer):
             ref_number = (idx+1) * self.ref_number_step
             style = {
                 'transform': f'translate(0 -{self.ref_number_gap})',
+                'text-anchor': 'middle',
             }
-            self.svg.add_xml_text(x_pos, size, style, ref_number, self.svg_pattern_text_class_name)
+            self.svg.add_xml_text(x_pos, size, style, ref_number, self.svg_text_class_name)
 
     def _add_left_numbers(self, size: int, height: int) -> None:
         """Add numbers in left margin"""
@@ -97,16 +100,20 @@ class PatternComposer(SVGComposer):
             ref_number = (idx+1) * self.ref_number_step
             style = {
                 'transform': f'translate(-{self.ref_number_gap} 0) rotate(-90 {size} {y_pos})',
+                'text-anchor': 'middle',
             }
-            self.svg.add_xml_text(size, y_pos, style, ref_number, self.svg_pattern_text_class_name)
+            self.svg.add_xml_text(size, y_pos, style, ref_number, self.svg_text_class_name)
     
-    def add_color(self, palette: list[dict[str, tuple | str]], idx: int, x: int, y: int, size: int) -> None:
+    def add_color(self, palette: list[dict[str, tuple | str]], idx: int, x: int, y: int, size: int, box: bool=False) -> None:
         """Add colors as "pixels" """
         r, g, b = palette[idx] if self.color else (255, 255, 255)
         style = {
             'fill': f'rgb({r},{g},{b})',
             'stroke': 'none',
         }
+        if box:
+            style['stroke'] = self.stroke_color
+            style['stroke-width'] = self.stroke_width
         self.svg.add_xml_rect(x, y, size, size, style)
 
     def add_symbol(self, idx: int, x: int, y: int, size: int) -> None:
@@ -118,3 +125,11 @@ class PatternComposer(SVGComposer):
                 'fill': self.symbol_color if idx in self.idx_to_fill else "none",
             }
             self.svg.add_xml_path(code, style, self.svg_symbol_class_name)
+
+    def add_text(self, x: int, y: int, text: str) -> None:
+        """Add text"""
+        self.svg.add_xml_text(x, y, {}, text, self.svg_text_class_name)
+
+    def add_title(self, x: int, y: int, text: str) -> None:
+        """Add title"""
+        self.svg.add_xml_text(x, y, {}, text, self.svg_title_class_name)

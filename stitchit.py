@@ -11,13 +11,13 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 
 
 # TODO:
-#  - fix: when symbol is skipped in background cannot be reused
 #  - backstitch function
 #  - user arguments: backstitch_codes
 #  - use argparse
 #  - way to change format options, yml or by optional arguments
 #  - change readme
 #  - introduce error color metrics, for example mean of deltaE
+#  - move legend to image and info to txt file
 
 
 if __name__ == '__main__':
@@ -71,16 +71,10 @@ if __name__ == '__main__':
 
     # Generate pattern svg
 
-    pattern = Pattern(color=True, symbols=True)
+    pattern = Pattern(color=True, symbols=True, legend=True)
     pattern.process_image(input_file, n_colors, stitches_per_row, distance_method)
     pattern.generate()
     pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
-
-    # Generate legend svg
-
-    legend = Legend(color=True, symbols=True)
-    legend.generate(pattern, distance_method)
-    legend.save(out_legend_file)
 
     # Print thread info
 
