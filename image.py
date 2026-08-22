@@ -1,7 +1,7 @@
+import numpy as np
+
 from math import dist
 from pathlib import Path
-
-import numpy as np
 from PIL import Image as PILImage
 
 from dmc import DMC
@@ -78,11 +78,14 @@ class Image:
     def _get_predominant_colors(self, n_colors: int) -> list[tuple[int]]:
         """Get a list of colors most used in image"""
         count_rgbs = self.pil_image.getcolors(maxcolors=self.width*self.height)
-        # TODO change RGB to LAB if method is 76 or 00
         count_rgbs.sort(reverse=True) # sort by count
-        img_rbgs = [c_rgb[1] for c_rgb in count_rgbs]
+        img_rgbs = [c_rgb[1] for c_rgb in count_rgbs]
         output_rgbs = []
-        for base_rgb in img_rbgs:
+        for base_rgb in img_rgbs:
+            # euclidean distance is used instead of user method
+            # because this is just to check that the next color to 
+            # add in output will be different enough to existing ones
+            # plus there is constant threshold
             if all(dist(base_rgb, rgb) >= SIMILAR_COLOR_THRESHOLD for rgb in output_rgbs):
                 output_rgbs.append(base_rgb)
         return output_rgbs[:n_colors]  # return only the n most predominant colors
@@ -129,7 +132,7 @@ class Image:
             self._replace_pixel_by_mode(row, col, neighbors)
 
     def _get_neighbor_values(self, row: int, col: int, array: np.ndarray[int], only_diagonals: bool=False) -> list[int]:
-        """Get neighbour values (color indexes) in a specific coordinate (max length is 8)"""
+        """Get neighbor values (color indexes) in a specific coordinate (max length is 8)"""
         values = []
         for dr in (-1, 0, 1):
             for dc in (-1, 0, 1):

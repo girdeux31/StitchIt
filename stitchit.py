@@ -7,17 +7,18 @@ from pattern import Pattern
 from thread import Thread
 
 MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
-ALLOWED_DISTANCE_METHODS = ['euclidian', 'compuphase', 'de76', 'de00']
+ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 
 
 # TODO:
-#  - change rgb to lab once the image and the dmc colors are read if method is de76 or de00
-#  - user arguments: codes_wo_symbols, backstich_codes
-#  - help function
-#  - backstitch function
-#  - change readme
-#  - way to change format options, yml or by optional arguments
 #  - fix: one stitch is missing in pattern
+#  - fix: when symbol is skipped in background cannot be reused
+#  - backstitch function
+#  - user arguments: backstitch_codes
+#  - use argparse
+#  - way to change format options, yml or by optional arguments
+#  - change readme
+
 
 if __name__ == '__main__':
 
@@ -34,11 +35,11 @@ if __name__ == '__main__':
     # Just for debugging
     input_file = Path('examples/bird.jpg')
     n_colors = 3
-    stitches_per_row = 60  # FIX there is one less stitch in output
+    stitches_per_row = 60  # FIX: there is one less stitch in output
     png_scale = 2.0  # png scale
     fabric_count = 14  # aida or squares per inch
     strands_for_stitching = 2  # strands for stitching
-    distance_method = 'de00'  # 'euclidian', 'compuphase', 'de76', 'de00'
+    distance_method = 'de00'  # 'euclidean', 'compuphase', 'de76', 'de00'
 
     # input_file = Path('examples/ita.jpg')
     # n_colors = 3
@@ -59,6 +60,7 @@ if __name__ == '__main__':
             f'Parameter \'stitches_per_row\' is over the recommended limit of {MAX_STITCHES_PER_ROW_RECOMMENDED}, '
             f'this make take some time'
         )
+    distance_method = distance_method.lower()
     if distance_method not in ALLOWED_DISTANCE_METHODS:
         raise ValueError(f'Allowed distance methods are {", ".join(ALLOWED_DISTANCE_METHODS)}')
 

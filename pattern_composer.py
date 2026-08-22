@@ -45,13 +45,13 @@ class PatternComposer(SVGComposer):
         code = "M4 4L16 10L4 16 Z"  # triangle, looking right, filled black
         self.svg.add_xml_path(code, style)
 
-    def add_gridlines(self, size: int, width: int, height: int) -> None:
-        """Add major and minor gridlines"""
-        self._add_minor_gridlines(size, width, height)
-        self._add_major_gridlines(size, width, height)
+    def add_grids(self, size: int, width: int, height: int) -> None:
+        """Add major and minor grids"""
+        self._add_minor_grid(size, width, height)
+        self._add_major_grid(size, width, height)
 
-    def _add_major_gridlines(self, size: int, width: int, height: int) -> None:
-        """Add major gridlines"""
+    def _add_major_grid(self, size: int, width: int, height: int) -> None:
+        """Add major grid"""
         style = {
             'stroke': self.major_grid_color,
             'stroke-width': self.major_grid_width,
@@ -63,8 +63,8 @@ class PatternComposer(SVGComposer):
         for y in range(11*size, height, 10*size):
             self.svg.add_xml_line(size, y, width, y, style)
 
-    def _add_minor_gridlines(self, size: int, width: int, height: int) -> None:
-        """Add minor gridlines"""
+    def _add_minor_grid(self, size: int, width: int, height: int) -> None:
+        """Add minor grid"""
         style = {
             'stroke': self.minor_grid_color,
             'stroke-width': self.minor_grid_width,

@@ -1,6 +1,6 @@
 import csv
 
-from color_tool import ColorTool
+from color_tools import ColorTools
 
 
 class DMC:
@@ -23,7 +23,6 @@ class DMC:
                 
                 code = row[0]
                 rgb = (int(row[1]), int(row[2]), int(row[3]))
-                # TODO change RGB to LAB if method is 76 or 00
                 name = row[4]
                 dmc_dict[code] = {'rgb': rgb, 'name': name}
 
@@ -32,11 +31,11 @@ class DMC:
     def get_most_similar_code_by_rgb(self, rgb: tuple[int], method: str) -> str:
         """Get DMC color code from an RGB tuple. To get the code, the closest rgb is chosen from the list,
         correction to the distance can be applied with corrected bool argument"""
-        temp_dist = 99999999
+        tmp_dist = 99999999
         for code, info in self.dmc_dict.items():
-            dist = ColorTool.compute_color_distance(info['rgb'], rgb, method)
-            if dist < temp_dist:
-                temp_dist = dist
+            dist = ColorTools.compute_color_distance(info['rgb'], rgb, method)
+            if dist < tmp_dist:
+                tmp_dist = dist
                 new_code = code
 
         return new_code

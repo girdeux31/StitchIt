@@ -46,7 +46,7 @@ class Pattern:
                 self.pattern_composer.add_color(self.dmc_palette, c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
                 if self.symbols and background_idx is not None and c_idx != background_idx:
                     self.pattern_composer.add_symbol(c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
-        self.pattern_composer.add_gridlines(SVG_UNIT_SIZE, width, height)
+        self.pattern_composer.add_grids(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_numbers(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_arrows(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_tail()
