@@ -17,7 +17,7 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - way to change format options, yml or by optional arguments
 #  - change readme
 #  - introduce error color metrics, for example mean of deltaE
-#  - move legend to image and info to txt file
+#  - move info to txt file
 
 
 if __name__ == '__main__':
