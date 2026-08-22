@@ -50,7 +50,7 @@ class Thread:
                 pattern.height / self.fabric_count * CM_PER_INCH,
             ),
         }
-        for c_idx, rgb in enumerate(pattern.dmc_palette):
+        for c_idx, rgb in pattern.dmc_palette.items():
             code = dmc.get_most_similar_code_by_rgb(rgb, method=method)
             name = dmc.get_color_name_by_code(code)
             stitches = len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])

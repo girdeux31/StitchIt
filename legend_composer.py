@@ -33,12 +33,13 @@ class LegendComposer(SVGComposer):
 
     def add_symbol(self, x_pos: int, y_pos: int, height: int, idx: int) -> None:
         """Add symbol in first column"""
-        code = self.idx_to_code.get(idx, '')
-        style = {
-            'transform': f'translate({x_pos} {y_pos}) scale({height/20.0})',
-            'fill': self.symbol_color if idx in self.idx_to_fill else "none",
-        }
-        self.svg.add_xml_path(code, style, self.svg_symbol_class_name)
+        code = self.idx_to_code.get(idx)
+        if code:
+            style = {
+                'transform': f'translate({x_pos} {y_pos}) scale({height/20.0})',
+                'fill': self.symbol_color if idx in self.idx_to_fill else "none",
+            }
+            self.svg.add_xml_path(code, style, self.svg_symbol_class_name)
 
     def add_color_name(self, x_pos: int, y_pos: int, width: int, height: int, color_info: dict[str, tuple | str]) -> None:
         """Add color name in second column"""

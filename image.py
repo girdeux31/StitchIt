@@ -57,7 +57,7 @@ class Image:
     def _quantize(self, dmc_palette_2d: list[tuple[int]]) -> None:
         """Assign a color index to each pixel, only n colors are used, 
         output image is (stitches_cols, stitches_rows) where each element is a color index"""
-        dmc_palette_1d = [value for rgb in dmc_palette_2d for value in rgb]
+        dmc_palette_1d = [value for rgb in dmc_palette_2d.values() for value in rgb]
         dmc_palette_img = PILImage.new("P", (1, 1))  # create an image 1x1 just to put the palette on
         dmc_palette_img.putpalette(dmc_palette_1d)
         self.pil_image = self.pil_image.quantize(
@@ -65,14 +65,14 @@ class Image:
             dither=PILImage.Dither.NONE,
         )
 
-    def _get_dmc_palette(self, n_colors: int, method: str) -> list[tuple[int]]:
+    def _get_dmc_palette(self, n_colors: int, method: str) -> dict[int, tuple[int]]:
         """Get a list of dmc colors most used in image"""
         dmc = DMC()
-        dmc_palette = []
+        dmc_palette = {}
         predominant_rgbs = self._get_predominant_colors(n_colors)
-        for rgb in predominant_rgbs:
+        for c_idx, rgb in enumerate(predominant_rgbs):
             dmc_rgb = dmc.get_most_similar_rgb_by_rgb(rgb, method)
-            dmc_palette.append(dmc_rgb)
+            dmc_palette[c_idx] = dmc_rgb
         return dmc_palette
 
     def _get_predominant_colors(self, n_colors: int) -> list[tuple[int]]:
