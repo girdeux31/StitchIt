@@ -18,7 +18,7 @@ CM_PER_INCH = 2.54  # cm/inch
 # strand: hebra
 
 
-class Thread:
+class Statistics:
 
     def __init__(self, fabric_count: int, strands_for_stitching: int) -> None:
         """Init object"""

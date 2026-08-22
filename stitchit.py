@@ -4,7 +4,7 @@ from pathlib import Path
 
 from legend import Legend
 from pattern import Pattern
-from thread import Thread
+from statistics import Statistics
 
 MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
 ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
@@ -78,6 +78,6 @@ if __name__ == '__main__':
 
     # Print thread info
 
-    thread = Thread(fabric_count, strands_for_stitching)
+    thread = Statistics(fabric_count, strands_for_stitching)
     thread.import_pattern(pattern, distance_method)
     thread.print_info()
