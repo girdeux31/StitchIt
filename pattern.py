@@ -51,7 +51,7 @@ class Pattern:
             y_pos = (y_idx+1) * SVG_UNIT_SIZE  # +1 allows space for midpoint arrows
             for x_idx, c_idx in enumerate(row):
                 x_pos = (x_idx+1) * SVG_UNIT_SIZE
-                self.pattern_composer.add_color(self.dmc_palette, c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
+                self.pattern_composer.add_color(self.dmc_palette[c_idx], x_pos, y_pos, SVG_UNIT_SIZE)
                 if self.symbols:
                     self.pattern_composer.add_symbol(c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
         self.pattern_composer.add_grids(SVG_UNIT_SIZE, width, height)
@@ -60,30 +60,13 @@ class Pattern:
 
     def _generate_legend(self, start_height: int) -> None:
         """Generate legend as SVG next to pattern"""
-        box_x_pos = 2*SVG_UNIT_SIZE
-        code_x_pos = box_x_pos + 2*SVG_UNIT_SIZE
-        title_y_pos = start_height+2*SVG_UNIT_SIZE
+        x_pos = 2*SVG_UNIT_SIZE
         y_pos = start_height+3*SVG_UNIT_SIZE
-        color_info = self._get_color_info('de00')  # TODO refactor
-        self.pattern_composer.add_title(box_x_pos, title_y_pos, LEGEND_TITLE)
-        for c_idx, c_info in color_info.items():
-            self.pattern_composer.add_color(self.dmc_palette, c_idx, box_x_pos, y_pos, 1.5*SVG_UNIT_SIZE, box=True)
-            if self.symbols:
-                self.pattern_composer.add_symbol(c_idx, box_x_pos, y_pos, 1.5*SVG_UNIT_SIZE)
-            self.pattern_composer.add_text(code_x_pos, y_pos+SVG_UNIT_SIZE, c_info['code'])
+        title_y_pos = start_height+2*SVG_UNIT_SIZE
+        self.pattern_composer.add_title(x_pos, title_y_pos, LEGEND_TITLE)
+        for c_idx, c_info in self.dmc_palette.items():
+            self.pattern_composer.add_legend_item(c_info, c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
             y_pos += 2.5*SVG_UNIT_SIZE
-
-    def _get_color_info(self, method: str) -> dict[int, dict[str, tuple[int] | str]]:
-        """Get dict with dmc color info"""
-        dmc = DMC()
-        color_info = {}
-        for c_idx, rgb in self.dmc_palette.items():
-            code = dmc.get_most_similar_code_by_rgb(rgb, method=method)
-            color_info[c_idx] = {
-                'rgb': rgb,
-                'code': code,
-            }
-        return color_info
 
     def _set_background_index(self) -> None:
         """Set color index of background to special index, also reduce in 1 indexes bigger than original 

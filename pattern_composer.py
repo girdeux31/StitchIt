@@ -104,9 +104,9 @@ class PatternComposer(SVGComposer):
             }
             self.svg.add_xml_text(size, y_pos, style, ref_number, self.svg_text_class_name)
     
-    def add_color(self, palette: list[dict[str, tuple | str]], idx: int, x: int, y: int, size: int, box: bool=False) -> None:
+    def add_color(self, c_info: dict[str, tuple | str], x: int, y: int, size: int, box: bool=False) -> None:
         """Add colors as "pixels" """
-        r, g, b = palette[idx] if self.color else (255, 255, 255)
+        r, g, b = c_info['rgb'] if self.color else (255, 255, 255)
         style = {
             'fill': f'rgb({r},{g},{b})',
             'stroke': 'none',
@@ -126,10 +126,12 @@ class PatternComposer(SVGComposer):
             }
             self.svg.add_xml_path(code, style, self.svg_symbol_class_name)
 
-    def add_text(self, x: int, y: int, text: str) -> None:
-        """Add text"""
-        self.svg.add_xml_text(x, y, {}, text, self.svg_text_class_name)
-
     def add_title(self, x: int, y: int, text: str) -> None:
         """Add title"""
         self.svg.add_xml_text(x, y, {}, text, self.svg_title_class_name)
+
+    def add_legend_item(self, c_info: dict[str, tuple | str], c_idx: int, x: int, y: int, size: int):
+        self.add_color(c_info, x, y, 1.5*size, box=True)
+        if self.symbols:
+            self.add_symbol(c_idx, x, y, 1.5*size)
+        self.svg.add_xml_text(x+2*size, y+size, {}, c_info['code'], self.svg_text_class_name)

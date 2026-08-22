@@ -9,10 +9,6 @@ from dmc import DMC
 RESIZE_WIDTH  = 1000
 MASK_SIZE = 3
 SIMILAR_COLOR_THRESHOLD = 30
-DEBUG = False
-
-if DEBUG:
-    import matplotlib.pyplot as plt
 
 
 class Image:
@@ -54,10 +50,10 @@ class Image:
             resample=PILImage.Resampling.NEAREST,  # or LANCZOS
         )
 
-    def _quantize(self, dmc_palette_2d: list[tuple[int]]) -> None:
+    def _quantize(self, dmc_palette_2d: dict[str, dict[str, str | tuple]]) -> None:
         """Assign a color index to each pixel, only n colors are used, 
         output image is (stitches_cols, stitches_rows) where each element is a color index"""
-        dmc_palette_1d = [value for rgb in dmc_palette_2d.values() for value in rgb]
+        dmc_palette_1d = [rgb for info in dmc_palette_2d.values() for rgb in info['rgb']]
         dmc_palette_img = PILImage.new("P", (1, 1))  # create an image 1x1 just to put the palette on
         dmc_palette_img.putpalette(dmc_palette_1d)
         self.pil_image = self.pil_image.quantize(
@@ -65,14 +61,14 @@ class Image:
             dither=PILImage.Dither.NONE,
         )
 
-    def _get_dmc_palette(self, n_colors: int, method: str) -> dict[int, tuple[int]]:
+    def _get_dmc_palette(self, n_colors: int, method: str) -> dict[int, dict[str, str | tuple]]:
         """Get a list of dmc colors most used in image"""
         dmc = DMC()
         dmc_palette = {}
         predominant_rgbs = self._get_predominant_colors(n_colors)
         for c_idx, rgb in enumerate(predominant_rgbs):
-            dmc_rgb = dmc.get_most_similar_rgb_by_rgb(rgb, method)
-            dmc_palette[c_idx] = dmc_rgb
+            c_info = dmc.get_most_similar_color(rgb, method)
+            dmc_palette[c_idx] = c_info
         return dmc_palette
 
     def _get_predominant_colors(self, n_colors: int) -> list[tuple[int]]:
@@ -157,22 +153,9 @@ class Image:
         3. Quantize the image with n dmc colors
         4. Convert the image to a np array"""
         self._resize(stitches_per_row)
-        if DEBUG:
-            self.show('After resize')
         dmc_palette = self._get_dmc_palette(n_colors, method)
         self._quantize(dmc_palette)
-        if DEBUG:
-            self.show('After quantize')
         self._clean()
-        if DEBUG:
-            self.show('After clean')
         dcm_pattern = self._get_dmc_pattern()
 
         return dmc_palette, dcm_pattern
-
-    def show(self, title):
-        """Show PIL Image in screen"""
-        data = np.array(self.pil_image)
-        plt.title(title)
-        plt.imshow(data)
-        plt.show()

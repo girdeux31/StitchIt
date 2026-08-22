@@ -2,7 +2,7 @@ import math
 from tabulate import tabulate
 
 from pattern import Pattern
-from dmc import DMC
+
 
 FABRIC_COUNT_TO_STITCH_LENGTH = {
     11: 2.10,  # number of squares (or stitches) per inch, thread length in cm
@@ -38,7 +38,6 @@ class Thread:
 
     def import_pattern(self, pattern: Pattern, method: str):
         """Import pattern"""
-        dmc = DMC()
         self.pattern_size = {
             'stitches': (pattern.width, pattern.height),
             'inch': (
@@ -50,14 +49,12 @@ class Thread:
                 pattern.height / self.fabric_count * CM_PER_INCH,
             ),
         }
-        for c_idx, rgb in pattern.dmc_palette.items():
-            code = dmc.get_most_similar_code_by_rgb(rgb, method=method)
-            name = dmc.get_color_name_by_code(code)
+        for c_idx, c_info in pattern.dmc_palette.items():
             stitches = len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
             length = stitches * self.length_per_stitch / 100  # m
             skeins = math.ceil(length / (SKEIN_LENGTH*STRANDS_PER_SKEIN/self.strands_for_stitching))
-            self.thread_info['code'].append(code)
-            self.thread_info['name'].append(name)
+            self.thread_info['code'].append(c_info['code'])
+            self.thread_info['name'].append(c_info['name'])
             self.thread_info['stitches'].append(stitches)
             self.thread_info['length'].append(length)
             self.thread_info['skeins'].append(skeins)
@@ -93,7 +90,3 @@ class Thread:
         print('')
         print(tabulate(self.thread_info, headers=headers, tablefmt='simple'))
         print('')
-    
-    def get_thread_info(self):
-        """Return thread_info"""
-        return self.thread_info
