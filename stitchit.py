@@ -11,13 +11,13 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 
 
 # TODO:
-#  - fix: one stitch is missing in pattern
 #  - fix: when symbol is skipped in background cannot be reused
 #  - backstitch function
 #  - user arguments: backstitch_codes
 #  - use argparse
 #  - way to change format options, yml or by optional arguments
 #  - change readme
+#  - introduce error color metrics, for example mean of deltaE
 
 
 if __name__ == '__main__':

@@ -21,6 +21,7 @@ class PatternComposer(SVGComposer):
     arrow_width = 2
     arrow_fill = 'black'
     arrow_gap = 2
+    major_grid_step = 10
     major_grid_color = 'black'
     major_grid_width = 2
     minor_grid_color = 'rgb(20,20,20)'
@@ -57,10 +58,10 @@ class PatternComposer(SVGComposer):
             'stroke-width': self.major_grid_width,
         }
         # horizontal lines
-        for x in range(11*size, width, 10*size):
+        for x in range(11*size, width, self.major_grid_step*size):
             self.svg.add_xml_line(x, size, x, height, style)
         # vertical lines
-        for y in range(11*size, height, 10*size):
+        for y in range(11*size, height, self.major_grid_step*size):
             self.svg.add_xml_line(size, y, width, y, style)
 
     def _add_minor_grid(self, size: int, width: int, height: int) -> None:

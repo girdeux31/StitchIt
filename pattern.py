@@ -35,8 +35,8 @@ class Pattern:
     
     def generate(self):
         """Generate SVG info"""
-        width = self.width * SVG_UNIT_SIZE
-        height = self.height * SVG_UNIT_SIZE
+        width = (self.width+1) * SVG_UNIT_SIZE  # +1 because of outer margin
+        height = (self.height+1) * SVG_UNIT_SIZE
         self.pattern_composer.add_header(width, height)
         background_idx = self._get_background_idx() if self.background_wo_symbols else None
         for y_idx, row in enumerate(self.dmc_pattern):  # TODO: these loops take a long time for stitches_per_row > 100
