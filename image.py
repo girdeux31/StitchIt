@@ -6,10 +6,8 @@ from PIL import Image as PILImage
 
 from dmc import DMC
 
-RESIZE_WIDTH  = 1000
-MASK_SIZE = 3
-SIMILAR_COLOR_THRESHOLD = 30
 
+SIMILAR_COLOR_THRESHOLD = 30
 
 class Image:
 

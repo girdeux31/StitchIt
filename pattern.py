@@ -10,7 +10,7 @@ LEGEND_TITLE = 'Mouliné DMC'
 
 class Pattern:
 
-    background_wo_symbols = True
+    ignore_background = True  # color is kept but no symbol is used and not shown in legend
 
     def __init__(self, color: bool=True, symbols: bool=True, legend: bool=True) -> None:
         """Init object"""
@@ -39,7 +39,7 @@ class Pattern:
         image_width = pattern_width
         image_height = pattern_height + legend_height
         self.pattern_composer.add_header(image_width, image_height)
-        if self.background_wo_symbols:
+        if self.ignore_background:
             self._set_background_index()
         self._generate_pattern(pattern_width, pattern_height)
         if self.legend:
@@ -66,6 +66,8 @@ class Pattern:
         title_y_pos = start_height+2*SVG_UNIT_SIZE
         self.pattern_composer.add_title(x_pos, title_y_pos, LEGEND_TITLE)
         for c_idx, c_info in self.dmc_palette.items():
+            if self.ignore_background and c_idx == BACKGROUND_INDEX:
+                continue
             self.pattern_composer.add_legend_item(c_info, c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
             y_pos += 2.5*SVG_UNIT_SIZE
 

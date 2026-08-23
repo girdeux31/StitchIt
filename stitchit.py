@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     # Just for debugging
     # input_file = Path('examples/bird.jpg')
-    # n_colors = 3
+    # n_colors = 3  # includes background even if ignore_background is True
     # stitches_per_row = 60
 
     input_file = Path('examples/octopus.jpg')
