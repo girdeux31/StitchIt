@@ -15,7 +15,6 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - use argparse
 #  - way to change format options, yml or by optional arguments
 #  - change readme
-#  - introduce error color metrics, for example mean of deltaE
 
 
 if __name__ == '__main__':
@@ -74,7 +73,7 @@ if __name__ == '__main__':
     pattern.generate()
     pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
 
-    # Print thread info
+    # Write info file 
 
     info_file = InfoFile(fabric_count, strands_for_stitching)
     info_file.import_pattern(pattern, distance_method)

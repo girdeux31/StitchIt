@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from dmc import DMC
 from image import Image
 from pattern_composer import PatternComposer
 
@@ -19,6 +18,8 @@ class Pattern:
         self.symbols = symbols
         self.legend = legend
         self.dmc_palette = None
+        self.dmc_pattern = None
+        self.base_rgb_pattern = None
         self.width = 0
         self.height = 0
         self.pattern_composer = PatternComposer(color, symbols)
@@ -26,7 +27,7 @@ class Pattern:
     def process_image(self, img_file: Path, n_colors: int, stitches_per_row: int, method: str) -> None:
         """Create image, process it (resize, pixelate, quantize), then get palette and pattern"""
         image = Image(img_file)
-        self.dmc_palette, self.dmc_pattern = image.process(n_colors, stitches_per_row, method)
+        self.dmc_palette, self.dmc_pattern, self.base_rgb_pattern = image.process(n_colors, stitches_per_row, method)
         self.width = self.dmc_pattern.shape[1]
         self.height = self.dmc_pattern.shape[0]
     

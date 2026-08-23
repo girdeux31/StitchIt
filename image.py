@@ -1,6 +1,6 @@
+import math
 import numpy as np
 
-from math import dist
 from pathlib import Path
 from PIL import Image as PILImage
 
@@ -82,7 +82,7 @@ class Image:
             # because this is just to check that the next color to 
             # add in output will be different enough to existing ones
             # plus there is constant threshold
-            if all(dist(base_rgb, rgb) >= SIMILAR_COLOR_THRESHOLD for rgb in output_rgbs):
+            if all(math.dist(base_rgb, rgb) >= SIMILAR_COLOR_THRESHOLD for rgb in output_rgbs):
                 output_rgbs.append(base_rgb)
         return output_rgbs[:n_colors]  # return only the n most predominant colors
 
@@ -153,9 +153,10 @@ class Image:
         3. Quantize the image with n dmc colors
         4. Convert the image to a np array"""
         self._resize(stitches_per_row)
+        base_rgb_pattern = self._get_dmc_pattern()
         dmc_palette = self._get_dmc_palette(n_colors, method)
         self._quantize(dmc_palette)
         self._clean()
         dcm_pattern = self._get_dmc_pattern()
 
-        return dmc_palette, dcm_pattern
+        return dmc_palette, dcm_pattern, base_rgb_pattern

@@ -1,10 +1,23 @@
 import math
+import numpy as np
+
 from pathlib import Path
 from tabulate import tabulate
 
 from pattern import Pattern
+from color_tools import ColorTools
 
 
+TABLE_HEADER = [
+    'DMC code',
+    'DMC color',
+    'DMC RGB',
+    'Stitches',
+    'Length (m)',
+    'Skeins',
+    'MSE'
+]
+TABLE_FORMAT = 'simple'
 FABRIC_COUNT_TO_STITCH_LENGTH = {
     11: 2.10,  # number of squares (or stitches) per inch, thread length in cm
     14: 1.80,
@@ -29,9 +42,11 @@ class InfoFile:
         self.thread_info = {
             'code': [],
             'name': [],
+            'rgb': [],
             'stitches': [],
             'length': [],
             'skeins': [],
+            'error': [],
         }
         if fabric_count not in FABRIC_COUNT_TO_STITCH_LENGTH:
             raise ValueError(f'Allowed values for \'thread_count\' parameters are: {", ".join(FABRIC_COUNT_TO_STITCH_LENGTH.keys())}')
@@ -51,14 +66,18 @@ class InfoFile:
             ),
         }
         for c_idx, c_info in pattern.dmc_palette.items():
-            stitches = len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
+            rgb_str = ','.join([str(coord) for coord in c_info['rgb']])
+            stitches = np.sum(pattern.dmc_pattern == c_idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
             length = stitches * self.length_per_stitch / 100  # m
             skeins = math.ceil(length / (SKEIN_LENGTH*STRANDS_PER_SKEIN/self.strands_for_stitching))
+            error = ColorTools.compute_color_mse(pattern, method, c_idx)
             self.thread_info['code'].append(c_info['code'])
             self.thread_info['name'].append(c_info['name'])
+            self.thread_info['rgb'].append(rgb_str)
             self.thread_info['stitches'].append(stitches)
             self.thread_info['length'].append(length)
             self.thread_info['skeins'].append(skeins)
+            self.thread_info['error'].append(error)
 
     def _write_design_info(self, f):
         """Write design info"""
@@ -75,16 +94,9 @@ class InfoFile:
 
     def _write_thread_info(self, f):
         """Write thread info"""
-        headers = [
-            'DMC code',
-            'DMC color',
-            'Stitches',
-            'Length (m)',
-            'Skeins',
-        ]
         f.write('Thread information:\n')
         f.write('\n')
-        f.write(tabulate(self.thread_info, headers=headers, tablefmt='simple'))
+        f.write(tabulate(self.thread_info, headers=TABLE_HEADER, tablefmt=TABLE_FORMAT, floatfmt=('','','','','.2f','','.4f')))
         f.write('\n')
 
     def save(self, file: Path):
