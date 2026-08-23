@@ -73,7 +73,7 @@ class Pattern:
         """Set color index of background to special index, also reduce in 1 indexes bigger than original 
         background index so symbols can be reused"""
         background_idx = self._get_background_idx()
-        color_idxs = self.dmc_palette.keys()
+        color_idxs = list(self.dmc_palette.keys())
         for c_idx in color_idxs:
             if c_idx == background_idx:
                 # change bkgd idx in pattern and palette

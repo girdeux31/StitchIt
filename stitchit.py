@@ -30,23 +30,23 @@ if __name__ == '__main__':
     # stitches_per_row = int(sys.argv[3])   # stitch count, number of stitches in x axis
 
     # Just for debugging
-    input_file = Path('examples/bird.jpg')
-    n_colors = 3
-    stitches_per_row = 60  # FIX: there is one less stitch in output
-    png_scale = 2.0  # png scale
-    fabric_count = 14  # aida or squares per inch
-    strands_for_stitching = 2  # strands for stitching
-    distance_method = 'de00'  # 'euclidean', 'compuphase', 'de76', 'de00'
-
-    # input_file = Path('examples/ita.jpg')
+    # input_file = Path('examples/bird.jpg')
     # n_colors = 3
-    # stitches_per_row = 100
-    # png_scale = 2.0
+    # stitches_per_row = 60
+
+    input_file = Path('examples/octopus.jpg')
+    n_colors = 3
+    stitches_per_row = 60
 
     # input_file = Path('examples/waves.jpg')
     # n_colors = 10
     # stitches_per_row = 140
     # png_scale = 1.0
+
+    png_scale = 2.0  # png scale
+    fabric_count = 14  # aida or squares per inch
+    strands_for_stitching = 2  # strands for stitching
+    distance_method = 'de00'  # 'euclidean', 'compuphase', 'de76', 'de00'
 
     if not input_file.exists():
         raise FileNotFoundError(f'File \'{input_file}\' not found')

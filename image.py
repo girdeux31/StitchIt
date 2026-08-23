@@ -43,8 +43,8 @@ class Image:
     def _resize(self, stitches_per_row: int) -> None:
         """Resize image so each pixel is a stitch (equivalent to pixelate), 
         output image is (stitches_cols, stitches_rows, rgb)"""
-        pixel_size = self.width // stitches_per_row
-        stitches_per_col = self.height // pixel_size
+        pixel_size = self.width / stitches_per_row
+        stitches_per_col = round(self.height / pixel_size)
         self.pil_image = self.pil_image.resize(
             (stitches_per_row, stitches_per_col),
             resample=PILImage.Resampling.NEAREST,  # or LANCZOS
