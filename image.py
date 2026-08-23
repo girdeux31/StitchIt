@@ -5,9 +5,16 @@ from pathlib import Path
 from PIL import Image as PILImage
 
 from dmc import DMC
+from color_tools import ColorTools
 
 
-SIMILAR_COLOR_THRESHOLD = 30
+# increase if colors in pattern are too similar
+METHOD_TO_COLOR_THRESHOLD = {
+    'euclidean': 30,
+    'compuphase': 30,
+    'de76': 10,
+    'de00': 10,
+}
 
 class Image:
 
@@ -63,24 +70,23 @@ class Image:
         """Get a list of dmc colors most used in image"""
         dmc = DMC()
         dmc_palette = {}
-        predominant_rgbs = self._get_predominant_colors(n_colors)
+        predominant_rgbs = self._get_predominant_colors(n_colors, method)
         for c_idx, rgb in enumerate(predominant_rgbs):
             c_info = dmc.get_most_similar_color(rgb, method)
             dmc_palette[c_idx] = c_info
         return dmc_palette
 
-    def _get_predominant_colors(self, n_colors: int) -> list[tuple[int]]:
+    def _get_predominant_colors(self, n_colors: int, method: str) -> list[tuple[int]]:
         """Get a list of colors most used in image"""
         count_rgbs = self.pil_image.getcolors(maxcolors=self.width*self.height)
         count_rgbs.sort(reverse=True) # sort by count
         img_rgbs = [c_rgb[1] for c_rgb in count_rgbs]
         output_rgbs = []
         for base_rgb in img_rgbs:
-            # euclidean distance is used instead of user method
-            # because this is just to check that the next color to 
-            # add in output will be different enough to existing ones
-            # plus there is constant threshold
-            if all(math.dist(base_rgb, rgb) >= SIMILAR_COLOR_THRESHOLD for rgb in output_rgbs):
+            if all(
+                ColorTools.compute_color_distance(base_rgb, rgb, method) >= METHOD_TO_COLOR_THRESHOLD[method]
+                for rgb in output_rgbs
+            ):
                 output_rgbs.append(base_rgb)
         return output_rgbs[:n_colors]  # return only the n most predominant colors
 

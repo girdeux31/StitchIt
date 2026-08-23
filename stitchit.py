@@ -15,6 +15,7 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - use argparse
 #  - way to change format options, yml or by optional arguments
 #  - change readme
+#  - legend as columns
 
 
 if __name__ == '__main__':
@@ -34,14 +35,17 @@ if __name__ == '__main__':
     # n_colors = 3  # includes background even if ignore_background is True
     # stitches_per_row = 60
 
-    input_file = Path('examples/octopus.jpg')
-    n_colors = 3
-    stitches_per_row = 60
+    # input_file = Path('examples/octopus.jpg')
+    # n_colors = 3
+    # stitches_per_row = 60
 
     # input_file = Path('examples/waves.jpg')
     # n_colors = 10
     # stitches_per_row = 140
-    # png_scale = 1.0
+
+    input_file = Path('examples/einstain.jpg')
+    n_colors = 5
+    stitches_per_row = 80
 
     png_scale = 2.0  # png scale
     fabric_count = 14  # aida or squares per inch
