@@ -68,7 +68,7 @@ class ColorTools:
     @classmethod
     def compute_color_mse(cls, pattern, method: str, color_idx: int) -> float:
         """Compute MSE between DMC color and real color (method is used to compute yi-ŷi)"""
-        count = 0
+        count, mse = 0, 0
         rgb = pattern.dmc_palette[color_idx]['rgb']
         for r, row in enumerate(pattern.dmc_pattern):
             for c, c_idx in enumerate(row):
@@ -77,4 +77,4 @@ class ColorTools:
                     error = cls.compute_color_distance(base_rgb, rgb, method)
                     mse = error**2
                     count += 1
-        return mse/count
+        return mse/count if count > 0 else 'Unknown'
