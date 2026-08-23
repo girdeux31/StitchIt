@@ -1,3 +1,4 @@
+import numpy as np
 from pathlib import Path
 
 from image import Image
@@ -87,14 +88,17 @@ class Pattern:
                 self.dmc_palette[c_idx-1] = self.dmc_palette.pop(c_idx)
 
     def _get_background_idx(self) -> int:
-        """Get index representing background (check 4 corners, if they match it is the background idx)"""
-        idx = [
-            self.dmc_pattern[0, 0],
-            self.dmc_pattern[self.height-1, 0],
-            self.dmc_pattern[0, self.width-1],
-            self.dmc_pattern[self.height-1, self.width-1],
-        ]
-        return int(idx[0]) if idx.count(idx[0]) == 4 else None  # same color in all corners?
+        """Get index representing background (mode of outer rim)"""
+        rim = np.concatenate(
+            [
+                self.dmc_pattern[0, :],  # top
+                self.dmc_pattern[-1, :],  # bottom
+                self.dmc_pattern[1:-1, 0],  # left
+                self.dmc_pattern[1:-1, -1],  # right
+            ]
+        )
+        values, counts = np.unique(rim, return_counts=True)
+        return values[np.argmax(counts)]
 
     def save(self, out_file: Path, formats: list[str]=['pdf'], png_scale: float=1.0) -> None:
         self.pattern_composer.save(out_file, formats, png_scale)
