@@ -2,24 +2,11 @@ from pathlib import Path
 
 from svg import SVG
 from backstitch_detector import Backstitch
+from palette import DMCColor
 
 
 class PatternComposer:
 
-    idx_to_symbol_code = {
-        0: "M4 4L16 16", # backslash
-        1: "M4 16L16 4M4 10L 16 10", # forward slash
-        2: "M7 7L7 13 13 13 13 7Z", # little square, filled black
-        3: "M4 4L10 16L16 4 Z", # triangle, upside down
-        4: "M4 4L16 16M4 16 L16 4", # diagonal cross
-        5: "M4 4L4 16 16 16 16 4Z", # square
-        6: "M4 4L10 16L16 4 Z", # triangle, upside down, filled black
-        7: "M10 4L6 10 10 16 14 10Z", # diamond, filled black
-        8: "M8 8L8 12 12 12 12 8Z", # little square
-        9: "M4 4L16 16M4 16 L16 4M10 4L10 16M4 10L16 10", # 8 way cross
-        10: "M4 4L4 16 16 16 16 4Z", # square, filled black
-    }
-    idx_to_fill = [2, 6, 7, 10]
     arrow_color = 'black'
     arrow_width = 2
     arrow_fill = 'black'
@@ -45,10 +32,8 @@ class PatternComposer:
     svg_symbol_class_name = 'glyph'
     backstitch_width = 2
 
-    def __init__(self, color: bool=True, symbols: bool=True) -> None:
+    def __init__(self) -> None:
         """Init object"""
-        self.color = color
-        self.symbols = symbols
         self.svg = SVG()
 
     def add_header(self, width: int, height: int) -> None:
@@ -150,11 +135,15 @@ class PatternComposer:
             }
             self.svg.add_xml_text(size, y_pos, style, ref_number, self.svg_text_class_name)
     
-    def add_color(self, c_info: dict[str, tuple | str], x: int, y: int, size: int, box: bool=False) -> None:
+    def add_color_and_symbol(self, color: DMCColor, x: int, y: int, size: int, box: bool=False) -> None:
+        """Add color and symbol if any"""
+        self._add_color(color, x, y, size, box)
+        self._add_symbol(color, x, y, size)
+
+    def _add_color(self, color: DMCColor, x: int, y: int, size: int, box: bool=False) -> None:
         """Add colors as "pixels" """
-        r, g, b = c_info['rgb'] if self.color else (255, 255, 255)
         style = {
-            'fill': f'rgb({r},{g},{b})',
+            'fill': f'rgb({color.get_dmc_rgb_as_str()})',
             'stroke': 'none',
         }
         if box:
@@ -162,34 +151,30 @@ class PatternComposer:
             style['stroke-width'] = self.stroke_width
         self.svg.add_xml_rect(x, y, size, size, style)
 
-    def add_symbol(self, idx: int, x: int, y: int, size: int) -> None:
-        """Add symbols"""
-        code = self.idx_to_symbol_code.get(idx)
-        if code:
+    def _add_symbol(self, color: DMCColor, x: int, y: int, size: int) -> None:
+        """Add symbol"""
+        if color.has_symbol:
             style = {
                 'transform': f'translate({x} {y}) scale({size/20.0})',
-                'fill': self.symbol_color if idx in self.idx_to_fill else "none",
+                'fill': self.symbol_color if color.fill_symbol is True else "none",
             }
-            self.svg.add_xml_path(code, style, self.svg_symbol_class_name)
+            self.svg.add_xml_path(color.symbol_code, style, self.svg_symbol_class_name)
 
     def add_title(self, x: int, y: int, text: str) -> None:
         """Add title"""
         self.svg.add_xml_text(x, y, {}, text, self.svg_title_class_name)
 
-    def add_legend_item(self, c_info: dict[str, tuple | str], c_idx: int, x: int, y: int, size: int) -> None:
+    def add_legend_item(self, color: DMCColor, x: int, y: int, size: int) -> None:
         """Add legend entry (square color with symbol and color code)"""
-        self.add_color(c_info, x, y, 1.5*size, box=True)
-        if self.symbols:
-            self.add_symbol(c_idx, x, y, 1.5*size)
-        self.svg.add_xml_text(x+2*size, y+size, {}, c_info['code'], self.svg_text_class_name)
+        self.add_color_and_symbol(color, x, y, 1.5*size, box=True)
+        self.svg.add_xml_text(x+2*size, y+size, {}, color.dmc_code, self.svg_text_class_name)
 
     def add_backstitch(self, bs: Backstitch, pixels_per_coord: int) -> None:
         """Add backstitch as line"""
         start = [(coord+1)*pixels_per_coord for coord in bs.start]  # +1 because outer margin
         end = [(coord+1)*pixels_per_coord for coord in bs.end]
-        color = ','.join([str(coord) for coord in bs.color])
         style = {
-            'stroke': f'rgb({color})',
+            'stroke': f'rgb({bs.color.get_dmc_rgb_as_str()})',
             'stroke-width': self.backstitch_width,
         }
         self.svg.add_xml_line(start[0], start[1], end[0], end[1], style)

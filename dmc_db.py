@@ -3,7 +3,7 @@ import csv
 from color_tools import ColorTools
 
 
-class DMC:
+class DMCDB:
 
     csv_file = 'dmc_colors.csv'
     
@@ -47,4 +47,4 @@ class DMC:
         code = str(code)
         if code not in self.dmc_dict:
             raise ValueError(f'Code \'{code}\' not found in DMC database')
-        return self.dmc_dict[code]
+        return self.dmc_dict[code] | {'code': code}

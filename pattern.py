@@ -8,39 +8,34 @@ from backstitch_detector import BackstitchDetector
 
 SVG_UNIT_SIZE = 10
 BACKGROUND_INDEX = 99  # must be between n_colors and 255 inclusive since pattern is uint8
-IGNORE_BACKGROUND = True  # color is kept but no symbol is used and not shown in legend
+BACKGROUND_CODE = 'B5200'
+IGNORE_BACKGROUND = True  # bg is set white with no symbol and not shown in legend
 LEGEND_TITLE = 'Mouliné DMC'
 BACKSTITCH = True
 
 class Pattern:
 
-    def __init__(self, color: bool=True, symbols: bool=True, legend: bool=True) -> None:
+    def __init__(self, show_colors: bool=True, show_symbols: bool=True, show_legend: bool=True) -> None:
         """Init object"""
-        self.color = color
-        self.symbols = symbols
-        self.legend = legend
+        self.show_colors = show_colors
+        self.show_symbols = show_symbols
+        self.show_legend = show_legend
         self.dmc_palette = None
         self.dmc_pattern = None
         self.base_rgb_pattern = None
         self.backstitches = []
         self.width = 0
         self.height = 0
-        self.pattern_composer = PatternComposer(color, symbols)
+        self.pattern_composer = PatternComposer()
 
     def _change_background_index(self) -> None:
-        """Set color index of background to special index, also reduce in 1 indexes bigger than original 
-        background index so symbols can be reused"""
-        background_idx = self._get_background_idx()
-        color_idxs = list(self.dmc_palette.keys())
-        for c_idx in color_idxs:
-            if c_idx == background_idx:
-                # change bkgd idx in pattern and palette
-                self.dmc_pattern[self.dmc_pattern==background_idx] = BACKGROUND_INDEX  # change idx in pattern
-                self.dmc_palette[BACKGROUND_INDEX] = self.dmc_palette.pop(background_idx)  # change idx in palette
-            elif c_idx > background_idx:
-                # reduce idx in 1 for idx bigger than bkgd idx
-                self.dmc_pattern[self.dmc_pattern==c_idx] = c_idx - 1
-                self.dmc_palette[c_idx-1] = self.dmc_palette.pop(c_idx)
+        """Set color index of background to special index"""
+        self.bg_idx = self._get_background_idx()
+        if IGNORE_BACKGROUND:
+            self.dmc_pattern[self.dmc_pattern==self.bg_idx] = BACKGROUND_INDEX  # change idx in pattern
+            self.dmc_palette.remove_color_by_idx(self.bg_idx)
+            self.dmc_palette.add_color_by_code(BACKGROUND_INDEX, BACKGROUND_CODE, show_in_legend=False)
+            self.bg_idx = BACKGROUND_INDEX
 
     def _get_background_idx(self) -> int:
         """Get index representing background (mode of outer rim)"""
@@ -61,9 +56,8 @@ class Pattern:
             y_pos = (y_idx+1) * SVG_UNIT_SIZE  # +1 allows space for midpoint arrows
             for x_idx, c_idx in enumerate(row):
                 x_pos = (x_idx+1) * SVG_UNIT_SIZE
-                self.pattern_composer.add_color(self.dmc_palette[c_idx], x_pos, y_pos, SVG_UNIT_SIZE)
-                if self.symbols:
-                    self.pattern_composer.add_symbol(c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
+                color = self.dmc_palette.get_color_by_idx(c_idx)
+                self.pattern_composer.add_color_and_symbol(color, x_pos, y_pos, SVG_UNIT_SIZE)
         self.pattern_composer.add_grids(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_numbers(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_arrows(SVG_UNIT_SIZE, width, height)
@@ -74,11 +68,10 @@ class Pattern:
         y_pos = start_height+3*SVG_UNIT_SIZE
         title_y_pos = start_height+2*SVG_UNIT_SIZE
         self.pattern_composer.add_title(x_pos, title_y_pos, LEGEND_TITLE)
-        for c_idx, c_info in self.dmc_palette.items():
-            if IGNORE_BACKGROUND and c_idx == BACKGROUND_INDEX:
-                continue
-            self.pattern_composer.add_legend_item(c_info, c_idx, x_pos, y_pos, SVG_UNIT_SIZE)
-            y_pos += 2.5*SVG_UNIT_SIZE
+        for color in self.dmc_palette:
+            if color.show_in_legend is True:
+                self.pattern_composer.add_legend_item(color, x_pos, y_pos, SVG_UNIT_SIZE)
+                y_pos += 2.5*SVG_UNIT_SIZE
 
     def _generate_backstitches(self) -> None:
         """Generate backstitches over pattern as SVG"""
@@ -87,26 +80,41 @@ class Pattern:
 
     def process_image(self, img_file: Path, n_colors: int, stitches_per_row: int, method: str) -> None:
         """Create image, process it (resize, pixelate, quantize), then get palette and pattern"""
-        image = Image(img_file)
+        image = Image(img_file, show_colors=self.show_colors, show_symbols=self.show_symbols)
         self.dmc_palette, self.dmc_pattern, self.base_rgb_pattern = image.process(n_colors, stitches_per_row, method)
         self.width = self.dmc_pattern.shape[1]
         self.height = self.dmc_pattern.shape[0]
-        if IGNORE_BACKGROUND:
-            self._change_background_index()
-            if BACKSTITCH:
-                backstitch_detector = BackstitchDetector(self.dmc_pattern, self.dmc_palette)
-                self.backstitches = backstitch_detector.detect()
+        self._change_background_index()
+        if BACKSTITCH:
+            backstitch_detector = BackstitchDetector(self.dmc_pattern, self.dmc_palette, self.bg_idx)
+            self.backstitches = backstitch_detector.detect()
+
+    def get_pattern_size(self) -> tuple[int]:
+        """Calculate pattern size (width, height)"""
+        width = (self.width+1) * SVG_UNIT_SIZE  # +1 because of outer margin
+        height = (self.height+1) * SVG_UNIT_SIZE
+        return (width, height)
+
+    def get_legend_size(self) -> tuple[int]:
+        """Calculate legend size (width, height)"""
+        p_width, _ = self.get_pattern_size()
+        height = (3 + 2.5*self.dmc_palette.n_colors_in_legend) * SVG_UNIT_SIZE  # title + legend entries
+        return (p_width, height)
+
+    def get_image_size(self) -> tuple[int]:
+        """Calculate image size (width, height)"""
+        p_width, p_height = self.get_pattern_size()
+        _, l_height = self.get_legend_size()
+        height = p_height + l_height
+        return (p_width, height)
 
     def generate(self):
         """Generate SVG info"""
-        pattern_width = (self.width+1) * SVG_UNIT_SIZE  # +1 because of outer margin
-        pattern_height = (self.height+1) * SVG_UNIT_SIZE
-        legend_height = (3 + 2.5*len(self.dmc_palette)) * SVG_UNIT_SIZE  # title + legend entries
-        image_width = pattern_width
-        image_height = pattern_height + legend_height
+        pattern_width, pattern_height = self.get_pattern_size()
+        image_width, image_height = self.get_image_size()
         self.pattern_composer.add_header(image_width, image_height)
         self._generate_pattern(pattern_width, pattern_height)
-        if self.legend:
+        if self.show_legend:
             self._generate_legend(pattern_height)
         if BACKSTITCH:
             self._generate_backstitches()

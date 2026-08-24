@@ -4,7 +4,7 @@ import numpy as np
 from pathlib import Path
 from tabulate import tabulate
 
-from pattern import Pattern, BACKGROUND_INDEX, IGNORE_BACKGROUND
+from pattern import Pattern
 from color_tools import ColorTools
 
 
@@ -65,21 +65,19 @@ class InfoFile:
                 pattern.height / self.fabric_count * CM_PER_INCH,
             ),
         }
-        for c_idx, c_info in pattern.dmc_palette.items():
-            if IGNORE_BACKGROUND and c_idx == BACKGROUND_INDEX:
-                continue
-            rgb_str = ','.join([str(coord) for coord in c_info['rgb']])
-            stitches = np.sum(pattern.dmc_pattern == c_idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
-            length = stitches * self.length_per_stitch / 100  # m
-            skeins = math.ceil(length / (SKEIN_LENGTH*STRANDS_PER_SKEIN/self.strands_for_stitching))
-            error = ColorTools.compute_color_mse(pattern, method, c_idx)
-            self.thread_info['code'].append(c_info['code'])
-            self.thread_info['name'].append(c_info['name'])
-            self.thread_info['rgb'].append(rgb_str)
-            self.thread_info['stitches'].append(stitches)
-            self.thread_info['length'].append(length)
-            self.thread_info['skeins'].append(skeins)
-            self.thread_info['error'].append(error)
+        for color in pattern.dmc_palette:
+            if color.show_in_legend is True:
+                stitches = np.sum(pattern.dmc_pattern == color.idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
+                length = stitches * self.length_per_stitch / 100  # m
+                skeins = math.ceil(length / (SKEIN_LENGTH*STRANDS_PER_SKEIN/self.strands_for_stitching))
+                error = ColorTools.compute_color_mse(pattern, method, color.idx)
+                self.thread_info['code'].append(color.dmc_code)
+                self.thread_info['name'].append(color.dmc_name)
+                self.thread_info['rgb'].append(color.get_dmc_rgb_as_str())
+                self.thread_info['stitches'].append(stitches)
+                self.thread_info['length'].append(length)
+                self.thread_info['skeins'].append(skeins)
+                self.thread_info['error'].append(error)
 
     def _write_design_info(self, f):
         """Write design info"""

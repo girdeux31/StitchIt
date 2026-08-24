@@ -15,10 +15,7 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - change readme
 #  - legend as columns
 #  - add backstitches in legend
-#  - change background color to white if ignore background
-#  - debug backstitches when ignore background is false
-#  - manage palette and c_info with class and dataclass
-#  - include symbol in palette?
+#  - increase by 1 n_colors if ignore_bg is True
 
 
 if __name__ == '__main__':
@@ -75,7 +72,7 @@ if __name__ == '__main__':
 
     # Generate pattern svg
 
-    pattern = Pattern(color=True, symbols=True, legend=True)
+    pattern = Pattern(show_colors=True, show_symbols=True, show_legend=True)
     pattern.process_image(input_file, n_colors, stitches_per_row, distance_method)
     pattern.generate()
     pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)

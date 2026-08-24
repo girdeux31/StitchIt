@@ -1,10 +1,9 @@
-import math
 import numpy as np
 
 from pathlib import Path
 from PIL import Image as PILImage
 
-from dmc import DMC
+from palette import Palette
 from color_tools import ColorTools
 
 
@@ -15,15 +14,18 @@ METHOD_TO_COLOR_THRESHOLD = {
     'de76': 10,
     'de00': 10,
 }
+BACKGROUND_CODE = 'B5200'
 
 class Image:
 
     clean_pixels_wo_neighbors = True
     clean_pixels_w1_diagonal_neighbor = True
 
-    def __init__(self, img_file: Path) -> None:
+    def __init__(self, img_file: Path, show_colors: bool=True, show_symbols: bool=True) -> None:
         """Init object"""
         self.img_file = img_file
+        self.show_colors = show_colors
+        self.show_symbols = show_symbols
         self.pil_image = self._import_image(img_file)  # pil_image is always width,height / cols,rows / x,y
 
     @property
@@ -53,25 +55,28 @@ class Image:
             resample=PILImage.Resampling.NEAREST,  # or LANCZOS
         )
 
-    def _quantize(self, dmc_palette_2d: dict[str, dict[str, str | tuple]]) -> None:
+    def _quantize(self, palette: Palette) -> None:
         """Assign a color index to each pixel, only n colors are used, 
         output image is (stitches_cols, stitches_rows) where each element is a color index"""
-        dmc_palette_1d = [rgb for info in dmc_palette_2d.values() for rgb in info['rgb']]
-        dmc_palette_img = PILImage.new("P", (1, 1))  # create an image 1x1 just to put the palette on
-        dmc_palette_img.putpalette(dmc_palette_1d)
+        palette_1d = [coord for color in palette for coord in color.dmc_rgb]
+        palette_img = PILImage.new("P", (1, 1))  # create an image 1x1 just to put the palette on
+        palette_img.putpalette(palette_1d)
         self.pil_image = self.pil_image.quantize(
-            palette=dmc_palette_img,
+            palette=palette_img,
             dither=PILImage.Dither.NONE,
         )
 
-    def _get_dmc_palette(self, n_colors: int, method: str) -> dict[int, dict[str, str | tuple]]:
+    def _get_dmc_palette(self, n_colors: int, method: str) -> Palette:
         """Get a list of dmc colors most used in image"""
-        dmc = DMC()
-        dmc_palette = {}
+        dmc_palette = Palette(method)
         predominant_rgbs = self._get_predominant_colors(n_colors, method)
         for c_idx, rgb in enumerate(predominant_rgbs):
-            c_info = dmc.get_most_similar_color(rgb, method)
-            dmc_palette[c_idx] = c_info
+            if self.show_colors:
+                dmc_palette.add_color_by_rgb(c_idx, rgb)
+            else:
+                dmc_palette.add_color_by_code(c_idx, BACKGROUND_CODE)
+            if self.show_symbols:
+                dmc_palette.add_symbol(c_idx)
         return dmc_palette
 
     def _get_predominant_colors(self, n_colors: int, method: str) -> list[tuple[int]]:
@@ -148,7 +153,7 @@ class Image:
             mode = int(max(neighbors, key=neighbors.count))
             self.pil_image.putpixel((col, row), mode)
 
-    def process(self, n_colors: int, stitches_per_row: int, method: str) -> tuple[list[tuple[int]], np.ndarray[int]]:
+    def process(self, n_colors: int, stitches_per_row: int, method: str) -> tuple[Palette, np.ndarray[int]]:
         """Process image:
         1. Resize image to be stitches_per_row x stitches_per_column, this shape is not changed anymore
         2. Compute the dmc palette based on the predominant image colors
