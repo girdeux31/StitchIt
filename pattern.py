@@ -94,9 +94,8 @@ class Pattern:
         if IGNORE_BACKGROUND:
             self._change_background_index()
             if BACKSTITCH:
-                backstitch_detector = BackstitchDetector(self.dmc_pattern)
+                backstitch_detector = BackstitchDetector(self.dmc_pattern, self.dmc_palette)
                 self.backstitches = backstitch_detector.detect()
-                # TODO: return a backstitch palette and merge with dmc_palette
 
     def generate(self):
         """Generate SVG info"""

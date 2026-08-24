@@ -17,6 +17,8 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - add backstitches in legend
 #  - change background color to white if ignore background
 #  - debug backstitches when ignore background is false
+#  - manage palette and c_info with class and dataclass
+#  - include symbol in palette?
 
 
 if __name__ == '__main__':
