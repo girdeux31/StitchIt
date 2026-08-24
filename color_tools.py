@@ -77,4 +77,4 @@ class ColorTools:
                     error = cls.compute_color_distance(base_rgb, rgb, method)
                     mse = error**2
                     count += 1
-        return mse/count if count > 0 else 'Unknown'
+        return mse/count if count > 0 else 0.0

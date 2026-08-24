@@ -41,3 +41,10 @@ class DMC:
                 new_code = c_code
         color_info = self.dmc_dict[new_code] | {'code': new_code}
         return color_info
+
+    def get_color_by_code(self, code: str | int) -> dict[str, str | tuple]:
+        """Get DMC color info from code"""
+        code = str(code)
+        if code not in self.dmc_dict:
+            raise ValueError(f'Code \'{code}\' not found in DMC database')
+        return self.dmc_dict[code]

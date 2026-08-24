@@ -10,12 +10,13 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 
 
 # TODO:
-#  - backstitch function
-#  - user arguments: backstitch_codes
 #  - use argparse
 #  - way to change format options, yml or by optional arguments
 #  - change readme
 #  - legend as columns
+#  - add backstitches in legend
+#  - change background color to white if ignore background
+#  - debug backstitches when ignore background is false
 
 
 if __name__ == '__main__':

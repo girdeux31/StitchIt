@@ -4,7 +4,7 @@ import numpy as np
 from pathlib import Path
 from tabulate import tabulate
 
-from pattern import Pattern, BACKGROUND_INDEX
+from pattern import Pattern, BACKGROUND_INDEX, IGNORE_BACKGROUND
 from color_tools import ColorTools
 
 
@@ -66,7 +66,7 @@ class InfoFile:
             ),
         }
         for c_idx, c_info in pattern.dmc_palette.items():
-            if pattern.ignore_background and c_idx == BACKGROUND_INDEX:
+            if IGNORE_BACKGROUND and c_idx == BACKGROUND_INDEX:
                 continue
             rgb_str = ','.join([str(coord) for coord in c_info['rgb']])
             stitches = np.sum(pattern.dmc_pattern == c_idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])

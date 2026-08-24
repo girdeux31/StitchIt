@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from svg import SVG
+from backstitch_detector import Backstitch
 
 
 class PatternComposer:
@@ -42,6 +43,7 @@ class PatternComposer:
     svg_title_class_name = 'title_text'
     svg_text_class_name = 'pattern_text'
     svg_symbol_class_name = 'glyph'
+    backstitch_width = 2
 
     def __init__(self, color: bool=True, symbols: bool=True) -> None:
         """Init object"""
@@ -174,11 +176,23 @@ class PatternComposer:
         """Add title"""
         self.svg.add_xml_text(x, y, {}, text, self.svg_title_class_name)
 
-    def add_legend_item(self, c_info: dict[str, tuple | str], c_idx: int, x: int, y: int, size: int):
+    def add_legend_item(self, c_info: dict[str, tuple | str], c_idx: int, x: int, y: int, size: int) -> None:
+        """Add legend entry (square color with symbol and color code)"""
         self.add_color(c_info, x, y, 1.5*size, box=True)
         if self.symbols:
             self.add_symbol(c_idx, x, y, 1.5*size)
         self.svg.add_xml_text(x+2*size, y+size, {}, c_info['code'], self.svg_text_class_name)
+
+    def add_backstitch(self, bs: Backstitch, pixels_per_coord: int) -> None:
+        """Add backstitch as line"""
+        start = [(coord+1)*pixels_per_coord for coord in bs.start]  # +1 because outer margin
+        end = [(coord+1)*pixels_per_coord for coord in bs.end]
+        color = ','.join([str(coord) for coord in bs.color])
+        style = {
+            'stroke': f'rgb({color})',
+            'stroke-width': self.backstitch_width,
+        }
+        self.svg.add_xml_line(start[0], start[1], end[0], end[1], style)
 
     def save(self, out_file: Path, formats: list[str], png_scale: float=1.0) -> None:
         """Save / export output as svg, png or pdf, scale is only applied to pngs"""

@@ -24,8 +24,6 @@ class Image:
     def __init__(self, img_file: Path) -> None:
         """Init object"""
         self.img_file = img_file
-        self.dmc_palette = None
-        self.dmc_pattern = None
         self.pil_image = self._import_image(img_file)  # pil_image is always width,height / cols,rows / x,y
 
     @property
@@ -161,6 +159,6 @@ class Image:
         dmc_palette = self._get_dmc_palette(n_colors, method)
         self._quantize(dmc_palette)
         self._clean()
-        dcm_pattern = self._get_dmc_pattern()
+        dmc_pattern = self._get_dmc_pattern()
 
-        return dmc_palette, dcm_pattern, base_rgb_pattern
+        return dmc_palette, dmc_pattern, base_rgb_pattern
