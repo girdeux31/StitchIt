@@ -5,7 +5,8 @@ from dataclasses import dataclass
 from palette import Palette, DMCColor
 
 
-BACKSTITCH_DMC_CODE = 498
+BACKSTITCH_DMC_CODE = 498  # red
+BACKSTITCH_DMC_CODE_NO_COLOR = 310  # black
 BACKSTITCH_INDEX = 100  # TODO refactor?
 
 @dataclass
@@ -16,11 +17,12 @@ class Backstitch:
 
 class BackstitchDetector:
 
-    def __init__(self, pattern: np.ndarray[int], palette: Palette, bg_idx: int) -> None:
+    def __init__(self, pattern: np.ndarray[int], palette: Palette, bg_idx: int, show_colors: bool=True) -> None:
         """Init object"""
         self.pattern = pattern
         self.palette = palette
         self.bg_idx = bg_idx
+        self.show_colors = show_colors
         self.backstitches = []
         self._add_backstitch_color_to_palette(BACKSTITCH_DMC_CODE)
 
@@ -58,6 +60,7 @@ class BackstitchDetector:
 
     def _add_backstitch_color_to_palette(self, code: str | int) -> None:
         """Add backstitch color to palete by dmc code"""
+        code = BACKSTITCH_DMC_CODE if self.show_colors is True else BACKSTITCH_DMC_CODE_NO_COLOR
         self.palette.add_color_by_code(BACKSTITCH_INDEX, code, is_backstitch=True)
 
     def _add_backstitch(self, start: tuple[int], end: tuple[int], color: DMCColor) -> None:

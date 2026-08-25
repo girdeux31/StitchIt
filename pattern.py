@@ -86,7 +86,7 @@ class Pattern:
         self.height = self.dmc_pattern.shape[0]
         self._change_background_index()
         if BACKSTITCH:
-            backstitch_detector = BackstitchDetector(self.dmc_pattern, self.dmc_palette, self.bg_idx)
+            backstitch_detector = BackstitchDetector(self.dmc_pattern, self.dmc_palette, self.bg_idx, show_colors=self.show_colors)
             self.backstitches = backstitch_detector.detect()
 
     def get_pattern_size(self) -> tuple[int]:
@@ -117,7 +117,7 @@ class Pattern:
         if self.show_legend:
             self._generate_legend(pattern_height)
         if BACKSTITCH:
-            self._generate_backstitches()  # TODO change bs color to black if show colors is false
+            self._generate_backstitches()
         self.pattern_composer.add_tail()
 
     def save(self, out_file: Path, formats: list[str]=['pdf'], png_scale: float=1.0) -> None:
