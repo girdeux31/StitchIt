@@ -57,7 +57,7 @@ class Pattern:
             for x_idx, c_idx in enumerate(row):
                 x_pos = (x_idx+1) * SVG_UNIT_SIZE
                 color = self.dmc_palette.get_color_by_idx(c_idx)
-                self.pattern_composer.add_color_and_symbol(color, x_pos, y_pos, SVG_UNIT_SIZE)
+                self.pattern_composer.add_cross_stitch_entry(color, x_pos, y_pos, SVG_UNIT_SIZE)
         self.pattern_composer.add_grids(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_numbers(SVG_UNIT_SIZE, width, height)
         self.pattern_composer.add_arrows(SVG_UNIT_SIZE, width, height)

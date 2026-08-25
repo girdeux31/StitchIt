@@ -131,10 +131,18 @@ class PatternComposer:
             }
             self.svg.add_xml_text(size, y_pos, style, ref_number, self.svg_text_class_name)
     
-    def add_color_and_symbol(self, color: DMCColor, x: int, y: int, size: int, box: bool=False) -> None:
+    def add_cross_stitch_entry(self, color: DMCColor, x: int, y: int, size: int, box: bool=False) -> None:
         """Add color and symbol if any"""
         self._add_color(color, x, y, size, box)
         self._add_symbol(color, x, y, size)
+
+    def add_backstitch_entry(self, color: DMCColor, x: int, y: int, size: int) -> None:
+        """Add backstitch legend entry"""
+        style = {
+            'stroke': f'rgb({color.get_dmc_rgb_as_str()})',
+            'stroke-width': self.backstitch_width,
+        }
+        self.svg.add_xml_line(x, y+size*0.5, x+size, y+size*0.5, style)
 
     def _add_color(self, color: DMCColor, x: int, y: int, size: int, box: bool=False) -> None:
         """Add colors as "pixels" """
@@ -162,7 +170,10 @@ class PatternComposer:
 
     def add_legend_item(self, color: DMCColor, x: int, y: int, size: int) -> None:
         """Add legend entry (square color with symbol and color code)"""
-        self.add_color_and_symbol(color, x, y, 1.5*size, box=True)
+        if color.is_backstitch is True:
+            self.add_backstitch_entry(color, x, y, 1.5*size)
+        else:
+            self.add_cross_stitch_entry(color, x, y, 1.5*size, box=True)
         self.svg.add_xml_text(x+2*size, y+size, {}, color.dmc_code, self.svg_text_class_name)
 
     def add_backstitch(self, bs: Backstitch, pixels_per_coord: int) -> None:

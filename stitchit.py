@@ -13,7 +13,6 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - use argparse
 #  - change readme
 #  - legend as columns
-#  - add backstitches in legend
 #  - increase by 1 n_colors if ignore_bg is True
 #  - refactor: pattern is chart, then inside a new class pattern you have things like
 # _change_background_index, _get_background_idx and extract pattern from image
