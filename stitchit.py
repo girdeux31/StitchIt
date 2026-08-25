@@ -98,7 +98,7 @@ if __name__ == '__main__':
     # n_colors = 5
     # stitches_per_row = 80
 
-    show_colors = False
+    show_colors = True
     show_symbols = True
     show_legend = True
 

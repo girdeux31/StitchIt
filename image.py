@@ -163,7 +163,8 @@ class Image:
         dmc_palette = self._get_dmc_palette(n_colors, method)
         self._quantize(dmc_palette)
         self._clean()
-        dmc_palette.replace_all_colors_by_code(BACKGROUND_CODE)
+        if self.show_colors is False:
+            dmc_palette.replace_all_colors_by_code(BACKGROUND_CODE)
         dmc_pattern = self._get_dmc_pattern()
 
         return dmc_palette, dmc_pattern, base_rgb_pattern

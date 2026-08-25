@@ -104,8 +104,10 @@ class Pattern:
     def get_image_size(self) -> tuple[int]:
         """Calculate image size (width, height)"""
         p_width, p_height = self.get_pattern_size()
-        _, l_height = self.get_legend_size()
-        height = p_height + l_height
+        height = p_height
+        if self.show_legend is True:
+            _, l_height = self.get_legend_size()
+            height += l_height 
         return (p_width, height)
 
     def generate(self):
