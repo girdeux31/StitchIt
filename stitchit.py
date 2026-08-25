@@ -11,42 +11,29 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 
 # TODO:
 #  - use argparse
-#  - way to change format options, yml or by optional arguments
 #  - change readme
 #  - legend as columns
 #  - add backstitches in legend
 #  - increase by 1 n_colors if ignore_bg is True
+#  - refactor: pattern is chart, then inside a new class pattern you have things like
+# _change_background_index, _get_background_idx and extract pattern from image
+# new class cleaner with methods related with clean confetti
 
+def stitchit(
+        input_file: Path,
+        n_colors: int,
+        stitches_per_row: int,
+        show_colors: bool=True,
+        show_symbols: bool=True,
+        show_legend: bool=True,
+    ):
+    """
+    Generates a cross stitch pattern from an image, input arguments are:
 
-if __name__ == '__main__':
-
-    # Process user arguments
-
-    # if(len(sys.argv)<3):
-    #     print("function requires an input filename, number of colors, stitch count and mode")
-    #     sys.exit(0)
-
-    # input_file = Path(sys.argv[1])       # input file name, has to be a jpg
-    # n_colors = int(sys.argv[2])    # number of colors to use in the pattern
-    # stitches_per_row = int(sys.argv[3])   # stitch count, number of stitches in x axis
-
-    # Just for debugging
-    # input_file = Path('examples/bird.jpg')
-    # n_colors = 3  # includes background even if ignore_background is True
-    # stitches_per_row = 60
-
-    # input_file = Path('examples/octopus.jpg')
-    # n_colors = 3
-    # stitches_per_row = 60
-
-    # input_file = Path('examples/waves.jpg')
-    # n_colors = 10
-    # stitches_per_row = 140
-
-    input_file = Path('examples/einstain.jpg')
-    n_colors = 5
-    stitches_per_row = 80
-
+    input_file (Path): image to process
+    n_colors (int): number of colors to use to stitch
+    stitches_per_row (int): number of stitches (squares) per row in pattern
+    """
     png_scale = 2.0  # png scale
     fabric_count = 14  # aida or squares per inch
     strands_for_stitching = 2  # strands for stitching
@@ -72,7 +59,7 @@ if __name__ == '__main__':
 
     # Generate pattern svg
 
-    pattern = Pattern(show_colors=True, show_symbols=True, show_legend=True)
+    pattern = Pattern(show_colors=show_colors, show_symbols=show_symbols, show_legend=show_legend)
     pattern.process_image(input_file, n_colors, stitches_per_row, distance_method)
     pattern.generate()
     pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
@@ -82,3 +69,37 @@ if __name__ == '__main__':
     info_file = InfoFile(fabric_count, strands_for_stitching)
     info_file.import_pattern(pattern, distance_method)
     info_file.save(out_info_file)
+
+if __name__ == '__main__':
+
+    # Process user arguments
+
+    # if(len(sys.argv)<3):
+    #     print("function requires an input filename, number of colors, stitch count and mode")
+    #     sys.exit(0)
+
+    # input_file = Path(sys.argv[1])       # input file name, has to be a jpg
+    # n_colors = int(sys.argv[2])    # number of colors to use in the pattern
+    # stitches_per_row = int(sys.argv[3])   # stitch count, number of stitches in x axis
+
+    input_file = Path('examples/bird.jpg')
+    n_colors = 3  # includes background even if ignore_background is True
+    stitches_per_row = 20
+
+    # input_file = Path('examples/octopus.jpg')
+    # n_colors = 3
+    # stitches_per_row = 60
+
+    # input_file = Path('examples/waves.jpg')
+    # n_colors = 10
+    # stitches_per_row = 140
+
+    # input_file = Path('examples/einstain.jpg')
+    # n_colors = 5
+    # stitches_per_row = 80
+
+    show_colors = False
+    show_symbols = True
+    show_legend = True
+
+    stitchit(input_file, n_colors, stitches_per_row, show_colors=show_colors, show_symbols=show_symbols, show_legend=show_legend)    

@@ -1,0 +1,15 @@
+Design information:
+
+  Fabric count or Aida count: 14 (ct or stitches per inch)
+  Strands for stitching: 2 strands
+  Size (width x height): 3.63x2.90 (cm) or 1.43x1.14 ('')
+  Stitches (width x height): 20x16
+
+Thread information:
+
+DMC code    DMC color    DMC RGB        Stitches    Length (m)    Skeins     MSE
+----------  -----------  -----------  ----------  ------------  --------  ------
+B5200       Snow White   255,255,255           0          0.00         0  0.0000
+B5200       Snow White   255,255,255           0          0.00         0  0.0000
+B5200       Snow White   255,255,255           0          0.00         0  0.0000
+498         Red Dark     167,19,43             0          0.00         0  0.0000
