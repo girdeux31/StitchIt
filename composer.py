@@ -11,7 +11,7 @@ class Composer:
     arrow_width_pixels = 2
     arrow_fill = 'black'
     arrow_gap_pixels = 2
-    major_grid_step_pixels = 10  # TODO change to units
+    major_grid_step_pixels = 100
     major_grid_color = 'black'
     major_grid_width_pixels = 2
     minor_grid_color = 'rgb(20,20,20)'
@@ -89,10 +89,10 @@ class Composer:
             'stroke-width': self.major_grid_width_pixels,
         }
         # horizontal lines
-        for x in range(11*size, width, self.major_grid_step_pixels*size):
+        for x in range(11*size, width, self.major_grid_step_pixels):
             self.svg.add_xml_line(x, size, x, height, style)
         # vertical lines
-        for y in range(11*size, height, self.major_grid_step_pixels*size):
+        for y in range(11*size, height, self.major_grid_step_pixels):
             self.svg.add_xml_line(size, y, width, y, style)
 
     def _add_minor_grid(self, size: int, width: int, height: int) -> None:
