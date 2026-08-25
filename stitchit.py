@@ -12,7 +12,6 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 # TODO:
 #  - use argparse
 #  - change readme
-#  - legend as columns
 #  - bs with inverse rgb color
 
 def stitchit(
