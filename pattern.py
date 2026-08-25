@@ -33,9 +33,9 @@ class Pattern:
         self.bg_idx = self._get_background_idx()
         if IGNORE_BACKGROUND:
             self.dmc_pattern[self.dmc_pattern==self.bg_idx] = BACKGROUND_INDEX  # change idx in pattern
-            self.dmc_palette.remove_color_by_idx(self.bg_idx)
-            self.dmc_palette.add_color_by_code(BACKGROUND_INDEX, BACKGROUND_CODE, show_in_legend=False)
-            self.bg_idx = BACKGROUND_INDEX
+            self.dmc_palette.remove_color_by_idx(self.bg_idx)  # remove old bg color
+            self.dmc_palette.add_color_by_code(BACKGROUND_INDEX, BACKGROUND_CODE, show_in_legend=False)  # add bg color
+            self.bg_idx = BACKGROUND_INDEX  # change bg idx
 
     def _get_background_idx(self) -> int:
         """Get index representing background (mode of outer rim)"""
@@ -117,7 +117,7 @@ class Pattern:
         if self.show_legend:
             self._generate_legend(pattern_height)
         if BACKSTITCH:
-            self._generate_backstitches()
+            self._generate_backstitches()  # TODO change bs color to black if show colors is false
         self.pattern_composer.add_tail()
 
     def save(self, out_file: Path, formats: list[str]=['pdf'], png_scale: float=1.0) -> None:

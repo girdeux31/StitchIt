@@ -27,7 +27,7 @@ class DMCColor:
     method: str | None = None
     dmc_code: str | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize some attributs after init"""
         if self.img_rgb is None and self.dmc_code is None:
             raise ValueError('You must specify either \'img_rgb\' or \'dmc_code\'')
@@ -35,28 +35,34 @@ class DMCColor:
             raise ValueError('You cannot specify both \'img_rgb\' and \'dmc_code\'')
         if self.img_rgb is not None and self.method is None:
             raise ValueError('If you specify \'img_rgb\', then you must also specify \'method\'')
+        self.dmc = DMCDB()
         self._add_rgb()
         self.has_symbol = False
 
-    def _add_rgb(self):
+    def _add_rgb(self) -> None:
         """Add DMC RGB info"""
-        dmc = DMCDB()
         if self.img_rgb is not None:
-            c_info = dmc.get_most_similar_color(self.img_rgb, self.method)
+            c_info = self.dmc.get_most_similar_color(self.img_rgb, self.method)
             self.dmc_code = c_info['code']
         else:  # by code
-            c_info = dmc.get_color_by_code(self.dmc_code)
+            c_info = self.dmc.get_color_by_code(self.dmc_code)
         self.dmc_rgb = c_info['rgb']
         self.dmc_name = c_info['name']
 
-    def add_symbol(self):
+    def replace_color_by_code(self, code: int | str) -> None:
+        """Replace dmc_rgb, dmc_name (but no dmc_code), just used if show_colors is False"""
+        c_info = self.dmc.get_color_by_code(code)
+        self.dmc_rgb = c_info['rgb']
+        self.dmc_name = c_info['name']
+
+    def add_symbol(self) -> None:
         """Associate symbol to color"""
         if self.is_backstitch is False:
             self.has_symbol = self.idx in IDX_TO_SYMBOL_CODE
             self.symbol_code = IDX_TO_SYMBOL_CODE.get(self.idx)
             self.fill_symbol = self.idx in SYMBOLS_TO_FILL
 
-    def get_dmc_rgb_as_str(self):
+    def get_dmc_rgb_as_str(self) -> None:
         """Return DMC RGB as str, such as r,g,b"""
         return ','.join([str(coord) for coord in self.dmc_rgb])
 
@@ -67,12 +73,9 @@ class Palette:
         self.method = method
         self.colors = []
 
-    # define dunder methods iter and getitem so you can do 'for color in palette'
+    # define dunder method iter so you can do 'for color in palette'
     def __iter__(self):
         return iter(self.colors)
-
-    # def __getitem__(self, idx):
-    #     return self.colors[idx]
     
     def add_color_by_rgb(
         self,
@@ -109,11 +112,6 @@ class Palette:
             )
         )
 
-    def add_symbol(self, c_idx: int) -> None:
-        """Add symbol if available to DMC color object"""
-        color = self.get_color_by_idx(c_idx)
-        color.add_symbol()
-
     def get_color_by_idx(self, c_idx: int) -> DMCColor:
         """Get DMC color object by color index"""
         for color in self.colors:
@@ -122,11 +120,21 @@ class Palette:
         raise ValueError(f'Color with index \'{c_idx}\' not found')
 
     def remove_color_by_idx(self, c_idx: int) -> None:
-        """Remove DMC color object by color index"""
+        """Remove DMC color object by color index, do not call it inside a 'for color in palette' loop"""
         list_idx = [idx for idx, color in enumerate(self.colors) if color.idx == c_idx]
         if len(list_idx) == 0:
             raise ValueError(f'Color with index \'{c_idx}\' not found')
         del self.colors[list_idx[0]]
+
+    def replace_all_colors_by_code(self, code: int | str) -> None:
+        """Replace all colors by dmc code, do no call this before quantize"""
+        for color in self.colors:
+            color.replace_color_by_code(code)
+
+    def add_symbols(self) -> None:
+        """If possible add symbol to all colors (there is a limit of 11)"""
+        for color in self.colors:
+            color.add_symbol()
 
     @property
     def n_colors_in_legend(self) -> int:

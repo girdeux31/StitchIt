@@ -47,4 +47,5 @@ class DMCDB:
         code = str(code)
         if code not in self.dmc_dict:
             raise ValueError(f'Code \'{code}\' not found in DMC database')
-        return self.dmc_dict[code] | {'code': code}
+        color_info = self.dmc_dict[code] | {'code': code}
+        return color_info

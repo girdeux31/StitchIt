@@ -14,6 +14,7 @@ METHOD_TO_COLOR_THRESHOLD = {
     'de76': 10,
     'de00': 10,
 }
+BACKGROUND_INDEX = 99  # must be between n_colors and 255 inclusive since pattern is uint8
 BACKGROUND_CODE = 'B5200'
 
 class Image:
@@ -71,12 +72,9 @@ class Image:
         dmc_palette = Palette(method)
         predominant_rgbs = self._get_predominant_colors(n_colors, method)
         for c_idx, rgb in enumerate(predominant_rgbs):
-            if self.show_colors:
-                dmc_palette.add_color_by_rgb(c_idx, rgb)
-            else:
-                dmc_palette.add_color_by_code(c_idx, BACKGROUND_CODE)
+            dmc_palette.add_color_by_rgb(c_idx, rgb)
             if self.show_symbols:
-                dmc_palette.add_symbol(c_idx)
+                dmc_palette.add_symbols()
         return dmc_palette
 
     def _get_predominant_colors(self, n_colors: int, method: str) -> list[tuple[int]]:
@@ -150,8 +148,9 @@ class Image:
         return values
 
     def _replace_pixel_by_mode(self, row: int, col: int, neighbors: list[int]) -> None:
-            mode = int(max(neighbors, key=neighbors.count))
-            self.pil_image.putpixel((col, row), mode)
+        """Replace current pixel by mode in neighbors"""
+        mode = int(max(neighbors, key=neighbors.count))
+        self.pil_image.putpixel((col, row), mode)
 
     def process(self, n_colors: int, stitches_per_row: int, method: str) -> tuple[Palette, np.ndarray[int]]:
         """Process image:
@@ -164,6 +163,7 @@ class Image:
         dmc_palette = self._get_dmc_palette(n_colors, method)
         self._quantize(dmc_palette)
         self._clean()
+        dmc_palette.replace_all_colors_by_code(BACKGROUND_CODE)
         dmc_pattern = self._get_dmc_pattern()
 
         return dmc_palette, dmc_pattern, base_rgb_pattern
