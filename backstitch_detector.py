@@ -1,19 +1,12 @@
 import numpy as np
 
-from dataclasses import dataclass
-
 from palette import DMCColor
+from data_classes import Backstitch
 
 
 BACKSTITCH_DMC_CODE = 498  # red
 BACKSTITCH_DMC_CODE_NO_COLOR = 310  # black
 BACKSTITCH_INDEX = 100  # TODO refactor?
-
-@dataclass
-class Backstitch:
-    start: tuple[int, int]
-    end: tuple[int, int]
-    color: DMCColor
 
 class BackstitchDetector:
 
