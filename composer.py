@@ -16,8 +16,8 @@ class Composer:
     major_grid_width_pixels = 2
     minor_grid_color = 'rgb(20,20,20)'
     minor_grid_width_pixels = 1
-    ref_number_step_pixels = 10  # TODO change to units
-    ref_number_gap_pixels = 2
+    coords_step_pixels = 100
+    coords_gap_pixels = 2
     stroke_color = 'black'
     stroke_width_pixels = 1
     title_font_size = '12px'
@@ -115,23 +115,23 @@ class Composer:
 
     def _add_top_numbers(self, size: int, width: int) -> None:
         """Add numbers in top margin"""
-        for idx, x_pos in enumerate(range(size*(self.ref_number_step_pixels+1), width, size*self.ref_number_step_pixels)):
-            ref_number = (idx+1) * self.ref_number_step_pixels
+        for idx, x_pos in enumerate(range(self.coords_step_pixels+size, width+1, self.coords_step_pixels)):
+            coord = (idx+1) * size
             style = {
-                'transform': f'translate(0 -{self.ref_number_gap_pixels})',
+                'transform': f'translate(0 -{self.coords_gap_pixels})',
                 'text-anchor': 'middle',
             }
-            self.svg.add_xml_text(x_pos, size, style, ref_number, self.svg_text_class_name)
+            self.svg.add_xml_text(x_pos, size, style, coord, self.svg_text_class_name)
 
     def _add_left_numbers(self, size: int, height: int) -> None:
         """Add numbers in left margin"""
-        for idx, y_pos in enumerate(range(size*(self.ref_number_step_pixels+1), height, size*self.ref_number_step_pixels)):
-            ref_number = (idx+1) * self.ref_number_step_pixels
+        for idx, y_pos in enumerate(range(self.coords_step_pixels+size, height+1, self.coords_step_pixels)):
+            coord = (idx+1) * size
             style = {
-                'transform': f'translate(-{self.ref_number_gap_pixels} 0) rotate(-90 {size} {y_pos})',
+                'transform': f'translate(-{self.coords_gap_pixels} 0) rotate(-90 {size} {y_pos})',
                 'text-anchor': 'middle',
             }
-            self.svg.add_xml_text(size, y_pos, style, ref_number, self.svg_text_class_name)
+            self.svg.add_xml_text(size, y_pos, style, coord, self.svg_text_class_name)
     
     def add_cross_stitch_entry(self, color: DMCColor, x: int, y: int, size: int, box: bool=False) -> None:
         """Add color and symbol if any"""
