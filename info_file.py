@@ -4,7 +4,7 @@ import numpy as np
 from pathlib import Path
 from tabulate import tabulate
 
-from pattern import Pattern
+from chart import Chart
 from color_tools import ColorTools
 
 
@@ -52,25 +52,26 @@ class InfoFile:
             raise ValueError(f'Allowed values for \'thread_count\' parameters are: {", ".join(FABRIC_COUNT_TO_STITCH_LENGTH.keys())}')
         self.length_per_stitch = FABRIC_COUNT_TO_STITCH_LENGTH[fabric_count]
 
-    def import_pattern(self, pattern: Pattern, method: str):
+    def import_chart(self, chart: Chart, method: str):
         """Import pattern"""
         self.pattern_size = {
-            'stitches': (pattern.width, pattern.height),
+            'width': chart.pattern.width,
+            'height': chart.pattern.height,
             'inch': (
-                pattern.width / self.fabric_count,  # squares / squares*inch = inch
-                pattern.height / self.fabric_count,
+                chart.pattern.width / self.fabric_count,  # squares / squares*inch = inch
+                chart.pattern.height / self.fabric_count,
             ),
             'cm': (
-                pattern.width / self.fabric_count * CM_PER_INCH,  # squares / squares*inch * cm/inch = cm
-                pattern.height / self.fabric_count * CM_PER_INCH,
+                chart.pattern.width / self.fabric_count * CM_PER_INCH,  # squares / squares*inch * cm/inch = cm
+                chart.pattern.height / self.fabric_count * CM_PER_INCH,
             ),
         }
-        for color in pattern.dmc_palette:
+        for color in chart.pattern.palette:
             if color.show_in_legend is True:
-                stitches = np.sum(pattern.dmc_pattern == color.idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
+                stitches = np.sum(chart.pattern.array == color.idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
                 length = stitches * self.length_per_stitch / 100  # m
                 skeins = math.ceil(length / (SKEIN_LENGTH*STRANDS_PER_SKEIN/self.strands_for_stitching))
-                error = ColorTools.compute_color_mse(pattern, method, color.idx)
+                error = ColorTools.compute_color_mse(chart.pattern, method, color.idx)
                 self.thread_info['code'].append(color.dmc_code)
                 self.thread_info['name'].append(color.dmc_name)
                 self.thread_info['rgb'].append(color.get_dmc_rgb_as_str())
@@ -89,7 +90,7 @@ class InfoFile:
             f'  Size (width x height): {self.pattern_size["cm"][0]:.2f}x{self.pattern_size["cm"][1]:.2f} (cm) or '
             f'{self.pattern_size["inch"][0]:.2f}x{self.pattern_size["inch"][1]:.2f} (\'\')\n'
         )
-        f.write(f'  Stitches (width x height): {self.pattern_size["stitches"][0]}x{self.pattern_size["stitches"][1]}\n')
+        f.write(f'  Stitches (width x height): {self.pattern_size["width"]}x{self.pattern_size["height"]}\n')
         f.write('\n')
 
     def _write_thread_info(self, f):

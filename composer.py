@@ -5,7 +5,7 @@ from backstitch_detector import Backstitch
 from palette import DMCColor
 
 
-class PatternComposer:
+class Composer:
 
     arrow_color = 'black'
     arrow_width = 2

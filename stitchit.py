@@ -2,7 +2,7 @@ import sys
 from warnings import warn
 from pathlib import Path
 
-from pattern import Pattern
+from chart import Chart
 from info_file import InfoFile
 
 MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
@@ -13,10 +13,7 @@ ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
 #  - use argparse
 #  - change readme
 #  - legend as columns
-#  - increase by 1 n_colors if ignore_bg is True
-#  - refactor: pattern is chart, then inside a new class pattern you have things like
-# _change_background_index, _get_background_idx and extract pattern from image
-# new class cleaner with methods related with clean confetti
+#  - bs with inverse rgb color
 
 def stitchit(
         input_file: Path,
@@ -58,15 +55,15 @@ def stitchit(
 
     # Generate pattern svg
 
-    pattern = Pattern(show_colors=show_colors, show_symbols=show_symbols, show_legend=show_legend)
-    pattern.process_image(input_file, n_colors, stitches_per_row, distance_method)
-    pattern.generate()
-    pattern.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
+    chart = Chart(show_colors=show_colors, show_symbols=show_symbols, show_legend=show_legend)
+    chart.process(input_file, n_colors, stitches_per_row, distance_method)
+    chart.generate()
+    chart.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
 
     # Write info file 
 
     info_file = InfoFile(fabric_count, strands_for_stitching)
-    info_file.import_pattern(pattern, distance_method)
+    info_file.import_chart(chart, distance_method)
     info_file.save(out_info_file)
 
 if __name__ == '__main__':
@@ -81,9 +78,9 @@ if __name__ == '__main__':
     # n_colors = int(sys.argv[2])    # number of colors to use in the pattern
     # stitches_per_row = int(sys.argv[3])   # stitch count, number of stitches in x axis
 
-    input_file = Path('examples/bird.jpg')
-    n_colors = 3  # includes background even if ignore_background is True
-    stitches_per_row = 20
+    # input_file = Path('examples/bird.jpg')
+    # n_colors = 3
+    # stitches_per_row = 20
 
     # input_file = Path('examples/octopus.jpg')
     # n_colors = 3
@@ -93,12 +90,19 @@ if __name__ == '__main__':
     # n_colors = 10
     # stitches_per_row = 140
 
-    # input_file = Path('examples/einstain.jpg')
-    # n_colors = 5
-    # stitches_per_row = 80
+    input_file = Path('examples/einstain.jpg')
+    n_colors = 5
+    stitches_per_row = 80
 
     show_colors = True
     show_symbols = True
     show_legend = True
 
-    stitchit(input_file, n_colors, stitches_per_row, show_colors=show_colors, show_symbols=show_symbols, show_legend=show_legend)    
+    stitchit(
+        input_file,
+        n_colors,
+        stitches_per_row,
+        show_colors=show_colors,
+        show_symbols=show_symbols,
+        show_legend=show_legend
+    )    
