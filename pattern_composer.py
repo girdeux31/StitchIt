@@ -26,7 +26,6 @@ class PatternComposer:
     text_font_color = 'black'
     symbol_color = 'black'
     symbol_width = 1
-    svg_fill = 'red'
     svg_title_class_name = 'title_text'
     svg_text_class_name = 'pattern_text'
     svg_symbol_class_name = 'glyph'
@@ -38,9 +37,6 @@ class PatternComposer:
 
     def add_header(self, width: int, height: int) -> None:
         """Add svg header"""
-        style = {
-            'fill': self.svg_fill,
-        }  # TODO remove?
         classes = {
             self.svg_title_class_name: {
                 'font-size': self.title_font_size,
@@ -55,7 +51,7 @@ class PatternComposer:
                 'stroke-width': self.symbol_width,
             }
         }
-        self.svg.add_xml_header(width, height, style)
+        self.svg.add_xml_header(width, height, {})
         self.svg.add_xml_style(classes)
 
     def add_tail(self) -> None:
