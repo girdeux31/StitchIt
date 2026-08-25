@@ -5,7 +5,7 @@ from composer import Composer
 from pattern import Pattern
 
 
-SVG_UNIT_SIZE = 10
+SVG_PIXELS_PER_UNIT = 10
 LEGEND_TITLE = 'Mouliné DMC'
 BACKSTITCH = True
 
@@ -23,41 +23,41 @@ class Chart:
     def _generate_pattern(self, width: int, height: int) -> None:
         """Generate pattern as SVG"""
         for y_idx, row in enumerate(self.pattern.array):  # TODO: these loops take a long time for stitches_per_row > 100
-            y_pos = (y_idx+1) * SVG_UNIT_SIZE  # +1 allows space for midpoint arrows
+            y_pos = (y_idx+1) * SVG_PIXELS_PER_UNIT  # +1 allows space for midpoint arrows
             for x_idx, c_idx in enumerate(row):
-                x_pos = (x_idx+1) * SVG_UNIT_SIZE
+                x_pos = (x_idx+1) * SVG_PIXELS_PER_UNIT
                 color = self.image.palette.get_color_by_idx(c_idx)
-                self.composer.add_cross_stitch_entry(color, x_pos, y_pos, SVG_UNIT_SIZE)
-        self.composer.add_grids(SVG_UNIT_SIZE, width, height)
-        self.composer.add_numbers(SVG_UNIT_SIZE, width, height)
-        self.composer.add_arrows(SVG_UNIT_SIZE, width, height)
+                self.composer.add_cross_stitch_entry(color, x_pos, y_pos, SVG_PIXELS_PER_UNIT)
+        self.composer.add_grids(SVG_PIXELS_PER_UNIT, width, height)
+        self.composer.add_numbers(SVG_PIXELS_PER_UNIT, width, height)
+        self.composer.add_arrows(SVG_PIXELS_PER_UNIT, width, height)
 
     def _generate_legend(self, start_height: int) -> None:
         """Generate legend as SVG next to pattern"""
-        x_pos = 2*SVG_UNIT_SIZE
-        y_pos = start_height+3*SVG_UNIT_SIZE
-        title_y_pos = start_height+2*SVG_UNIT_SIZE
+        x_pos = 2*SVG_PIXELS_PER_UNIT
+        y_pos = start_height+3*SVG_PIXELS_PER_UNIT
+        title_y_pos = start_height+2*SVG_PIXELS_PER_UNIT
         self.composer.add_title(x_pos, title_y_pos, LEGEND_TITLE)
         for color in self.image.palette:
             if color.show_in_legend is True:
-                self.composer.add_legend_item(color, x_pos, y_pos, SVG_UNIT_SIZE)
-                y_pos += 2.5*SVG_UNIT_SIZE
+                self.composer.add_legend_item(color, x_pos, y_pos, SVG_PIXELS_PER_UNIT)
+                y_pos += 2.5*SVG_PIXELS_PER_UNIT
 
     def _generate_backstitches(self) -> None:
         """Generate backstitches over pattern as SVG"""
         for bs in self.pattern.backstitches:
-            self.composer.add_backstitch(bs, SVG_UNIT_SIZE)
+            self.composer.add_backstitch(bs, SVG_PIXELS_PER_UNIT)
 
     def _get_pattern_size(self) -> tuple[int]:
         """Calculate pattern size (width, height)"""
-        width = (self.pattern.width+1) * SVG_UNIT_SIZE  # +1 because of outer margin
-        height = (self.pattern.height+1) * SVG_UNIT_SIZE
+        width = (self.pattern.width+1) * SVG_PIXELS_PER_UNIT  # +1 because of outer margin
+        height = (self.pattern.height+1) * SVG_PIXELS_PER_UNIT
         return (width, height)
 
     def _get_legend_size(self) -> tuple[int]:
         """Calculate legend size (width, height)"""
         p_width, _ = self._get_pattern_size()
-        height = (3 + 2.5*self.image.palette.n_colors_in_legend) * SVG_UNIT_SIZE  # title + legend entries
+        height = (3 + 2.5*self.image.palette.n_colors_in_legend) * SVG_PIXELS_PER_UNIT  # title + legend entries
         return (p_width, height)
 
     def _get_image_size(self) -> tuple[int]:
