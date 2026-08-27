@@ -92,7 +92,7 @@ class OtherConfig:
     ignore_background: bool = False
     background_code: str | int = 'B5200'
     show_backstitch: bool = False
-    backstitch_option: str = 'constant'
+    backstitch_option: str = 'constant'  # 'none', 'constant'
     backstitch_code: str | int = 498  # red
     backstitch_code_no_colors: str | int = 310  # black
     backstitch_line_width: int = 2

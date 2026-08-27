@@ -8,7 +8,7 @@ from data_classes import GeneralConfig, OtherConfig, ThreadConfig, LegendConfig,
 
 
 METHOD_OPTIONS = ['euclidean', 'compuphase', 'de76', 'de00']  # TODO remove compuphase?
-CONFETTI_CLEANER_OPTIONS = ['none', 'moderate', 'strong']
+CLEANER_OPTIONS = ['none', 'moderate', 'strong']
 BACKSTITCH_OPTIONS = ['none', 'constant']
 FONT_WEIGHT_OPTIONS = ['normal', 'bold']
 N_COLOR_RANGE = [2, 100]
@@ -57,13 +57,13 @@ class ArgumentParser:
         # GENERAL PARAMETERS
 
         self.parser.add_argument(
-            'input_file', type=str, help='Image file to convert.'
+            '--input_file', type=str, help='Image file to convert.'
         )
         self.parser.add_argument(
-            'n_colors', type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included.'
+            '--n_colors', type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included.'
         )
         self.parser.add_argument(
-            'stitches_per_row', type=int, help='Number of stitches (squares/pixels) per row in chart.'
+            '--stitches_per_row', type=int, help='Number of stitches (squares/pixels) per row in chart.'
         )
         self.parser.add_argument(
             '--no_colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in parameter \'--background_code\' is used). By default colors are user.'
@@ -93,7 +93,7 @@ class ArgumentParser:
             '--method', default='de00', choices=METHOD_OPTIONS, help='Method to compute color distance. Options are: \'euclidean\', \'compuphase\' (similar to euclidean distance but with weighting factors depending on red), \'de76\' (deltaE CIE76, like euclidean distance but with LAB coordinates), \'de00\' (deltaE CIELAB2000, more accurate method as it measure color difference as human perception). Default is \'de00\'.'
         )
         self.parser.add_argument(
-            '--confetti_cleaner', default='strong', choices=CONFETTI_CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'
+            '--cleaner_option', default='strong', choices=CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'
         )
         self.parser.add_argument(
             '--ignore_background', action='store_true', help='Stitches detected as background are drown with color specified in parameter \'--background_code\', without symbols and its color is not shown in legend. Background is detected as the mode of outer rim in input file. By default background is not ignored.'
@@ -198,7 +198,7 @@ class ArgumentParser:
             '--coords_font_color', type=str, default='black', help='Coordinates color in outer margin. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--coords_font_size', type=int, default=10, help='Coordinatess font size. Default is 10.'
+            '--coords_font_size', type=int, default=10, help='Coordinates font size. Default is 10.'
         )
         self.parser.add_argument(
             '--coords_step_pixels', type=int, default=100, help='Space between coordinate numbers in pixels. Default is 100.'
@@ -224,8 +224,8 @@ class ArgumentParser:
         self._postprocess_colors()
         self.args.input_file = Path(self.args.input_file)
         self.args.show_backstitch = True if self.args.backstitch_option != 'none' else False
-        self.args.clean_confetti_wout_neighbors = True if self.args.confetti_cleaner in ['moderate', 'strong'] else False
-        self.args.clean_confetti_w1_diagonal_neighbor = True if self.args.confetti_cleaner == 'strong' else False
+        self.args.clean_confetti_wout_neighbors = True if self.args.cleaner_option in ['moderate', 'strong'] else False
+        self.args.clean_confetti_w1_diagonal_neighbor = True if self.args.cleaner_option == 'strong' else False
         self.args.arrow_fill_color = self.args.arrow_color  # user don't need such detail
         self.args.arrow_line_width = 2  # user don't need such detail
         self.args.symbol_fill_color = self.args.symbol_color  # user don't need such detail
@@ -342,10 +342,3 @@ class ArgumentParser:
             symbol_fill_color = self.args.symbol_fill_color,
             symbol_line_width = self.args.symbol_line_width,
         )
-
-if __name__ == '__main__':
-
-    argument_parser = ArgumentParser()
-    argument_parser.parse_arguments()
-    general_config, other_config, thread_config, legend_config, pattern_config = argument_parser.get_configurations()
-    pass
