@@ -7,30 +7,35 @@ from palette import DMCColor
 
 class Composer:
 
+    svg_title_class_name = 'title'
+    svg_code_class_name = 'code'
+    svg_coords_class_name = 'coordenates'
+    svg_symbol_class_name = 'glyph'
+
     arrow_color = 'black'
-    arrow_width_pixels = 2
-    arrow_fill = 'black'
+    arrow_line_width = 2
+    arrow_fill_color = 'black'
     arrow_gap_pixels = 2
     major_grid_step_pixels = 100
     major_grid_color = 'black'
-    major_grid_width_pixels = 2
-    minor_grid_color = 'rgb(20,20,20)'
-    minor_grid_width_pixels = 1
+    major_grid_width = 2
+    minor_grid_color = '#323232'
+    minor_grid_width = 1
+    coords_font_size = 10
+    coords_font_color = 'black'
     coords_step_pixels = 100
     coords_gap_pixels = 2
-    stroke_color = 'black'
-    stroke_width_pixels = 1
-    title_font_size = '12px'
+    legend_box_line_color = 'black'
+    legend_box_line_width = 1
+    title_font_size = 12
     title_font_color = 'black'
     title_font_weight = 'bold'
-    text_font_size = '10px'
-    text_font_color = 'black'
     symbol_color = 'black'
-    symbol_width_pixels = 1
-    svg_title_class_name = 'title_text'
-    svg_text_class_name = 'pattern_text'
-    svg_symbol_class_name = 'glyph'
-    backstitch_width_pixels = 2
+    symbol_fill_color = 'black'
+    symbol_line_width = 1
+    backstitch_line_width = 2
+    code_font_size = 10
+    code_font_color = 'black'
 
     def __init__(self) -> None:
         """Init object"""
@@ -40,17 +45,21 @@ class Composer:
         """Add svg header"""
         classes = {
             self.svg_title_class_name: {
-                'font-size': self.title_font_size,
+                'font-size': f'{self.title_font_size}px',
                 'font-weight': self.title_font_weight,
                 'fill': self.title_font_color,
             },
-            self.svg_text_class_name: {
-                'font-size': self.text_font_size,
-                'fill': self.text_font_color,
+            self.svg_coords_class_name: {
+                'font-size': f'{self.coords_font_size}px',
+                'fill': self.coords_font_color,
+            },
+            self.svg_code_class_name: {
+                'font-size': f'{self.code_font_size}px',
+                'fill': self.code_font_color,
             },
             self.svg_symbol_class_name: {
                 'stroke': self.symbol_color,
-                'stroke-width': self.symbol_width_pixels,
+                'stroke-width': self.symbol_line_width,
             }
         }
         self.svg.add_xml_header(width, height, {})
@@ -65,8 +74,8 @@ class Composer:
         gap = -1*self.arrow_gap_pixels
         style = {
             'stroke': self.arrow_color,
-            'stroke-width': self.arrow_width_pixels,
-            'fill': self.arrow_fill,
+            'stroke-width': self.arrow_line_width,
+            'fill': self.arrow_fill_color,
             'transform': f'translate({width/2} {gap}) scale({size/15.0})',
         }
         # vertical arrow looking down
@@ -86,7 +95,7 @@ class Composer:
         """Add major grid"""
         style = {
             'stroke': self.major_grid_color,
-            'stroke-width': self.major_grid_width_pixels,
+            'stroke-width': self.major_grid_width,
         }
         # horizontal lines
         for x in range(11*size, width, self.major_grid_step_pixels):
@@ -99,7 +108,7 @@ class Composer:
         """Add minor grid"""
         style = {
             'stroke': self.minor_grid_color,
-            'stroke-width': self.minor_grid_width_pixels,
+            'stroke-width': self.minor_grid_width,
         }
         # horizontal lines
         for x in range(size, width+1, size):
@@ -115,23 +124,23 @@ class Composer:
 
     def _add_top_numbers(self, size: int, width: int) -> None:
         """Add numbers in top margin"""
-        for idx, x_pos in enumerate(range(self.coords_step_pixels+size, width+1, self.coords_step_pixels)):
+        for idx, x_pos in enumerate(range(size+self.coords_step_pixels, width+1, self.coords_step_pixels)):
             coord = (idx+1) * size
             style = {
                 'transform': f'translate(0 -{self.coords_gap_pixels})',
                 'text-anchor': 'middle',
             }
-            self.svg.add_xml_text(x_pos, size, style, coord, self.svg_text_class_name)
+            self.svg.add_xml_text(x_pos, size, style, coord, self.svg_coords_class_name)
 
     def _add_left_numbers(self, size: int, height: int) -> None:
         """Add numbers in left margin"""
-        for idx, y_pos in enumerate(range(self.coords_step_pixels+size, height+1, self.coords_step_pixels)):
+        for idx, y_pos in enumerate(range(size+self.coords_step_pixels, height+1, self.coords_step_pixels)):
             coord = (idx+1) * size
             style = {
                 'transform': f'translate(-{self.coords_gap_pixels} 0) rotate(-90 {size} {y_pos})',
                 'text-anchor': 'middle',
             }
-            self.svg.add_xml_text(size, y_pos, style, coord, self.svg_text_class_name)
+            self.svg.add_xml_text(size, y_pos, style, coord, self.svg_coords_class_name)
     
     def add_cross_stitch_entry(self, color: DMCColor, x: int, y: int, size: int, box: bool=False) -> None:
         """Add color and symbol if any"""
@@ -142,7 +151,7 @@ class Composer:
         """Add backstitch legend entry"""
         style = {
             'stroke': f'rgb({color.get_dmc_rgb_as_str()})',
-            'stroke-width': self.backstitch_width_pixels,
+            'stroke-width': self.backstitch_line_width,
         }
         self.svg.add_xml_line(x, y+size*0.5, x+size, y+size*0.5, style)
 
@@ -153,8 +162,8 @@ class Composer:
             'stroke': 'none',
         }
         if box:
-            style['stroke'] = self.stroke_color
-            style['stroke-width'] = self.stroke_width_pixels
+            style['stroke'] = self.legend_box_line_color
+            style['stroke-width'] = self.legend_box_line_width
         self.svg.add_xml_rect(x, y, size, size, style)
 
     def _add_symbol(self, color: DMCColor, x: int, y: int, size: int) -> None:
@@ -162,7 +171,7 @@ class Composer:
         if color.has_symbol:
             style = {
                 'transform': f'translate({x} {y}) scale({size/20.0})',
-                'fill': self.symbol_color if color.fill_symbol is True else "none",
+                'fill': self.symbol_fill_color if color.fill_symbol is True else 'none',
             }
             self.svg.add_xml_path(color.symbol_code, style, self.svg_symbol_class_name)
 
@@ -176,7 +185,7 @@ class Composer:
             self.add_backstitch_entry(color, x, y, 1.5*size)
         else:
             self.add_cross_stitch_entry(color, x, y, 1.5*size, box=True)
-        self.svg.add_xml_text(x+2*size, y+size, {}, color.dmc_code, self.svg_text_class_name)
+        self.svg.add_xml_text(x+2*size, y+size, {}, color.dmc_code, self.svg_code_class_name)
 
     def add_backstitch(self, bs: Backstitch, pixels_per_coord: int) -> None:
         """Add backstitch as line"""
@@ -184,7 +193,7 @@ class Composer:
         end = [(coord+1)*pixels_per_coord for coord in bs.end]
         style = {
             'stroke': f'rgb({bs.color.get_dmc_rgb_as_str()})',
-            'stroke-width': self.backstitch_width_pixels,
+            'stroke-width': self.backstitch_line_width,
         }
         self.svg.add_xml_line(start[0], start[1], end[0], end[1], style)
 

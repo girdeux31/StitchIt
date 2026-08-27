@@ -25,8 +25,8 @@ FABRIC_COUNT_TO_STITCH_LENGTH = {
     18: 1.45,
     20: 1.30,
 }
-SKEIN_LENGTH = 8  # m
-STRANDS_PER_SKEIN = 6  # strands in a skein
+skein_length = 8  # m
+strands_per_skein = 6  # strands in a skein
 CM_PER_INCH = 2.54  # cm/inch
 # skein: madeja  (EN to SP)
 # strand: hebra
@@ -34,10 +34,10 @@ CM_PER_INCH = 2.54  # cm/inch
 
 class InfoFile:
 
-    def __init__(self, fabric_count: int, strands_for_stitching: int) -> None:
+    def __init__(self, fabric_count: int, strands: int) -> None:
         """Init object"""
         self.fabric_count = fabric_count  # number of squares (or stitches) per inch
-        self.strands_for_stitching = strands_for_stitching
+        self.strands = strands
         self.pattern_size = {}
         self.thread_info = {
             'code': [],
@@ -70,7 +70,7 @@ class InfoFile:
             if color.show_in_legend is True:
                 stitches = np.sum(chart.pattern.array == color.idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
                 length = stitches * self.length_per_stitch / 100  # m
-                skeins = math.ceil(length / (SKEIN_LENGTH*STRANDS_PER_SKEIN/self.strands_for_stitching))
+                skeins = math.ceil(length / (skein_length*strands_per_skein/self.strands))
                 error = ColorTools.compute_color_mse(chart.pattern, method, color.idx)
                 self.thread_info['code'].append(color.dmc_code)
                 self.thread_info['name'].append(color.dmc_name)
@@ -85,7 +85,7 @@ class InfoFile:
         f.write('Design information:\n')
         f.write('\n')
         f.write(f'  Fabric count or Aida count: {self.fabric_count} (ct or stitches per inch)\n')
-        f.write(f'  Strands for stitching: {self.strands_for_stitching} strands\n')
+        f.write(f'  Strands for stitching: {self.strands} strands\n')
         f.write(
             f'  Size (width x height): {self.pattern_size["cm"][0]:.2f}x{self.pattern_size["cm"][1]:.2f} (cm) or '
             f'{self.pattern_size["inch"][0]:.2f}x{self.pattern_size["inch"][1]:.2f} (\'\')\n'

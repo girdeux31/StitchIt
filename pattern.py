@@ -7,10 +7,10 @@ from backstitch_detector import BackstitchDetector
 from confetti_cleaner import ConfettiCleaner
 
 
-BACKGROUND_INDEX = 99  # must be between n_colors and 255 inclusive since pattern is uint8
-BACKGROUND_CODE = 'B5200'
-IGNORE_BACKGROUND = True  # bg is set white with no symbol and not shown in legend
-BACKSTITCH = True
+BACKGROUND_INDEX = 255  # must be between n_colors and 255 inclusive since pattern is uint8
+background_code = 'B5200'
+ignore_background = True  # bg is set white with no symbol and not shown in legend
+show_backstitch = True
 
 class Pattern:
 
@@ -31,10 +31,10 @@ class Pattern:
     def _change_background_index(self) -> None:
         """Set color index of background to special index"""
         self.bg_idx = self._get_background_idx()
-        if IGNORE_BACKGROUND is True:
+        if ignore_background is True:
             self.array[self.array==self.bg_idx] = BACKGROUND_INDEX  # change idx in pattern
             self.palette.remove_color_by_idx(self.bg_idx)  # remove old bg color
-            self.palette.add_color_by_code(BACKGROUND_INDEX, BACKGROUND_CODE, show_in_legend=False)  # add bg color
+            self.palette.add_color_by_code(BACKGROUND_INDEX, background_code, show_in_legend=False)  # add bg color
             self.bg_idx = BACKGROUND_INDEX  # change bg idx
 
     def _get_background_idx(self) -> int:
@@ -66,5 +66,5 @@ class Pattern:
         cleaner.clean_confetti(self)
 
         self._change_background_index()
-        if BACKSTITCH:
+        if show_backstitch is True:
             self._set_backstitches()

@@ -5,7 +5,7 @@ from skimage.color import deltaE_ciede2000
 
 REF_PATH = Path('tests/ref')
 MAX_ALLOWED_ERROR = 10**-4
-CSV_FILE = REF_PATH / 'deltaE00_test_data.csv'
+CSV_FILE = REF_PATH / 'deltaE00_test_data.csv'  # data obtained in https://hajim.rochester.edu/ece/sites/gsharma/ciede2000/dataNprograms/ciede2000testdata.txt
 
 def test_detae00():
 

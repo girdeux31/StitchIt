@@ -1,8 +1,8 @@
 import numpy as np
 
 
-CLEAN_PIXELS_WOUT_NEIGHBORS = True
-CLEAN_PIXELS_W1_DIAGONAL_NEIGHBOR = True
+clean_confetti_wout_neighbors = True
+clean_confetti_w1_diagonal_neighbor = True
 
 class ConfettiCleaner:
 
@@ -28,9 +28,9 @@ class ConfettiCleaner:
         org_array = pattern.array
         for col in range(0, self.pattern.width):
             for row in range(0, self.pattern.height):
-                if CLEAN_PIXELS_WOUT_NEIGHBORS is True:
+                if clean_confetti_wout_neighbors is True:
                     self._clean_pixel_if_no_neighbors(row, col, org_array)
-                if CLEAN_PIXELS_W1_DIAGONAL_NEIGHBOR is True:
+                if clean_confetti_w1_diagonal_neighbor is True:
                     self._clean_pixel_if_only_one_diagonal_neighbor(row, col, org_array)
 
     def _clean_pixel_if_no_neighbors(self, row: int, col: int, array: np.ndarray[int]) -> None:

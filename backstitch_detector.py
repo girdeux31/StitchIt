@@ -4,9 +4,9 @@ from palette import DMCColor
 from data_classes import Backstitch
 
 
-BACKSTITCH_DMC_CODE = 498  # red
-BACKSTITCH_DMC_CODE_NO_COLOR = 310  # black
-BACKSTITCH_INDEX = 100  # TODO refactor?
+backstitch_code = 498  # dark red
+backstitch_code_no_colors = 310  # black
+BACKSTITCH_INDEX = 254
 
 class BackstitchDetector:
 
@@ -50,7 +50,7 @@ class BackstitchDetector:
 
     def _add_backstitch_color_to_palette(self) -> None:
         """Add backstitch color to palete by dmc code"""
-        code = BACKSTITCH_DMC_CODE if self.pattern.show_colors is True else BACKSTITCH_DMC_CODE_NO_COLOR
+        code = backstitch_code if self.pattern.show_colors is True else backstitch_code_no_colors
         self.pattern.palette.add_color_by_code(BACKSTITCH_INDEX, code, is_backstitch=True)
 
     def _add_backstitch(self, start: tuple[int], end: tuple[int], color: DMCColor) -> None:

@@ -1,4 +1,6 @@
+from pathlib import Path
 from dataclasses import dataclass
+
 from dmc_db import DMCDB
 
 
@@ -70,3 +72,71 @@ class Backstitch:
     start: tuple[int, int]
     end: tuple[int, int]
     color: DMCColor
+
+@dataclass
+class GeneralConfig:
+    input_file: Path
+    n_colors: int
+    stitches_per_row: int
+    show_colors: bool = True
+    show_symbols: bool = True
+    show_legend: bool = True
+    save_formats: list[str] | None = None
+    png_scale: float = 2.0
+
+@dataclass
+class OtherConfig:
+    method: str = 'de00'  # 'euclidean', 'compuphase', 'de76', 'de00'
+    clean_confetti_wout_neighbors: bool = True
+    clean_confetti_w1_diagonal_neighbor: bool = True
+    ignore_background: bool = False
+    background_code: str | int = 'B5200'
+    show_backstitch: bool = False
+    backstitch_option: str = 'constant'
+    backstitch_code: str | int = 498  # red
+    backstitch_code_no_colors: str | int = 310  # black
+    backstitch_line_width: int = 2
+
+@dataclass
+class ThreadConfig:
+    fabric_count: int = 14  # aida or squares per inch
+    strands: int = 2  # strands used for stitching
+    skein_length: float = 8.0  # m
+    strands_per_skein: int = 6  # strands in a skein
+
+@dataclass
+class LegendConfig:
+    title: str = 'Mouliné DMC'
+    title_font_size: int = 12
+    title_font_color: str = 'black'
+    title_font_weight: str = 'bold'
+    title_x_pixels: int = 20
+    title_y_pixels: int = 30
+    item_x_pixels: int = 20
+    item_y_pixels: int = 20
+    column_width_pixels: int = 100
+    column_height_pixels: int = 30
+    code_font_color: str = 'black'
+    code_font_size: int = 10
+    box_line_color: str = 'black'
+    box_line_width: int = 1
+
+@dataclass
+class PatternConfig:
+    svg_pixels_per_unit: int = 10
+    major_grid_step_pixels: int = 100
+    major_grid_color: str = 'black'
+    major_grid_width: int = 2
+    minor_grid_color: str = '#323232'
+    minor_grid_width: int = 1
+    coords_font_size: int = 10
+    coords_font_color: str = 'black'
+    coords_step_pixels: int = 100
+    coords_gap_pixels: int = 2
+    arrow_color: str = 'black'
+    arrow_line_width: int = 2
+    arrow_fill_color: str = 'black'
+    arrow_gap_pixels: int = 2
+    symbol_color: str = 'black'
+    symbol_fill_color: str = 'black'
+    symbol_line_width: int = 1

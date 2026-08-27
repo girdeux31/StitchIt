@@ -1,11 +1,14 @@
 import csv
 
+from PIL import ImageColor
+from pathlib import Path
+
 from color_tools import ColorTools
 
 
 class DMCDB:
 
-    csv_file = 'dmc_colors.csv'
+    csv_file = Path('data/dmc_db.csv')
     
     def __init__(self):
         """Init object"""
@@ -18,13 +21,15 @@ class DMCDB:
 
             reader = csv.reader(f)
             for row in reader:
-                if len(row) != 5:
+                if len(row) != 3:
                     raise ValueError(f'Bad format while reading \'{self.csv_file}\' file')
                 
-                code = row[0]
-                rgb = (int(row[1]), int(row[2]), int(row[3]))
-                name = row[4]
-                dmc_dict[code] = {'rgb': rgb, 'name': name}
+                dmc_code = row[0]
+                dmc_name = row[1]
+                hex_code = row[2]
+                # rgb = (int(row[1]), int(row[2]), int(row[3]))
+                rgb = ImageColor.getcolor(hex_code, 'RGB')
+                dmc_dict[dmc_code] = {'rgb': rgb, 'name': dmc_name}
 
         return dmc_dict
 

@@ -7,15 +7,15 @@ from pattern import Pattern
 
 
 SVG_PIXELS_PER_UNIT = 10
-LEGEND_TITLE = 'Mouliné DMC'
-LEGEND_TITLE_X_PIXELS = 20
-LEGEND_TITLE_Y_PIXELS = 30
-LEGEND_COLUMN_WIDTH_PIXELS = 100
-LEGEND_COLUMN_HEIGHT_PIXELS = 30
-LEGEND_X_PIXELS = 20
-LEGEND_Y_PIXELS = 50
+legend_title = 'Mouliné DMC'
+legend_title_x_pixels = 20
+legend_title_y_pixels = 30
+legend_column_width_pixels = 100
+legend_column_height_pixels = 30
+legend_item_x_pixels = 20
+legend_item_y_pixels = 20
 
-BACKSTITCH = True
+show_backstitch = True
 
 class Chart:
 
@@ -44,22 +44,22 @@ class Chart:
         """Generate legend as SVG next to pattern"""
         column = 1
         _, pattern_height = self._get_pattern_size()
-        x_pos = LEGEND_X_PIXELS
-        y_pos = pattern_height + LEGEND_Y_PIXELS
-        title_x_pos = LEGEND_TITLE_X_PIXELS
-        title_y_pos = pattern_height + LEGEND_TITLE_Y_PIXELS
-        self.composer.add_title(title_x_pos, title_y_pos, LEGEND_TITLE)
+        x_pos = legend_item_x_pixels
+        y_pos = pattern_height + legend_title_y_pixels + legend_item_y_pixels
+        title_x_pos = legend_title_x_pixels
+        title_y_pos = pattern_height + legend_title_y_pixels
+        self.composer.add_title(title_x_pos, title_y_pos, legend_title)
         width, _ = self._get_pattern_size()
-        n_columns = int((width - LEGEND_X_PIXELS) / LEGEND_COLUMN_WIDTH_PIXELS)
+        n_columns = int((width - legend_item_x_pixels) / legend_column_width_pixels)
         for color in self.image.palette:
             if color.show_in_legend is True:
                 self.composer.add_legend_item(color, x_pos, y_pos, SVG_PIXELS_PER_UNIT)
                 column += 1
                 if column <= n_columns:
-                    x_pos = x_pos + LEGEND_COLUMN_WIDTH_PIXELS
+                    x_pos = x_pos + legend_column_width_pixels
                 else:
-                    x_pos = LEGEND_X_PIXELS
-                    y_pos += LEGEND_COLUMN_HEIGHT_PIXELS
+                    x_pos = legend_item_x_pixels
+                    y_pos += legend_column_height_pixels
 
     def _generate_backstitches(self) -> None:
         """Generate backstitches over pattern as SVG"""
@@ -75,9 +75,9 @@ class Chart:
     def _get_legend_size(self) -> tuple[int]:
         """Calculate legend size (width, height)"""
         width, _ = self._get_pattern_size()
-        n_columns = int((width - LEGEND_X_PIXELS) / LEGEND_COLUMN_WIDTH_PIXELS)
+        n_columns = int((width - legend_item_x_pixels) / legend_column_width_pixels)
         n_rows = math.ceil(self.image.palette.n_colors_in_legend / n_columns)
-        height = (LEGEND_Y_PIXELS + LEGEND_COLUMN_HEIGHT_PIXELS*n_rows)  # title + legend entries
+        height = (legend_title_y_pixels + legend_item_y_pixels + legend_column_height_pixels*n_rows)  # title + legend entries
         return (width, height)
 
     def _get_image_size(self) -> tuple[int]:
@@ -95,9 +95,9 @@ class Chart:
         image_width, image_height = self._get_image_size()
         self.composer.add_header(image_width, image_height)
         self._generate_pattern(pattern_width, pattern_height)
-        if self.show_legend:
+        if self.show_legend is True:
             self._generate_legend()
-        if BACKSTITCH:
+        if show_backstitch is True:
             self._generate_backstitches()
         self.composer.add_tail()
 

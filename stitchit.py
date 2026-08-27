@@ -1,18 +1,16 @@
 import sys
-from warnings import warn
 from pathlib import Path
 
+from argument_parser import ArgumentParser
 from chart import Chart
 from info_file import InfoFile
 
-MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
-ALLOWED_DISTANCE_METHODS = ['euclidean', 'compuphase', 'de76', 'de00']
-
 
 # TODO:
-#  - use argparse
+#  - tests
 #  - change readme
 #  - bs with inverse rgb color
+#  - get DMC codes from dmc_db.csv
 
 def stitchit(
         input_file: Path,
@@ -23,29 +21,21 @@ def stitchit(
         show_legend: bool=True,
     ):
     """
-    Generates a cross stitch pattern from an image, input arguments are:
+    Generates a cross stitch pattern from an image, mandatory input arguments are:
 
     input_file (Path): image to process
     n_colors (int): number of colors to use to stitch
     stitches_per_row (int): number of stitches (squares) per row in pattern
     """
+    # argument_parser = ArgumentParser()
+    # argument_parser.parse_arguments()
+    # general_config, other_config, thread_config, legend_config, pattern_config = argument_parser.get_configurations()
+
     png_scale = 2.0  # png scale
     fabric_count = 14  # aida or squares per inch
-    strands_for_stitching = 2  # strands for stitching
+    strands = 2  # strands for stitching
     distance_method = 'de00'  # 'euclidean', 'compuphase', 'de76', 'de00'
-
-    if not input_file.exists():
-        raise FileNotFoundError(f'File \'{input_file}\' not found')
-    if not 2 <= n_colors <= 256:
-        raise ValueError('Parameter \'n_colors\' must be in range [2, 256]')
-    if stitches_per_row > MAX_STITCHES_PER_ROW_RECOMMENDED:
-        warn(
-            f'Parameter \'stitches_per_row\' is over the recommended limit of {MAX_STITCHES_PER_ROW_RECOMMENDED}, '
-            f'this make take some time'
-        )
-    distance_method = distance_method.lower()
-    if distance_method not in ALLOWED_DISTANCE_METHODS:
-        raise ValueError(f'Allowed distance methods are {", ".join(ALLOWED_DISTANCE_METHODS)}')
+    save_formats = ['svg', 'png', 'pdf']
 
     # Generate file paths
 
@@ -57,11 +47,11 @@ def stitchit(
     chart = Chart(show_colors=show_colors, show_symbols=show_symbols, show_legend=show_legend)
     chart.process(input_file, n_colors, stitches_per_row, distance_method)
     chart.generate()
-    chart.save(out_pattern_file, formats=['svg', 'png', 'pdf'], png_scale=png_scale)
+    chart.save(out_pattern_file, formats=save_formats, png_scale=png_scale)
 
     # Write info file 
 
-    info_file = InfoFile(fabric_count, strands_for_stitching)
+    info_file = InfoFile(fabric_count, strands)
     info_file.import_chart(chart, distance_method)
     info_file.save(out_info_file)
 

@@ -14,9 +14,9 @@ METHOD_TO_COLOR_THRESHOLD = {
     'de76': 10,
     'de00': 10,
 }
-BACKGROUND_INDEX = 99  # must be between n_colors and 255 inclusive since pattern is uint8
-BACKGROUND_CODE = 'B5200'
-IGNORE_BACKGROUND = True  # bg is set white with no symbol and not shown in legend
+BACKGROUND_INDEX = 255  # must be between n_colors and 255 inclusive since pattern is uint8
+background_code = 'B5200'
+ignore_background = True  # bg is set white with no symbol and not shown in legend
 
 class Image:
 
@@ -98,8 +98,8 @@ class Image:
         4. Convert the image to a np array"""
         self._import_image(img_file)  # pil_image is always width,height / cols,rows / x,y
         self._resize(stitches_per_row)
-        n_colors += 1 if IGNORE_BACKGROUND is True else 0  # add 1 color because bg color wont be shown in legend
+        n_colors += 1 if ignore_background is True else 0  # add 1 color because bg color wont be shown in legend
         self._set_dmc_palette(n_colors, method)
         self._quantize()
         if self.show_colors is False:
-            self.palette.replace_all_colors_by_code(BACKGROUND_CODE)
+            self.palette.replace_all_colors_by_code(background_code)
