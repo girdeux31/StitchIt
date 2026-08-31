@@ -1,18 +1,16 @@
 import csv
 
 from PIL import ImageColor
-from pathlib import Path
 
 from color_tools import ColorTools
+from constants import CSV_FILE
 
 
 class DMCDB:
-
-    csv_file = Path('data/dmc_db.csv')
     
     def __init__(self):
         """Init object"""
-        self.dmc_dict = self._read_info_from_csv(self.csv_file)
+        self.dmc_dict = self._read_info_from_csv(CSV_FILE)
 
     def _read_info_from_csv(self, csv_file: str) -> dict[str, dict[str, tuple | str]]:
         """Read CSV file with DMC info"""

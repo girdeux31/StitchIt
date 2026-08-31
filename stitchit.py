@@ -1,6 +1,3 @@
-import sys
-from pathlib import Path
-
 from argument_parser import ArgumentParser
 from chart import Chart
 from info_file import InfoFile
@@ -45,7 +42,7 @@ def stitchit():
 
     # Write info file 
 
-    info_file = InfoFile(thread_config)
+    info_file = InfoFile(other_config, thread_config)
     info_file.import_chart(chart)
     info_file.save(txt_file)
 

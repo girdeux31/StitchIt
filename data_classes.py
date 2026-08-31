@@ -2,22 +2,8 @@ from pathlib import Path
 from dataclasses import dataclass
 
 from dmc_db import DMCDB
+from constants import IDX_TO_SYMBOL_CODE, SYMBOLS_TO_FILL
 
-
-IDX_TO_SYMBOL_CODE = {
-    0: "M4 4L16 16", # backslash
-    1: "M4 16L16 4M4 10L 16 10", # forward slash
-    2: "M7 7L7 13 13 13 13 7Z", # little square, filled black
-    3: "M4 4L10 16L16 4 Z", # triangle, upside down
-    4: "M4 4L16 16M4 16 L16 4", # diagonal cross
-    5: "M4 4L4 16 16 16 16 4Z", # square
-    6: "M4 4L10 16L16 4 Z", # triangle, upside down, filled black
-    7: "M10 4L6 10 10 16 14 10Z", # diamond, filled black
-    8: "M8 8L8 12 12 12 12 8Z", # little square
-    9: "M4 4L16 16M4 16 L16 4M10 4L10 16M4 10L16 10", # 8 way cross
-    10: "M4 4L4 16 16 16 16 4Z", # square, filled black
-}
-SYMBOLS_TO_FILL = [2, 6, 7, 10]
 
 @dataclass
 class DMCColor:
@@ -95,7 +81,6 @@ class OtherConfig:
     backstitch_option: str = 'constant'  # 'none', 'constant'
     backstitch_code: str | int = 498  # red
     backstitch_code_no_colors: str | int = 310  # black
-    backstitch_line_width: int = 2
 
 @dataclass
 class ThreadConfig:
@@ -140,3 +125,4 @@ class PatternConfig:
     symbol_color: str = 'black'
     symbol_fill_color: str = 'black'
     symbol_line_width: int = 1
+    backstitch_line_width: int = 2

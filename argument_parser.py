@@ -291,17 +291,17 @@ class ArgumentParser:
             backstitch_option = self.args.backstitch_option,
             backstitch_code = self.args.backstitch_code,
             backstitch_code_no_colors = self.args.backstitch_code_no_colors,
-            backstitch_line_width = self.args.backstitch_line_width,
         )
 
     def _get_thread_config(self) -> ThreadConfig:
         """Get thread config as dataclass"""
         return ThreadConfig(
-            fabric_count = self.args.fabric_count,
-            strands = self.args.strands,
-            skein_length = self.args.skein_length,
+            fabric_count = self.args.fabric_count,  # number of squares (or stitches) per inch
+            strands = self.args.strands,  # strand: hebra
+            skein_length = self.args.skein_length,  # skein: madeja  (EN to SP)
             strands_per_skein = self.args.strands_per_skein,
         )
+
     def _get_legend_config(self) -> LegendConfig:
         """Get legend config as dataclass"""
         return LegendConfig(
@@ -341,4 +341,5 @@ class ArgumentParser:
             symbol_color = self.args.symbol_color,
             symbol_fill_color = self.args.symbol_fill_color,
             symbol_line_width = self.args.symbol_line_width,
+            backstitch_line_width = self.args.backstitch_line_width,
         )

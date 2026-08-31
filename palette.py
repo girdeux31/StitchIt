@@ -3,7 +3,7 @@ from data_classes import DMCColor
 
 class Palette:
 
-    def __init__(self, method: str):
+    def __init__(self, method):
         """Init object"""
         self.method = method
         self.colors = []

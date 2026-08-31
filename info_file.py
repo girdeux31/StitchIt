@@ -6,38 +6,16 @@ from tabulate import tabulate
 
 from chart import Chart
 from color_tools import ColorTools
-
-
-TABLE_HEADER = [
-    'DMC code',
-    'DMC color',
-    'DMC RGB',
-    'Stitches',
-    'Length (m)',
-    'Skeins',
-    'MSE'
-]
-TABLE_FORMAT = 'simple'
-FABRIC_COUNT_TO_STITCH_LENGTH = {
-    11: 2.10,  # number of squares (or stitches) per inch, thread length in cm
-    14: 1.80,
-    16: 1.60,
-    18: 1.45,
-    20: 1.30,
-}
-skein_length = 8  # m
-strands_per_skein = 6  # strands in a skein
-CM_PER_INCH = 2.54  # cm/inch
-# skein: madeja  (EN to SP)
-# strand: hebra
+from data_classes import OtherConfig, ThreadConfig
+from constants import TABLE_HEADER, TABLE_FORMAT, FABRIC_COUNT_TO_STITCH_LENGTH, CM_PER_INCH
 
 
 class InfoFile:
 
-    def __init__(self, fabric_count: int, strands: int) -> None:
+    def __init__(self, other_config: OtherConfig, thread_config: ThreadConfig) -> None:
         """Init object"""
-        self.fabric_count = fabric_count  # number of squares (or stitches) per inch
-        self.strands = strands
+        self.other_config = other_config
+        self.thread_config = thread_config
         self.pattern_size = {}
         self.thread_info = {
             'code': [],
@@ -48,30 +26,30 @@ class InfoFile:
             'skeins': [],
             'error': [],
         }
-        if fabric_count not in FABRIC_COUNT_TO_STITCH_LENGTH:
+        if self.thread_config.fabric_count not in FABRIC_COUNT_TO_STITCH_LENGTH:
             raise ValueError(f'Allowed values for \'thread_count\' parameters are: {", ".join(FABRIC_COUNT_TO_STITCH_LENGTH.keys())}')
-        self.length_per_stitch = FABRIC_COUNT_TO_STITCH_LENGTH[fabric_count]
+        self.length_per_stitch = FABRIC_COUNT_TO_STITCH_LENGTH[self.thread_config.fabric_count]
 
-    def import_chart(self, chart: Chart, method: str):
+    def import_chart(self, chart: Chart):
         """Import pattern"""
         self.pattern_size = {
             'width': chart.pattern.width,
             'height': chart.pattern.height,
             'inch': (
-                chart.pattern.width / self.fabric_count,  # squares / squares*inch = inch
-                chart.pattern.height / self.fabric_count,
+                chart.pattern.width / self.thread_config.fabric_count,  # squares / squares*inch = inch
+                chart.pattern.height / self.thread_config.fabric_count,
             ),
             'cm': (
-                chart.pattern.width / self.fabric_count * CM_PER_INCH,  # squares / squares*inch * cm/inch = cm
-                chart.pattern.height / self.fabric_count * CM_PER_INCH,
+                chart.pattern.width / self.thread_config.fabric_count * CM_PER_INCH,  # squares / squares*inch * cm/inch = cm
+                chart.pattern.height / self.thread_config.fabric_count * CM_PER_INCH,
             ),
         }
         for color in chart.pattern.palette:
             if color.show_in_legend is True:
                 stitches = np.sum(chart.pattern.array == color.idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
                 length = stitches * self.length_per_stitch / 100  # m
-                skeins = math.ceil(length / (skein_length*strands_per_skein/self.strands))
-                error = ColorTools.compute_color_mse(chart.pattern, method, color.idx)
+                skeins = math.ceil(length / (self.thread_config.skein_length*self.thread_config.strands_per_skein/self.thread_config.strands))
+                error = ColorTools.compute_color_mse(chart.pattern, self.other_config.method, color.idx)
                 self.thread_info['code'].append(color.dmc_code)
                 self.thread_info['name'].append(color.dmc_name)
                 self.thread_info['rgb'].append(color.get_dmc_rgb_as_str())
@@ -84,8 +62,8 @@ class InfoFile:
         """Write design info"""
         f.write('Design information:\n')
         f.write('\n')
-        f.write(f'  Fabric count or Aida count: {self.fabric_count} (ct or stitches per inch)\n')
-        f.write(f'  Strands for stitching: {self.strands} strands\n')
+        f.write(f'  Fabric count or Aida count: {self.thread_config.fabric_count} (ct or stitches per inch)\n')
+        f.write(f'  Strands for stitching: {self.thread_config.strands} strands\n')
         f.write(
             f'  Size (width x height): {self.pattern_size["cm"][0]:.2f}x{self.pattern_size["cm"][1]:.2f} (cm) or '
             f'{self.pattern_size["inch"][0]:.2f}x{self.pattern_size["inch"][1]:.2f} (\'\')\n'

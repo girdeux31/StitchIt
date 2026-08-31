@@ -1,13 +1,13 @@
 import numpy as np
 
+from data_classes import OtherConfig
 
-clean_confetti_wout_neighbors = True
-clean_confetti_w1_diagonal_neighbor = True
 
 class ConfettiCleaner:
 
-    def __init__(self):
+    def __init__(self, other_config: OtherConfig):
         """Init object"""
+        self.other_config = other_config
         self.pattern = None
 
     def clean_confetti(self, pattern) -> None:
@@ -28,9 +28,9 @@ class ConfettiCleaner:
         org_array = pattern.array
         for col in range(0, self.pattern.width):
             for row in range(0, self.pattern.height):
-                if clean_confetti_wout_neighbors is True:
+                if self.other_config.clean_confetti_wout_neighbors is True:
                     self._clean_pixel_if_no_neighbors(row, col, org_array)
-                if clean_confetti_w1_diagonal_neighbor is True:
+                if self.other_config.clean_confetti_w1_diagonal_neighbor is True:
                     self._clean_pixel_if_only_one_diagonal_neighbor(row, col, org_array)
 
     def _clean_pixel_if_no_neighbors(self, row: int, col: int, array: np.ndarray[int]) -> None:
