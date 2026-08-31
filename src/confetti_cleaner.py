@@ -1,6 +1,6 @@
 import numpy as np
 
-from data_classes import OtherConfig
+from src.data_classes import OtherConfig
 
 
 class ConfettiCleaner:

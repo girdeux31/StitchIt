@@ -2,8 +2,8 @@ import csv
 
 from PIL import ImageColor
 
-from color_tools import ColorTools
-from constants import CSV_FILE
+from src.color_tools import ColorTools
+from src.constants import CSV_FILE
 
 
 class DMCDB:

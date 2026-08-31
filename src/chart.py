@@ -1,10 +1,10 @@
 import math
 from pathlib import Path
 
-from image import Image
-from composer import Composer
-from pattern import Pattern
-from data_classes import GeneralConfig, OtherConfig, LegendConfig, PatternConfig
+from src.image import Image
+from src.composer import Composer
+from src.pattern import Pattern
+from src.data_classes import GeneralConfig, OtherConfig, LegendConfig, PatternConfig
 
 
 class Chart:
@@ -71,19 +71,24 @@ class Chart:
 
     def _get_legend_size(self) -> tuple[int]:
         """Calculate legend size (width, height)"""
-        width, _ = self._get_pattern_size()
-        n_columns = int((width - self.legend_config.item_x_pixels) / self.legend_config.column_width_pixels)
-        n_rows = math.ceil(self.image.palette.n_colors_in_legend / n_columns)
-        height = (self.legend_config.title_y_pixels + self.legend_config.item_y_pixels + self.legend_config.column_height_pixels*n_rows)  # title + legend entries
+        p_width, _ = self._get_pattern_size()
+        if self.general_config.show_legend is True:
+            n_columns = int((p_width - self.legend_config.item_x_pixels) / self.legend_config.column_width_pixels)
+            n_columns = n_columns if n_columns > 0 else 1
+            n_rows = math.ceil(self.image.palette.n_colors_in_legend / n_columns)
+            height = (self.legend_config.title_y_pixels + self.legend_config.item_y_pixels + self.legend_config.column_height_pixels*n_rows)  # title + legend entries
+            width = self.legend_config.item_x_pixels + n_columns*self.legend_config.column_width_pixels
+        else:
+            width, height = p_width, 0
         return (width, height)
 
     def _get_image_size(self) -> tuple[int]:
         """Calculate image size (width, height)"""
-        width, height = self._get_pattern_size()
+        p_width, p_height = self._get_pattern_size()
+        l_width, l_height = self._get_legend_size()
+        width = max(p_width, l_width)
+        height = p_height + l_height 
         width += self.pattern_config.svg_pixels_per_unit  # add right outer margin
-        if self.general_config.show_legend is True:
-            _, l_height = self._get_legend_size()
-            height += l_height 
         return (width, height)
 
     def generate(self):

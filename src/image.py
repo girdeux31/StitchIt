@@ -2,10 +2,10 @@ import numpy as np
 
 from PIL import Image as PILImage
 
-from palette import Palette
-from color_tools import ColorTools
-from data_classes import GeneralConfig, OtherConfig
-from constants import METHOD_TO_COLOR_THRESHOLD
+from src.palette import Palette
+from src.color_tools import ColorTools
+from src.data_classes import GeneralConfig, OtherConfig
+from src.constants import METHOD_TO_COLOR_THRESHOLD
 
 
 class Image:
@@ -88,8 +88,8 @@ class Image:
         4. Convert the image to a np array"""
         self._import_image()  # pil_image is always width,height / cols,rows / x,y
         self._resize()
-        self.general_config.n_colors += 1 if self.other_config.ignore_background is True else 0  # add 1 color because bg color wont be shown in legend
+        self.general_config.n_colors += 1 if self.general_config.ignore_background is True else 0  # add 1 color because bg color wont be shown in legend
         self._set_dmc_palette()
         self._quantize()
         if self.general_config.show_colors is False:
-            self.palette.replace_all_colors_by_code()
+            self.palette.replace_all_colors_by_code(self.other_config.background_code)

@@ -1,8 +1,8 @@
 from pathlib import Path
 from dataclasses import dataclass
 
-from dmc_db import DMCDB
-from constants import IDX_TO_SYMBOL_CODE, SYMBOLS_TO_FILL
+from src.dmc_db import DMCDB
+from src.constants import IDX_TO_SYMBOL_CODE, SYMBOLS_TO_FILL
 
 
 @dataclass
@@ -40,7 +40,6 @@ class DMCColor:
         """Replace dmc_rgb, dmc_name (but no dmc_code), just used if show_colors is False"""
         c_info = self.dmc.get_color_by_code(code)
         self.dmc_rgb = c_info['rgb']
-        self.dmc_name = c_info['name']
 
     def add_symbol(self) -> None:
         """Associate symbol to color"""
@@ -67,6 +66,7 @@ class GeneralConfig:
     show_colors: bool = True
     show_symbols: bool = True
     show_legend: bool = True
+    ignore_background: bool = True
     save_formats: list[str] | None = None
     png_scale: float = 2.0
 
@@ -75,7 +75,6 @@ class OtherConfig:
     method: str = 'de00'  # 'euclidean', 'compuphase', 'de76', 'de00'
     clean_confetti_wout_neighbors: bool = True
     clean_confetti_w1_diagonal_neighbor: bool = True
-    ignore_background: bool = False
     background_code: str | int = 'B5200'
     show_backstitch: bool = False
     backstitch_option: str = 'constant'  # 'none', 'constant'

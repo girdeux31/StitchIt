@@ -1,6 +1,6 @@
-from argument_parser import ArgumentParser
-from chart import Chart
-from info_file import InfoFile
+from src.argument_parser import ArgumentParser
+from src.chart import Chart
+from src.info_file import InfoFile
 
 
 # TODO:

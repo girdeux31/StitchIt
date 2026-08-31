@@ -4,15 +4,17 @@ from PIL import ImageColor
 from pathlib import Path
 from warnings import warn
 
-from data_classes import GeneralConfig, OtherConfig, ThreadConfig, LegendConfig, PatternConfig
+from src.data_classes import GeneralConfig, OtherConfig, ThreadConfig, LegendConfig, PatternConfig
+from src.constants import (
+    MIN_STITCHES_PER_ROW,
+    MAX_STITCHES_PER_ROW_RECOMMENDED,
+    METHOD_OPTIONS,
+    CLEANER_OPTIONS,
+    BACKSTITCH_OPTIONS,
+    FONT_WEIGHT_OPTIONS,
+    N_COLOR_RANGE
+)
 
-
-METHOD_OPTIONS = ['euclidean', 'compuphase', 'de76', 'de00']  # TODO remove compuphase?
-CLEANER_OPTIONS = ['none', 'moderate', 'strong']
-BACKSTITCH_OPTIONS = ['none', 'constant']
-FONT_WEIGHT_OPTIONS = ['normal', 'bold']
-N_COLOR_RANGE = [2, 100]
-MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
 
 def is_valid_color(value):
     try:
@@ -75,6 +77,9 @@ class ArgumentParser:
             '--no_legend', dest='show_legend', action='store_false', help='Produces chart without legend. By default legend is shown.'
         )
         self.parser.add_argument(
+            '--show_background', dest='ignore_background', action='store_false', help='Stitches detected as background are drawn with color specified in parameter \'--background_code\', without symbols and its color is not shown in legend. Background is detected as the mode of outer rim in input file. By default background is ignored.'
+        )
+        self.parser.add_argument(
             '--no_svg', dest='save_as_svg', action='store_false', help='Do not save chart as svg file. By default a svg file is generated.'
         )
         self.parser.add_argument(
@@ -96,13 +101,10 @@ class ArgumentParser:
             '--cleaner_option', default='strong', choices=CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'
         )
         self.parser.add_argument(
-            '--ignore_background', action='store_true', help='Stitches detected as background are drown with color specified in parameter \'--background_code\', without symbols and its color is not shown in legend. Background is detected as the mode of outer rim in input file. By default background is not ignored.'
+            '--background_code', type=str, default='B5200', help='DMC code for background color when parameter \'--show_background\' is not used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'B5200\' (snow white).'
         )
         self.parser.add_argument(
-            '--background_code', type=str, default='B5200', help='DMC code for background color when parameter \'--ignore_background\' is used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'B5200\' (snow white).'
-        )
-        self.parser.add_argument(
-            '--backstitch_option', default='constant', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\' and \'constant\' (backstitches with constant color between objects and background). Default is \'none\'.'
+            '--backstitch_option', default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\' and \'constant\' (backstitches with constant color between objects and background). Default is \'none\'.'
         )
         self.parser.add_argument(
             '--backstitch_code', type=str, default='498', help='DMC code for backstitches when parameter \'--backstitch_option\' is \'constant\'. See available codes in https://artpatt.com/dmc-color-chart. Default is \'498\' (dark red).'
@@ -251,6 +253,8 @@ class ArgumentParser:
             raise FileNotFoundError(f'File \'{self.args.input_file}\' not found')
         if not N_COLOR_RANGE[0] <= self.args.n_colors <= N_COLOR_RANGE[1]:
             raise ValueError(f'Parameter \'n_colors\' must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}')
+        if self.args.stitches_per_row < MIN_STITCHES_PER_ROW:
+            raise ValueError(f'Parameter \'stitches_per_row\' is below the minimum of {MIN_STITCHES_PER_ROW}')
         if self.args.stitches_per_row > MAX_STITCHES_PER_ROW_RECOMMENDED:
             warn(
                 f'Parameter \'stitches_per_row\' is over the recommended limit of {MAX_STITCHES_PER_ROW_RECOMMENDED}, '
@@ -275,6 +279,7 @@ class ArgumentParser:
             show_colors = self.args.show_colors,
             show_symbols = self.args.show_symbols,
             show_legend = self.args.show_legend,
+            ignore_background = self.args.ignore_background,
             save_formats = self.args.save_formats,
             png_scale = self.args.png_scale,
         )
@@ -285,7 +290,6 @@ class ArgumentParser:
             method = self.args.method,
             clean_confetti_wout_neighbors = self.args.clean_confetti_wout_neighbors,
             clean_confetti_w1_diagonal_neighbor = self.args.clean_confetti_w1_diagonal_neighbor,
-            ignore_background = self.args.ignore_background,
             background_code = self.args.background_code,
             show_backstitch = self.args.show_backstitch,
             backstitch_option = self.args.backstitch_option,

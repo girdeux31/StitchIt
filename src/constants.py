@@ -1,15 +1,21 @@
 from pathlib import Path
 
 
-METHOD_TO_COLOR_THRESHOLD = {
-    'euclidean': 30,
-    'compuphase': 30,
-    'de76': 10,
-    'de00': 10,
-}  # increase if colors in chart are too similar
+MIN_STITCHES_PER_ROW = 10
+MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
 BACKGROUND_INDEX = 255  # must be between n_colors and 255 inclusive since pattern is uint8
 BACKSTITCH_INDEX = 254
+CM_PER_INCH = 2.54  # cm/inch
+TABLE_FORMAT = 'simple'
 CSV_FILE = Path('data/dmc_db.csv')
+
+METHOD_OPTIONS = ['euclidean', 'compuphase', 'de76', 'de00']  # TODO remove compuphase?
+CLEANER_OPTIONS = ['none', 'moderate', 'strong']
+BACKSTITCH_OPTIONS = ['none', 'constant']
+FONT_WEIGHT_OPTIONS = ['normal', 'bold']
+N_COLOR_RANGE = [2, 100]
+
+SYMBOLS_TO_FILL = [2, 6, 7, 10]
 TABLE_HEADER = [
     'DMC code',
     'DMC color',
@@ -19,7 +25,13 @@ TABLE_HEADER = [
     'Skeins',
     'MSE'
 ]
-TABLE_FORMAT = 'simple'
+
+METHOD_TO_COLOR_THRESHOLD = {
+    'euclidean': 30,
+    'compuphase': 30,
+    'de76': 10,
+    'de00': 10,
+}  # increase if colors in chart are too similar
 FABRIC_COUNT_TO_STITCH_LENGTH = {
     11: 2.10,  # number of squares (or stitches) per inch, thread length in cm
     14: 1.80,
@@ -27,7 +39,6 @@ FABRIC_COUNT_TO_STITCH_LENGTH = {
     18: 1.45,
     20: 1.30,
 }
-CM_PER_INCH = 2.54  # cm/inch
 IDX_TO_SYMBOL_CODE = {
     0: "M4 4L16 16", # backslash
     1: "M4 16L16 4M4 10L 16 10", # forward slash
@@ -41,4 +52,3 @@ IDX_TO_SYMBOL_CODE = {
     9: "M4 4L16 16M4 16 L16 4M10 4L10 16M4 10L16 10", # 8 way cross
     10: "M4 4L4 16 16 16 16 4Z", # square, filled black
 }
-SYMBOLS_TO_FILL = [2, 6, 7, 10]

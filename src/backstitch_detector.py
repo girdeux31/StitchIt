@@ -1,8 +1,8 @@
 import numpy as np
 
-from palette import DMCColor
-from data_classes import Backstitch
-from constants import BACKSTITCH_INDEX
+from src.palette import DMCColor
+from src.data_classes import Backstitch
+from src.constants import BACKSTITCH_INDEX
 
 
 class BackstitchDetector:
@@ -50,7 +50,7 @@ class BackstitchDetector:
         if self.pattern.general_config.show_colors is True:
             code = self.pattern.other_config.backstitch_code
         else:
-            code = self.patter.other_config.backstitch_code_no_colors
+            code = self.pattern.other_config.backstitch_code_no_colors
         self.pattern.palette.add_color_by_code(BACKSTITCH_INDEX, code, is_backstitch=True)
 
     def _add_backstitch(self, start: tuple[int], end: tuple[int], color: DMCColor) -> None:

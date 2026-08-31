@@ -1,4 +1,4 @@
-from data_classes import DMCColor
+from src.data_classes import DMCColor
 
 
 class Palette:

@@ -1,12 +1,12 @@
 import numpy as np
 
-from image import Image
+from src.image import Image
 from PIL import Image as PILImage
 
-from backstitch_detector import BackstitchDetector
-from confetti_cleaner import ConfettiCleaner
-from data_classes import GeneralConfig, OtherConfig
-from constants import BACKGROUND_INDEX
+from src.backstitch_detector import BackstitchDetector
+from src.confetti_cleaner import ConfettiCleaner
+from src.data_classes import GeneralConfig, OtherConfig
+from src.constants import BACKGROUND_INDEX
 
 
 class Pattern:
@@ -29,7 +29,7 @@ class Pattern:
     def _change_background_index(self) -> None:
         """Set color index of background to special index"""
         self.bg_idx = self._get_background_idx()
-        if self.other_config.ignore_background is True:
+        if self.general_config.ignore_background is True:
             self.array[self.array==self.bg_idx] = BACKGROUND_INDEX  # change idx in pattern
             self.palette.remove_color_by_idx(self.bg_idx)  # remove old bg color
             self.palette.add_color_by_code(
