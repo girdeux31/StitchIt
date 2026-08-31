@@ -26,8 +26,6 @@ class InfoFile:
             'skeins': [],
             'error': [],
         }
-        if self.thread_config.fabric_count not in FABRIC_COUNT_TO_STITCH_LENGTH:
-            raise ValueError(f'Allowed values for \'thread_count\' parameters are: {", ".join(FABRIC_COUNT_TO_STITCH_LENGTH.keys())}')
         self.length_per_stitch = FABRIC_COUNT_TO_STITCH_LENGTH[self.thread_config.fabric_count]
 
     def import_chart(self, chart: Chart):

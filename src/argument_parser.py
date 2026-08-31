@@ -12,7 +12,8 @@ from src.constants import (
     CLEANER_OPTIONS,
     BACKSTITCH_OPTIONS,
     FONT_WEIGHT_OPTIONS,
-    N_COLOR_RANGE
+    N_COLOR_RANGE,
+    FABRIC_COUNT_TO_STITCH_LENGTH,
 )
 
 
@@ -118,8 +119,9 @@ class ArgumentParser:
 
         # THREAD PARAMETERS
 
+        fabric_count_options = list(FABRIC_COUNT_TO_STITCH_LENGTH.keys())
         self.parser.add_argument(
-            '--fabric_count', type=int, default=14, help='AIDA number of squares per inch. Only used to compute thread usage. Default is 14.'
+            '--fabric_count', type=int, default=14, choices=fabric_count_options, help='AIDA number of squares per inch. Only used to compute thread usage. Default is 14.'
         )
         self.parser.add_argument(
             '--strands', type=int, default=2, help='Strands used for stitching. Only used to compute thread usage. Default is 2.'
@@ -140,7 +142,7 @@ class ArgumentParser:
             '--legend_title_font_size', type=int, default=12, help='Legend title font size. Default is 12.'
         )
         self.parser.add_argument(
-            '--legend_title_font_color', type=str, default='black', help='Legend title font color. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
+            '--legend_title_font_color', type=str, default='black', help='Legend title font color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
             '--legend_title_font_weight', type=str, default='bold', choices=FONT_WEIGHT_OPTIONS, help='Legend title font weight. Options are \'normal\' and \'bold\'. Default is \'bold\'.'
@@ -164,13 +166,13 @@ class ArgumentParser:
             '--legend_column_height_pixels', type=int, default=30, help='Vertical space between legend rows in pixels. Default is 30.'
         )
         self.parser.add_argument(
-            '--legend_code_font_color', type=str, default='black', help='Font color for each legend item. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
+            '--legend_code_font_color', type=str, default='black', help='Font color for each legend item. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
             '--legend_code_font_size', type=int, default=10, help='Font size for each legend item. Default is 10.'
         )
         self.parser.add_argument(
-            '--legend_box_line_color', type=str, default='black', help='Box line color for each legend item. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
+            '--legend_box_line_color', type=str, default='black', help='Box line color for each legend item. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
             '--legend_box_line_width', type=int, default=1, help='Box line width for each legend item. Default is 1.'
@@ -179,7 +181,7 @@ class ArgumentParser:
         # PATTERN PARAMETERS
 
         self.parser.add_argument(
-            '--major_grid_color', type=str, default='black', help='Major grid color. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
+            '--major_grid_color', type=str, default='black', help='Major grid color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
             '--major_grid_step_pixels', type=int, default=100, help='Space between major gird lines in pixels. Default is 100.'
@@ -188,7 +190,7 @@ class ArgumentParser:
             '--major_grid_width', type=int, default=2, help='Major gird line width. Default is 2.'
         )
         self.parser.add_argument(
-            '--minor_grid_color', type=str, default='#323232', help='Minor grid color. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'#323232\'.'
+            '--minor_grid_color', type=str, default='#323232', help='Minor grid color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'#323232\'.'
         )
         self.parser.add_argument(
             '--minor_grid_step_pixels', type=int, dest='svg_pixels_per_unit', default=10, help='Space between minor gird lines in pixels. Default is 10.'
@@ -197,25 +199,25 @@ class ArgumentParser:
             '--minor_grid_width', type=int, default=1, help='Minor gird line width. Default is 1.'
         )
         self.parser.add_argument(
-            '--coords_font_color', type=str, default='black', help='Coordinates color in outer margin. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
+            '--coords_font_color', type=str, default='black', help='Coordinates color in outer margin. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
             '--coords_font_size', type=int, default=10, help='Coordinates font size. Default is 10.'
         )
         self.parser.add_argument(
-            '--coords_step_pixels', type=int, default=100, help='Space between coordinate numbers in pixels. Default is 100.'
+            '--coords_step_units', type=int, default=10, help='Space between coordinate numbers in minor grid units. Default is 10.'
         )
         self.parser.add_argument(
             '--coords_gap_pixels', type=int, default=2, help='Space between coordinates and chart in pixels. Default is 2.'
         )
         self.parser.add_argument(
-            '--arrow_color', type=str, default='black', help='Arrow color in outer margin. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
+            '--arrow_color', type=str, default='black', help='Arrow color in outer margin. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
             '--arrow_gap_pixels', type=int, default=2, help='Space before arrow and chart in pixels. Default is 2.'
         )
         self.parser.add_argument(
-            '--symbol_color', type=str, default='black', help='Symbol color when parameter \'--no_symbols\' is not used. Colors can be specified with names as \'gray\', RGB coordinates as \'128,128,128\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
+            '--symbol_color', type=str, default='black', help='Symbol color when parameter \'--no_symbols\' is not used. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors.  Default is \'black\'.'
         )
         self.parser.add_argument(
             '--symbol_line_width', type=int, default=1, help='Symbol line width when parameter \'--no_symbols\' is not used. Default is 1.'
@@ -223,7 +225,6 @@ class ArgumentParser:
 
     def _postprocess_arguments(self):
         """Tune some arguments depending on user options"""
-        self._postprocess_colors()
         self.args.input_file = Path(self.args.input_file)
         self.args.show_backstitch = True if self.args.backstitch_option != 'none' else False
         self.args.clean_confetti_wout_neighbors = True if self.args.cleaner_option in ['moderate', 'strong'] else False
@@ -238,14 +239,6 @@ class ArgumentParser:
             self.args.save_formats.append('png')
         if self.args.save_as_pdf is True:
             self.args.save_formats.append('pdf')
-
-    def _postprocess_colors(self):
-        """Convert RGB coords 20,20,20 to rgb(20,20,20)"""
-        for arg in vars(self):
-            if arg.endswith('_color'):
-                value = getattr(self, arg)
-                if value.count(',') == 2:  # then RGB coords
-                    setattr(self, arg, f'rgb({arg})')
 
     def _check_arguments(self) -> None:
         """Check some user arguments"""
@@ -336,7 +329,7 @@ class ArgumentParser:
             minor_grid_width = self.args.minor_grid_width,
             coords_font_size = self.args.coords_font_size,
             coords_font_color = self.args.coords_font_color,
-            coords_step_pixels = self.args.coords_step_pixels,
+            coords_step_units = self.args.coords_step_units,
             coords_gap_pixels = self.args.coords_gap_pixels,
             arrow_color = self.args.arrow_color,
             arrow_line_width = self.args.arrow_line_width,

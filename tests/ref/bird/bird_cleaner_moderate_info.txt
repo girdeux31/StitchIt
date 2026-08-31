@@ -1,0 +1,14 @@
+Design information:
+
+  Fabric count or Aida count: 14 (ct or stitches per inch)
+  Strands for stitching: 2 strands
+  Size (width x height): 10.89x8.53 (cm) or 4.29x3.36 ('')
+  Stitches (width x height): 60x47
+
+Thread information:
+
+  DMC code  DMC color               DMC RGB       Stitches    Length (m)    Skeins      MSE
+----------  ----------------------  ----------  ----------  ------------  --------  -------
+       726  Light Topaz             253,215,85         637         11.47         1   0.0095
+      3799  Very Dark Pewter Gray   66,66,66           447          8.05         1   0.0062
+       844  Ultra Dark Beaver Gray  72,72,72             6          0.11         1  69.5695
