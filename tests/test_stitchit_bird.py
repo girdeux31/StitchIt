@@ -13,9 +13,9 @@ def test_default_values(request):
         'n_colors': DEFAULT_N_COLORS,
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_no_colors(request):
     args = {
@@ -23,9 +23,9 @@ def test_no_colors(request):
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
         'no_colors': None,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_no_symbols(request):
     args = {
@@ -33,9 +33,9 @@ def test_no_symbols(request):
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
         'no_symbols': None,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_no_legend(request):
     args = {
@@ -43,9 +43,9 @@ def test_no_legend(request):
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
         'no_legend': None,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_all_false(request):
     args = {
@@ -55,9 +55,9 @@ def test_all_false(request):
         'no_symbols': None,
         'no_legend': None,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_show_background(request):
     args = {
@@ -65,9 +65,9 @@ def test_show_background(request):
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
         'show_background': None,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_backstitch_constant(request):
     args = {
@@ -75,15 +75,15 @@ def test_backstitch_constant(request):
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
         'backstitch_option': "constant",
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_min_values(request):
     args = {
         'n_colors': 2,
         'stitches_per_row': 10,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)

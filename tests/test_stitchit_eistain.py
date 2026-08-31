@@ -13,7 +13,7 @@ def test_default_values(request):
         'n_colors': DEFAULT_N_COLORS,
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
     assert_output(INP_NAME, tmp_file)
 
@@ -23,9 +23,9 @@ def test_method_euclidean(request):
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
         'method': 'euclidean',
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)
 
 def test_method_de76(request):
     args = {
@@ -33,6 +33,6 @@ def test_method_de76(request):
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
         'method': 'de76',
     }
-    ref_file, tmp_file = setup_method(request, INP_NAME, args)
+    tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
-    assert_output(ref_file, tmp_file)
+    assert_output(INP_NAME, tmp_file)

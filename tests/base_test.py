@@ -49,7 +49,7 @@ def setup_method(request, inp_name: Path, args: dict) -> None:
     clean_tmp_files(tmp_file)
     shutil.copyfile(ref_file, tmp_file)
     _setup_args(tmp_file, args)
-    return ref_file, tmp_file
+    return tmp_file
 
 def _setup_files(inp_name: Path, test_name: str):
     """Setup input and temp file"""
