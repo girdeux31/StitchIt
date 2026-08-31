@@ -1,8 +1,8 @@
 import numpy as np
 
-from src.palette import DMCColor
-from src.data_classes import Backstitch
-from src.constants import BACKSTITCH_INDEX
+from src.data_classes import Backstitch, DMCColor
+from src.color_tools import ColorTools
+from src.constants import BACKSTITCH_INDEX, INVERSE_BACKSTITCH_DELTA_INDEX, BACKGROUND_INDEX
 
 
 class BackstitchDetector:
@@ -11,7 +11,7 @@ class BackstitchDetector:
         """Init object"""
         self.pattern = pattern
         self.backstitches = []
-        self._add_backstitch_color_to_palette()
+        self._add_backstitch_colors_to_palette()
 
     def detect(self) -> list[Backstitch]:
         """
@@ -31,7 +31,13 @@ class BackstitchDetector:
                 if len(np.unique(mask)) == 2 and any(mask==self.pattern.bg_idx):  # two different colors and one is bg
                     start = (x_idx+1, y_idx)
                     end = (x_idx+1, y_idx+1)
-                    color = self.pattern.palette.get_color_by_idx(BACKSTITCH_INDEX)
+                    if self.pattern.other_config.backstitch_option == 'constant' or \
+                        self.pattern.general_config.show_colors is False:
+                        color = self.pattern.palette.get_color_by_idx(BACKSTITCH_INDEX)
+                    else:  # inverse
+                        dx = 1 if mask[0] == self.pattern.bg_idx else 0
+                        c_idx = self.pattern.array[y_idx, x_idx+dx] + INVERSE_BACKSTITCH_DELTA_INDEX
+                        color = self.pattern.palette.get_color_by_idx(c_idx)
                     self._add_backstitch(start, end, color)
 
     def _scann_vertically(self) -> None:
@@ -42,16 +48,33 @@ class BackstitchDetector:
                 if len(np.unique(mask)) == 2 and any(mask==self.pattern.bg_idx):  # two different colors and one is bg
                     start = (x_idx, y_idx+1)
                     end = (x_idx+1, y_idx+1)
-                    color = self.pattern.palette.get_color_by_idx(BACKSTITCH_INDEX)
+                    if self.pattern.other_config.backstitch_option == 'constant' or \
+                        self.pattern.general_config.show_colors is False:
+                        color = self.pattern.palette.get_color_by_idx(BACKSTITCH_INDEX)
+                    else:  # inverse
+                        dy = 1 if mask[0] == self.pattern.bg_idx else 0
+                        c_idx = self.pattern.array[y_idx+dy, x_idx] + INVERSE_BACKSTITCH_DELTA_INDEX
+                        color = self.pattern.palette.get_color_by_idx(c_idx)
                     self._add_backstitch(start, end, color)
 
-    def _add_backstitch_color_to_palette(self) -> None:
+    def _add_backstitch_colors_to_palette(self) -> None:
         """Add backstitch color to palete by dmc code"""
         if self.pattern.general_config.show_colors is True:
-            code = self.pattern.other_config.backstitch_code
+            if self.pattern.other_config.backstitch_option == 'constant':
+                code = self.pattern.other_config.backstitch_code
+                self.pattern.palette.add_color_by_code(BACKSTITCH_INDEX, code, is_backstitch=True)
+            else:  # inverse
+                colors = [color for color in self.pattern.palette if color.idx != BACKGROUND_INDEX]
+                for color in colors:  # warning: increasing list in loop of same list
+                    inv_rgb = ColorTools.inverse_rgb(color.dmc_rgb)
+                    self.pattern.palette.add_color_by_rgb(
+                        color.idx+INVERSE_BACKSTITCH_DELTA_INDEX,
+                        inv_rgb,
+                        is_backstitch=True
+                    )
         else:
             code = self.pattern.other_config.backstitch_code_no_colors
-        self.pattern.palette.add_color_by_code(BACKSTITCH_INDEX, code, is_backstitch=True)
+            self.pattern.palette.add_color_by_code(BACKSTITCH_INDEX, code, is_backstitch=True)
 
     def _add_backstitch(self, start: tuple[int], end: tuple[int], color: DMCColor) -> None:
         """Create backstitch and append to list"""

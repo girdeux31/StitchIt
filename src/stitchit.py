@@ -4,9 +4,10 @@ from src.info_file import InfoFile
 
 
 # TODO:
-#  - tests
 #  - change readme
-#  - bs with inverse rgb color
+
+# FIX:
+#  - whan backstitch option is inverse, then all bs colors are shown in legend even if not shown in chart
 
 def stitchit():
     """

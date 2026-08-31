@@ -50,7 +50,7 @@ def test_all_args(request):
     args = {
         'n_colors': 20,
         'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
-        'backstitch_option': 'constant',
+        'backstitch_option': 'inverse',
         'backstitch_code': 349,
         'fabric_count': 20,
         'strands': 10,

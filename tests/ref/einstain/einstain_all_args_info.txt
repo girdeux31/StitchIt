@@ -29,4 +29,23 @@ Thread information:
        801  Dark Coffee Brown         101,57,25             0          0.00         0   0.0000
        779  Dark Cocoa                98,75,69              0          0.00         0   0.0000
       3799  Very Dark Pewter Gray     66,66,66             69          0.90         1   1.6109
-       349  Dark Coral                210,16,53             0          0.00         0   0.0000
+       939  Very Dark Navy Blue       27,40,83              0          0.00         0   0.0000
+       797  Royal Blue                19,71,125             0          0.00         0   0.0000
+      3861  Light Cocoa               166,136,129           0          0.00         0   0.0000
+       312  Very Dark Baby Blue       53,102,139            0          0.00         0   0.0000
+      3841  Pale Baby Blue            205,223,237           0          0.00         0   0.0000
+       930  Dark Antique Blue         69,92,113             0          0.00         0   0.0000
+       162  Ultra Very Light Blue     219,236,245           0          0.00         0   0.0000
+       823  Dark Navy Blue            33,48,99              0          0.00         0   0.0000
+       322  Dark Baby Blue            90,143,184            0          0.00         0   0.0000
+      3750  Very Dark Antique Blue    56,76,94              0          0.00         0   0.0000
+       798  Dark Delft Blue           70,106,142            0          0.00         0   0.0000
+       334  Medium Baby Blue          115,159,193           0          0.00         0   0.0000
+       930  Dark Antique Blue         69,92,113             0          0.00         0   0.0000
+       169  Light Pewter              132,132,132           0          0.00         0   0.0000
+       334  Medium Baby Blue          115,159,193           0          0.00         0   0.0000
+      3861  Light Cocoa               166,136,129           0          0.00         0   0.0000
+       414  Dark Steel Gray           140,140,140           0          0.00         0   0.0000
+       813  Light Blue                161,194,215           0          0.00         0   0.0000
+       926  Medium Gray Green         152,174,174           0          0.00         0   0.0000
+        03  Medium Tin                200,200,192           0          0.00         0   0.0000

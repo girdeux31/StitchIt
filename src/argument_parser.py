@@ -105,7 +105,7 @@ class ArgumentParser:
             '--background_code', type=str, default='B5200', help='DMC code for background color when parameter \'--show_background\' is not used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'B5200\' (snow white).'
         )
         self.parser.add_argument(
-            '--backstitch_option', default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\' and \'constant\' (backstitches with constant color between objects and background). Default is \'none\'.'
+            '--backstitch_option', default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\', \'constant\' (backstitches with constant color between objects and background, color is defined by parameter \'--backstitch_code\') and \'inverse\' (backstitches with inverse color between objects and background). Default is \'none\'.'
         )
         self.parser.add_argument(
             '--backstitch_code', type=str, default='498', help='DMC code for backstitches when parameter \'--backstitch_option\' is \'constant\'. See available codes in https://artpatt.com/dmc-color-chart. Default is \'498\' (dark red).'

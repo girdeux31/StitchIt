@@ -64,3 +64,8 @@ class ColorTools:
                     mse = error**2
                     count += 1
         return mse/count if count > 0 else 0.0
+
+    @staticmethod
+    def inverse_rgb(rgb: tuple[int]) -> tuple[int]:
+        """Get inverse color from RGB"""
+        return tuple(255 - coord for coord in rgb)

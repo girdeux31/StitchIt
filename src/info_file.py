@@ -7,7 +7,7 @@ from tabulate import tabulate
 from src.chart import Chart
 from src.color_tools import ColorTools
 from src.data_classes import OtherConfig, ThreadConfig
-from src.constants import TABLE_HEADER, TABLE_FORMAT, FABRIC_COUNT_TO_STITCH_LENGTH, CM_PER_INCH
+from src.constants import TABLE_HEADER, TABLE_FORMAT, FABRIC_COUNT_TO_STITCH_LENGTH, CM_PER_INCH, CM_PER_M
 
 
 class InfoFile:
@@ -45,7 +45,7 @@ class InfoFile:
         for color in chart.pattern.palette:
             if color.show_in_legend is True:
                 stitches = np.sum(chart.pattern.array == color.idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
-                length = stitches * self.length_per_stitch / 100  # m
+                length = stitches * self.length_per_stitch / CM_PER_M  # m
                 skeins = math.ceil(length / (self.thread_config.skein_length*self.thread_config.strands_per_skein/self.thread_config.strands))
                 error = ColorTools.compute_color_mse(chart.pattern, self.other_config.method, color.idx)
                 self.thread_info['code'].append(color.dmc_code)

@@ -77,7 +77,7 @@ class OtherConfig:
     clean_confetti_w1_diagonal_neighbor: bool = True
     background_code: str | int = 'B5200'
     show_backstitch: bool = False
-    backstitch_option: str = 'constant'  # 'none', 'constant'
+    backstitch_option: str = 'constant'  # 'none', 'constant', 'inverse'
     backstitch_code: str | int = 498  # red
     backstitch_code_no_colors: str | int = 310  # black
 

@@ -79,6 +79,16 @@ def test_backstitch_constant(request):
     stitchit()
     assert_output(INP_NAME, tmp_file)
 
+def test_backstitch_inverse(request):
+    args = {
+        'n_colors': DEFAULT_N_COLORS,
+        'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
+        'backstitch_option': 'inverse',
+    }
+    tmp_file = setup_method(request, INP_NAME, args)
+    stitchit()
+    assert_output(INP_NAME, tmp_file)
+
 def test_min_values(request):
     args = {
         'n_colors': 2,
