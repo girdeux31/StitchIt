@@ -1,0 +1,16 @@
+Design information:
+
+  Fabric count or Aida count: 14 (ct or stitches per inch)
+  Strands for stitching: 2 strands
+  Size (width x height): 14.51x11.25 (cm) or 5.71x4.43 ('')
+  Stitches (width x height): 80x62
+
+Thread information:
+
+  DMC code  DMC color                  DMC RGB    Stitches    Length (m)    Skeins     MSE
+----------  ---------------------  -----------  ----------  ------------  --------  ------
+       739  Ultra Very Light Tan   248,228,200         702         12.64         1  0.4092
+      3827  Pale Golden Brown      247,187,119         494          8.89         1  0.2822
+       924  Very Dark Gray Green    86,106,106        1012         18.22         1  1.2038
+       722  Light Orange Spice     247,151,111         238          4.28         1  0.2449
+       613  Very Light Drab Brown  220,196,170         358          6.44         1  0.4060

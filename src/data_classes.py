@@ -115,7 +115,7 @@ class PatternConfig:
     minor_grid_width: int = 1
     coords_font_size: int = 10
     coords_font_color: str = 'black'
-    coords_step_pixels: int = 100
+    coords_step_units: int = 10
     coords_gap_pixels: int = 2
     arrow_color: str = 'black'
     arrow_line_width: int = 2

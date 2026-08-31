@@ -75,10 +75,10 @@ class Composer:
             'stroke-width': self.pattern_config.major_grid_width,
         }
         # horizontal lines
-        for x in range(11*size, width, self.pattern_config.major_grid_step_pixels):
+        for x in range(size+self.pattern_config.major_grid_step_pixels, width, self.pattern_config.major_grid_step_pixels):
             self.svg.add_xml_line(x, size, x, height, style)
         # vertical lines
-        for y in range(11*size, height, self.pattern_config.major_grid_step_pixels):
+        for y in range(size+self.pattern_config.major_grid_step_pixels, height, self.pattern_config.major_grid_step_pixels):
             self.svg.add_xml_line(size, y, width, y, style)
 
     def _add_minor_grid(self, size: int, width: int, height: int) -> None:
@@ -101,14 +101,12 @@ class Composer:
 
     def _add_top_numbers(self, size: int, width: int) -> None:
         """Add numbers in top margin"""
-        for idx, x_pos in enumerate(
-            range(
-                size+self.pattern_config.coords_step_pixels,
-                width+1,
-                self.pattern_config.coords_step_pixels
-            )
+        for x_pos in range(
+            size*(1+self.pattern_config.coords_step_units),
+            width+1,
+            size*self.pattern_config.coords_step_units
         ):
-            coord = (idx+1) * size
+            coord = int((x_pos-size) / size)
             style = {
                 'transform': f'translate(0 -{self.pattern_config.coords_gap_pixels})',
                 'text-anchor': 'middle',
@@ -117,14 +115,12 @@ class Composer:
 
     def _add_left_numbers(self, size: int, height: int) -> None:
         """Add numbers in left margin"""
-        for idx, y_pos in enumerate(
-            range(
-                size+self.pattern_config.coords_step_pixels,
-                height+1,
-                self.pattern_config.coords_step_pixels
-            )
+        for y_pos in range(
+            size*(1+self.pattern_config.coords_step_units),
+            height+1,
+            size*self.pattern_config.coords_step_units
         ):
-            coord = (idx+1) * size
+            coord = int((y_pos-size) / size)
             style = {
                 'transform': f'translate(-{self.pattern_config.coords_gap_pixels} 0) rotate(-90 {size} {y_pos})',
                 'text-anchor': 'middle',

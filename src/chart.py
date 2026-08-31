@@ -55,6 +55,7 @@ class Chart:
                 if column <= n_columns:
                     x_pos = x_pos + self.legend_config.column_width_pixels
                 else:
+                    column = 1
                     x_pos = self.legend_config.item_x_pixels
                     y_pos += self.legend_config.column_height_pixels
 
