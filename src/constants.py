@@ -9,7 +9,7 @@ CM_PER_INCH = 2.54  # cm/inch
 TABLE_FORMAT = 'simple'
 CSV_FILE = Path('data/dmc_db.csv')
 
-METHOD_OPTIONS = ['euclidean', 'compuphase', 'de76', 'de00']  # TODO remove compuphase?
+METHOD_OPTIONS = ['euclidean', 'de76', 'de00']
 CLEANER_OPTIONS = ['none', 'moderate', 'strong']
 BACKSTITCH_OPTIONS = ['none', 'constant']
 FONT_WEIGHT_OPTIONS = ['normal', 'bold']
@@ -28,7 +28,6 @@ TABLE_HEADER = [
 
 METHOD_TO_COLOR_THRESHOLD = {
     'euclidean': 30,
-    'compuphase': 30,
     'de76': 10,
     'de00': 10,
 }  # increase if colors in chart are too similar

@@ -10,18 +10,6 @@ class ColorTools:
         """Compute euclidean distance between two colors'"""
         return math.dist(c1, c2)
 
-    @staticmethod
-    def _compuphase_distance(c1: tuple[int], c2: tuple[int]) -> float:
-        """Compute the compuphase distance between two RGB colors (like euclidean but with weighting factors depending on red)"""
-        r1, g1, b1 = c1
-        r2, g2, b2 = c2
-        rmean = (r1 + r2) / 2
-        mr = (512 + rmean) / 256
-        mg = 4
-        mb = (767 - rmean) / 256
-
-        return math.sqrt(mr*((r1-r2)**2) + mg*((g1-g2)**2) + mb*((b1-b2)**2))
-
     @classmethod
     def _deltae76_distance(cls, c1: tuple[int], c2: tuple[int]) -> float:
         """
@@ -55,8 +43,6 @@ class ColorTools:
         dist_method = None
         if method == 'euclidean':
             dist_method = cls._euclidean_distance
-        elif method == 'compuphase':
-            dist_method = cls._compuphase_distance
         elif method == 'de76':
             dist_method = cls._deltae76_distance
         elif method == 'de00':

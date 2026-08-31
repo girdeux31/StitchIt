@@ -95,7 +95,7 @@ class ArgumentParser:
         # OTHER PARAMETERS
 
         self.parser.add_argument(
-            '--method', default='de00', choices=METHOD_OPTIONS, help='Method to compute color distance. Options are: \'euclidean\', \'compuphase\' (similar to euclidean distance but with weighting factors depending on red), \'de76\' (deltaE CIE76, like euclidean distance but with LAB coordinates), \'de00\' (deltaE CIELAB2000, more accurate method as it measure color difference as human perception). Default is \'de00\'.'
+            '--method', default='de00', choices=METHOD_OPTIONS, help='Method to compute color distance. Options are: \'euclidean\', \'de76\' (deltaE CIE76, like euclidean distance but with LAB coordinates), \'de00\' (deltaE CIELAB2000, more accurate method as it measure color difference as human perception). Default is \'de00\'.'
         )
         self.parser.add_argument(
             '--cleaner_option', default='strong', choices=CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'

@@ -72,7 +72,7 @@ class GeneralConfig:
 
 @dataclass
 class OtherConfig:
-    method: str = 'de00'  # 'euclidean', 'compuphase', 'de76', 'de00'
+    method: str = 'de00'  # 'euclidean', 'de76', 'de00'
     clean_confetti_wout_neighbors: bool = True
     clean_confetti_w1_diagonal_neighbor: bool = True
     background_code: str | int = 'B5200'
