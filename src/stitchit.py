@@ -5,9 +5,10 @@ from src.info_file import InfoFile
 
 # TODO:
 #  - change readme
+#  - order legend by #bs
 
 # FIX:
-#  - whan backstitch option is inverse, then all bs colors are shown in legend even if not shown in chart
+#  - all colors are shown in legend even if not shown in chart (also with bs when option is inverse)
 
 def stitchit():
     """
