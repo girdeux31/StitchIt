@@ -1,25 +1,138 @@
-# Python Cross Stitch Patterns!
+# <a id="sec-top"></a>StitchIt
 
-WORK IN PROGRESS, SEE [ORIGINAL REPO](https://github.com/PaulMakesStuff/Python_Cross_Stitch)
+> [!WARNING]
+> WORK IN PROGRESS
 
+StitchIt can generates a cross stitch chart from an image with ease and free. Output formats include svg, png and pdf. Main features include:
 
-Takes a .jpg image file and generates a cross stitch pattern using a user specified number of DMC colors.
+- User option for number of colors and stitches per row
+- Background recognition
+- Backstitch (limited to background rim so far)
+- Optionally, multiple format tweaks can be done to the final chart
 
-Prior to using this script you will need to install [Python Imaging Library - PIL](http://www.pythonware.com/products/pil/). 
-Once installed, open up either terminal, or command prompt and then run the following command replacing the file path with a 
-path to the folder containing the image you wish to convert.
+> [!NOTE]
+> StitchIt is developed with Python 3.10 and tested with pytest.
 
-    python "/pixelate.py" "/wave.jpg" 10 100
-    
- So the first argument is the name of the file to convert, note this must be .jpg for the time being, the second is the 
- number of DMC colors to use the third is the stitch count.
- 
- Example input image below:
- 
- ![Input Image](https://github.com/PaulMakesStuff/Python_Cross_Stitch/blob/master/wave.jpg)
- 
-Example output image below. This pattern has a stitch count of 100, and uses 10 DMC colors. Other outputs from this script include a black and white pattern; a color pattern with no symbols to get an idea of what the final cross stitch will look like; as well as a key so you'll know what DMC colors to purchase.
+## <a id="sec-install"></a>Install
 
- ![Output Image](https://github.com/PaulMakesStuff/Python_Cross_Stitch/blob/master/col_sym.png)
- 
- This package of files comes with a list of DMC colors, and their RGB values - this could be replaced with whatever thread you wish to use, for example Anchor. The nearest color is picked based upon what DMC color would look the closest, and is not simply done based upon how close the input RGB is to the DMC RGB.
+> [!NOTE]
+> Package soon available in PyPI.
+
+Meanwhile, clone the GitHub repository with:
+
+`gh repo clone girdeux31/StitchIt`
+
+The following third-party modules are required.
+
+- pillow==12.2.0
+- cairosvg==2.9.0
+- tabulate==0.10.0
+- scikit-image>=0.22.0
+- numpy>=1.24.3
+
+## <a id="sec-guide"></a>Quick guide
+
+`python stitchit.py input_file n_colors stitches_per_row`
+
+Only 3 arguments are mandatory, see the [list of all available arguments](#sec-options).
+
+- `input_file` (str): image to process
+- `n_colors` (int): number of colors
+- `stitches_per_row` (int): number of stitches (squares) per row
+
+## <a id="sec-recommendations"></a>Image recommendations
+
+## <a id="sec-featuers"></a>Special features
+
+### <a id="sec-bg"></a>Background
+
+### <a id="sec-bs"></a>Backstitch
+
+## <a id="sec-options"></a>User options
+
+In the table below there is a list of all available user options, along with the type, default value and a comment. Please, read carefully the following notes.
+
+> [!NOTE]
+> Only parameters `--input_file`, `--n_colors` and `--stitches_per_row` are mandatory. All others are optional (default is included in table).
+
+> [!NOTE]
+> No value is needed for parameters `--no_colors`, `--no_symbols`,`--no_legend`, `--show_background`, `--no_svg`, `--no_png`, `--no_pdf`. Their effect is applied if they are present in the command line. That is way they do not have type or default values, their default is explained in comments.
+
+> [!NOTE]
+> All parameters that end with `_color` ask for a color. Colors can be specified with names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
+
+> [!NOTE]
+> All parameters that end with `_code` (only `--background_code` and `--backstitch_code`) ask for a DMC code. See [available codes](https://artpatt.com/dmc-color-chart).
+
+> [!NOTE]
+> All parameters that end with `_pixels` ask for a distance in pixels over the SVG file produced.
+
+| Parameter | Type | Default | Comment |
+|-----------|------|---------|---------|
+| `--input_file` | `str` || Image file to convert. |
+| `--n_colors` | `int` || Colors to use in chart (backstitch colors are not included). Parameter must be between 2 and 100, both included. |
+| `--stitches_per_row` || `int` | Number of stitches (squares/pixels) per row in chart. Must be greater or equal than 10. |
+| `--no_colors` ||| Produces chart without colors (color specified in parameter `--background_code` is used). By default colors are user. |
+| `--no_symbols` ||| Produces chart without symbols. By default symbols are user. |
+| `--no_legend` ||| Produces chart without legend. By default legend is shown. |
+| `--show_background` ||| Stitches detected as background are drawn with color specified in parameter `--background_code`, without symbols and its color is not shown in legend. Background is detected as the mode of outer rim in input file. By default background is ignored. |
+| `--no_svg` ||| Do not save chart as svg file. By default a svg file is generated. |
+| `--no_png` ||| Do not save chart as png file. By default a png file is generated. |
+| `--no_pdf` ||| Do not save chart as pdf file. By default a pdf file is generated. |
+| `--png_scale` | `float` | 2.0 | Scale factor for the png generated file if `--no_png` parameter is not used. |
+| `--method` | `str` | `de00` | Method to compute color distance. Options are: `euclidean`, `de76` (deltaE CIE76, like euclidean distance but with LAB coordinates), `de00` (deltaE CIELAB2000, more accurate method as it measure color difference as human perception). |
+| `--cleaner_option` | `str` | `strong` | Level of confetti (bad pixels) cleaning. Options are `none`, `moderate` (cleans isoleted pixels) and `strong` (same as `moderate` plus cleans pixels with just one diagonal neighbor). |
+| `--background_code` | `str` | `B5200'` | DMC code for background color when parameter `--show_background` is not used. |
+| `--backstitch_option` | `str` | `none` | Level of backstitching. Options are `none`, `constant` (backstitches with constant color between objects and background, color is defined by parameter `--backstitch_code`) and `inverse` (backstitches with inverse color between objects and background). |
+| `--backstitch_code` | `str` | `498` | DMC code for backstitches when parameter `--backstitch_option` is `constant`. |
+| `--backstitch_code_no_colors` | `str` | `310` | DMC code for backstitches when parameter `--backstitch_option` is not `none` and `--no_colors` is used. See available codes in https://artpatt.com/dmc-color-chart. |
+| `--backstitch_line_width` | `int` | 2 | Backstitch line width when parameter `--backstitch_option` is not `none`. |
+| `--fabric_count` | `int` | 14 | AIDA number of squares per inch. Only used to compute thread usage. |
+| `--strands` | `int` | 2 | Strands used for stitching. Only used to compute thread usage. |
+| `--skein_length` | `float` | 8.0 | Skein length in meters. Only used to compute thread usage. |
+| `--strands_per_skein` | `int` | 6 | Strands in a skein. Only used to compute thread usage. |
+| `--legend_title` | `str` | `Mouliné DMC` | Legend title. |
+| `--legend_title_font_size` | `int` | 12 | Legend title font size. |
+| `--legend_title_font_color` | `str` | `black` | Legend title font color. |
+| `--legend_title_font_weight` | `str` | `bold` | Legend title font weight. Options are `normal` and `bold`. |
+| `--legend_title_x_pixels` | `int` | 20 | Horizontal space before legend title in pixels. |
+| `--legend_title_y_pixels` | `int` | 30 | Vertical space before legend title in pixels. |
+| `--legend_item_x_pixels` | `int` | 20 | Horizontal space before first legend item in pixels. |
+| `--legend_item_y_pixels` | `int` | 20 | Vertical space before first legend item in pixels. |
+| `--legend_column_width_pixels` | `int` | 100 | Horizontal space between legend columns in pixels. |
+| `--legend_column_height_pixels` | `int` | 30 | Vertical space between legend rows in pixels. |
+| `--legend_code_font_color` | `str` | `black` | Font color for each legend item.|
+| `--legend_code_font_size` | `int` | 10 | Font size for each legend item. |
+| `--legend_box_line_color` | `str` | `black` | Box line color for each legend item. |
+| `--legend_box_line_width` | `int` | 1 | Box line width for each legend item. |
+| `--major_grid_color` | `str` | `black` | Major grid color. |
+| `--major_grid_step_pixels` | `int` | 100 | Space between major gird lines in pixels. |
+| `--major_grid_width` | `int` | 2 | Major gird line width. |
+| `--minor_grid_color` | `str` | `#323232` | Minor grid color. Default is `#323232`. |
+| `--minor_grid_step_pixels` | `int` | 10 | Space between minor gird lines in pixels. |
+| `--minor_grid_width` | `int` | 1 | Minor gird line width. |
+| `--coords_font_color` | `str` | `black` | Coordinates color in outer margin. |
+| `--coords_font_size` | `int` | 10 | Coordinates font size. |
+| `--coords_step_units` | `int` | 10 | Space between coordinate numbers in minor grid units. |
+| `--coords_gap_pixels` | `int` | 2 | Space between coordinates and chart in pixels. |
+| `--arrow_color` | `str` | `black` | Arrow color in outer margin. |
+| `--arrow_gap_pixels` | `int` | 2 | Space before arrow and chart in pixels. |
+| `--symbol_color` | `str` | `black` | Symbol color when parameter `--no_symbols` is not used. |
+| `--symbol_line_width` | `int` | 1 | Symbol line width when parameter `--no_symbols` is not used. |
+
+## <a id="sec-bugs"></a>Known bugs and limitations
+
+## <a id="sec-work"></a>Future work
+
+The following ideas can be implemented in the future. It is not planed to do so, but maybe someone will fork this.
+
+- Improve backstitch with inner rims and/or other options
+- Implement half and quarter stitches
+
+## <a id="sec-aknowledgement"></a>Aknowledgement
+
+This repo is a fork, but it has been refactored in a 99.9%. See [original repo](https://github.com/PaulMakesStuff/Python_Cross_Stitch).
+
+## <a id="sec-contact"></a>Contact
+
+Feel free to [contact me](mesado31@gmail.com) for any suggestion or bug.

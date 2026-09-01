@@ -1,5 +1,5 @@
 pillow==12.2.0
 cairosvg==2.9.0
-scikit-image==0.22.0
-numpy==1.24.3
 tabulate==0.10.0
+scikit-image>=0.22.0
+numpy>=1.24.3
