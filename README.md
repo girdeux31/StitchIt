@@ -60,6 +60,23 @@ That is, use 2 different DMC colors and 60 stitches in each row.
 |----------|-------|
 |<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<div style="background-color: white; display: inline-block;"><img src="examples/bird_chart.png" alt="Same bird as a cross stitch chart" width="320"></div>|
 
+<div style="display: flex; gap: 20px; background-color: white; padding: 10px;">
+
+  <img src="examples/bird.jpg"
+       alt="A bird, original image"
+       width="300">
+
+  <img src="examples/bird_chart.png"
+       alt="Same bird as a cross stitch chart"
+       width="350">
+
+</div>
+
+<p align="center">
+  <img src="examples/bird.jpg" alt="A bird, original image" width="300">
+  <img src="examples/bird_chart.png" alt="Same bird as a cross stitch chart" width="350">
+</p>
+
 ## <a id="sec-recommendations"></a>Image recommendations
 
 ## <a id="sec-thread"></a>Thread information
