@@ -47,9 +47,18 @@ Only 3 parameters are mandatory, see the [list of all available options](#sec-op
 - `n_colors` (int): number of colors
 - `stitches_per_row` (int): number of stitches (squares) per row
 
+> [!WARNING]
+> If you clone the repo, then call the main script as `python src/stitchit.py`.
+
 For example:
 
+`python3 stitchit.py -i examples/bird.jpg -n 2 -s 60`
 
+That is, use 2 different DMC colors and 60 stitches in each row.
+
+| Original | Chart |
+|----------|-------|
+|<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<div style="background-color: white; display: inline-block;"><img src="examples/bird_chart.png" alt="Same bird as a cross stitch chart" width="320"></div>|
 
 ## <a id="sec-recommendations"></a>Image recommendations
 
