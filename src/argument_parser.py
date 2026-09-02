@@ -178,6 +178,9 @@ class ArgumentParser:
         # PATTERN PARAMETERS
 
         self.parser.add_argument(
+            '--svg-fill-color', type=str, default='none', help='SVG background color (outside chart). Use \'none\' for transparent color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'none\'.'
+        )
+        self.parser.add_argument(
             '--major-grid-color', type=str, default='black', help='Major grid color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
@@ -232,6 +235,9 @@ class ArgumentParser:
         self.args.arrow_fill_color = self.args.arrow_color  # user don't need such detail
         self.args.arrow_line_width = 2  # user don't need such detail
         self.args.symbol_fill_color = self.args.symbol_color  # user don't need such detail
+        self.args.is_svg_transparent = True if self.args.svg_fill_color.lower() == 'none' else False
+        if self.args.is_svg_transparent is True:
+            self.args.svg_fill_color = 'white'  # so _check_colors gives no problem, color won't be used
         self.args.save_formats = []
         if self.args.save_as_svg is True:
             self.args.save_formats.append('svg')
@@ -339,4 +345,6 @@ class ArgumentParser:
             symbol_fill_color = self.args.symbol_fill_color,
             symbol_line_width = self.args.symbol_line_width,
             backstitch_line_width = self.args.backstitch_line_width,
+            svg_fill_color = self.args.svg_fill_color,
+            is_svg_transparent = self.args.is_svg_transparent,
         )

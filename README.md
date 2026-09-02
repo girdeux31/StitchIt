@@ -60,23 +60,6 @@ That is, use 2 different DMC colors and 60 stitches in each row.
 |----------|-------|
 |<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<div style="background-color: white; display: inline-block;"><img src="examples/bird_chart.png" alt="Same bird as a cross stitch chart" width="320"></div>|
 
-<div style="display: flex; gap: 20px; background-color: white; padding: 10px;">
-
-  <img src="examples/bird.jpg"
-       alt="A bird, original image"
-       width="300">
-
-  <img src="examples/bird_chart.png"
-       alt="Same bird as a cross stitch chart"
-       width="350">
-
-</div>
-
-<p align="center">
-  <img src="examples/bird.jpg" alt="A bird, original image" width="300">
-  <img src="examples/bird_chart.png" alt="Same bird as a cross stitch chart" width="350">
-</p>
-
 ## <a id="sec-recommendations"></a>Image recommendations
 
 ## <a id="sec-thread"></a>Thread information
@@ -98,13 +81,13 @@ In the table below there is a list of all available user options, along with the
 > No value is needed for options `--no-colors`, `--no-symbols`,`--no-legend`, `--show-background`, `--no-svg`, `--no-png`, `--no-pdf`. Their effect is applied if they are present in the command line. That is way they do not have type or default values. Their default behavior is explained in comments.
 
 > [!NOTE]
-> All options that end with `_color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
+> All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
 
 > [!NOTE]
 > Options `--background-code`, `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available codes](https://artpatt.com/dmc-color-chart).
 
 > [!NOTE]
-> All options that end with `_pixels` ask for a distance in pixels over the SVG file produced.
+> All options that end with `-pixels` ask for a distance in pixels over the SVG file produced.
 
 | **Parameter** | **Type** | **Default** | **Comment** |
 |---------------|----------|-------------|-------------|
@@ -143,6 +126,7 @@ In the table below there is a list of all available user options, along with the
 | `--legend-code-font-size` | `int` | 10 | Font size for each legend item. |
 | `--legend-box-line-color` | `str` | `black` | Box line color for each legend item. |
 | `--legend-box-line-width` | `int` | 1 | Box line width for each legend item. |
+| `--svg-fill-color` | `str` | `none` | SVG background color (outside chart). Use `none` for transparent color. |
 | `--major-grid-color` | `str` | `black` | Major grid color. |
 | `--major-grid-step-pixels` | `int` | 100 | Space between major gird lines in pixels. |
 | `--major-grid-width` | `int` | 2 | Major gird line width. |

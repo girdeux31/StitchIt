@@ -41,6 +41,9 @@ class Composer:
         }
         self.svg.add_xml_header(width, height, {})
         self.svg.add_xml_style(classes)
+        if self.pattern_config.is_svg_transparent is False:
+            style = {'fill': self.pattern_config.svg_fill_color}
+            self.svg.add_xml_rect(0, 0, width, height, style)  # add rect full svg size so no transparency is shown
 
     def add_tail(self) -> None:
         """Add xml svg tag to close the file"""
