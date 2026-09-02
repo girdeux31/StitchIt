@@ -60,37 +60,37 @@ class ArgumentParser:
         # GENERAL PARAMETERS
 
         self.parser.add_argument(
-            '-i', '--input_file', required=True, type=str, help='Image file to convert.'
+            '-i', '--input-file', required=True, type=str, help='Image file to convert.'
         )
         self.parser.add_argument(
-            '-n', '--n_colors', required=True, type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included.'
+            '-n', '--n-colors', required=True, type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included.'
         )
         self.parser.add_argument(
-            '-s', '--stitches_per_row', required=True, type=int, help=f'Number of stitches/squares/pixels per row in chart. Must be greater or equal than {MIN_STITCHES_PER_ROW}.'
+            '-s', '--stitches-per-row', required=True, type=int, help=f'Number of stitches/squares/pixels per row in chart. Must be greater or equal than {MIN_STITCHES_PER_ROW}.'
         )
         self.parser.add_argument(
-            '--no_colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in parameter \'--background_code\' is used). By default colors are user.'
+            '--no-colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in parameter \'--background-code\' is used). By default colors are user.'
         )
         self.parser.add_argument(
-            '--no_symbols', dest='show_symbols', action='store_false', help='Produces chart without symbols. By default symbols are user.'
+            '--no-symbols', dest='show_symbols', action='store_false', help='Produces chart without symbols. By default symbols are user.'
         )
         self.parser.add_argument(
-            '--no_legend', dest='show_legend', action='store_false', help='Produces chart without legend. By default legend is shown.'
+            '--no-legend', dest='show_legend', action='store_false', help='Produces chart without legend. By default legend is shown.'
         )
         self.parser.add_argument(
-            '--show_background', dest='ignore_background', action='store_false', help='Stitches detected as background are drawn with color specified in parameter \'--background_code\', without symbols and its color is not shown in legend. Background is detected as the mode of outer rim in input file. By default background is ignored.'
+            '--show-background', dest='ignore_background', action='store_false', help='Stitches detected as background are drawn with color specified in parameter \'--background-code\', without symbols and its color is not shown in legend. Background is detected as the mode of outer rim in input file. By default background is ignored.'
         )
         self.parser.add_argument(
-            '--no_svg', dest='save_as_svg', action='store_false', help='Do not save chart as svg file. By default a svg file is generated.'
+            '--no-svg', dest='save_as_svg', action='store_false', help='Do not save chart as svg file. By default a svg file is generated.'
         )
         self.parser.add_argument(
-            '--no_png', dest='save_as_png', action='store_false', help='Do not save chart as png file. By default a png file is generated.'
+            '--no-png', dest='save_as_png', action='store_false', help='Do not save chart as png file. By default a png file is generated.'
         )
         self.parser.add_argument(
-            '--no_pdf', dest='save_as_pdf', action='store_false', help='Do not save chart as pdf file. By default a pdf file is generated.'
+            '--no-pdf', dest='save_as_pdf', action='store_false', help='Do not save chart as pdf file. By default a pdf file is generated.'
         )
         self.parser.add_argument(
-            '--png_scale', type=float, default=2.0, help='Scale factor for the png generated file if \'--no_png\' parameter is not used. Default is \'2.0\'.'
+            '--png-scale', type=float, default=2.0, help='Scale factor for the png generated file if \'--no-png\' parameter is not used. Default is \'2.0\'.'
         )
 
         # OTHER PARAMETERS
@@ -99,128 +99,128 @@ class ArgumentParser:
             '--method', type=str, default='de00', choices=METHOD_OPTIONS, help='Method to compute color distance. Options are: \'euclidean\', \'de76\' (deltaE CIE76, like euclidean distance but with LAB coordinates), \'de00\' (deltaE CIELAB2000, more accurate method as it measure color difference as human perception). Default is \'de00\'.'
         )
         self.parser.add_argument(
-            '--cleaner_option', type=str, default='strong', choices=CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'
+            '--cleaner-option', type=str, default='strong', choices=CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'
         )
         self.parser.add_argument(
-            '--background_code', type=str, default='B5200', help='DMC code for background color when parameter \'--show_background\' is not used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'B5200\' (snow white).'
+            '--background-code', type=str, default='B5200', help='DMC code for background color when parameter \'--show-background\' is not used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'B5200\' (snow white).'
         )
         self.parser.add_argument(
-            '--backstitch_option', type=str, default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\', \'constant\' (backstitches with constant color between objects and background, color is defined by parameter \'--backstitch_code\') and \'inverse\' (backstitches with inverse color between objects and background). Default is \'none\'.'
+            '--backstitch-option', type=str, default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\', \'constant\' (backstitches with constant color between objects and background, color is defined by parameter \'--backstitch-code\') and \'inverse\' (backstitches with inverse color between objects and background). Default is \'none\'.'
         )
         self.parser.add_argument(
-            '--backstitch_code', type=str, default='498', help='DMC code for backstitches when parameter \'--backstitch_option\' is \'constant\'. See available codes in https://artpatt.com/dmc-color-chart. Default is \'498\' (dark red).'
+            '--backstitch-code', type=str, default='498', help='DMC code for backstitches when parameter \'--backstitch-option\' is \'constant\'. See available codes in https://artpatt.com/dmc-color-chart. Default is \'498\' (dark red).'
         )
         self.parser.add_argument(
-            '--backstitch_code_no_colors', type=str, default='310', help='DMC code for backstitches when parameter \'--backstitch_option\' is not \'none\' and \'--no_colors\' is used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'310\' (black).'
-        )
-        self.parser.add_argument(
-            '--backstitch_line_width', type=int, default=2, help='Backstitch line width when parameter \'--backstitch_option\' is not \'none\'. Default is 2.'
+            '--backstitch-code-no-colors', type=str, default='310', help='DMC code for backstitches when parameter \'--backstitch-option\' is not \'none\' and \'--no-colors\' is used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'310\' (black).'
         )
 
         # THREAD PARAMETERS
 
         fabric_count_options = list(FABRIC_COUNT_TO_STITCH_LENGTH.keys())
         self.parser.add_argument(
-            '--fabric_count', type=int, default=14, choices=fabric_count_options, help='AIDA number of squares per inch. Only used to compute thread usage. Default is 14.'
+            '--fabric-count', type=int, default=14, choices=fabric_count_options, help='AIDA number of squares per inch. Only used to compute thread usage. Default is 14.'
         )
         self.parser.add_argument(
             '--strands', type=int, default=2, help='Strands used for stitching. Only used to compute thread usage. Default is 2.'
         )
         self.parser.add_argument(
-            '--skein_length_meters', type=float, default=8.0, help='Skein length in meters. Only used to compute thread usage. Default is 8.0.'
+            '--skein-length-meters', type=float, default=8.0, help='Skein length in meters. Only used to compute thread usage. Default is 8.0.'
         )
         self.parser.add_argument(
-            '--strands_per_skein', type=int, default=6, help='Strands in a skein. Only used to compute thread usage. Default is 6.'
+            '--strands-per-skein', type=int, default=6, help='Strands in a skein. Only used to compute thread usage. Default is 6.'
         )
 
         # LEGEND PARAMETERS
 
         self.parser.add_argument(
-            '--legend_title', type=str, default='Mouliné DMC', help='Legend title. Default is \'Mouliné DMC\'.'
+            '--legend-title', type=str, default='Mouliné DMC', help='Legend title. Default is \'Mouliné DMC\'.'
         )
         self.parser.add_argument(
-            '--legend_title_font_size', type=int, default=12, help='Legend title font size. Default is 12.'
+            '--legend-title-font-size', type=int, default=12, help='Legend title font size. Default is 12.'
         )
         self.parser.add_argument(
-            '--legend_title_font_color', type=str, default='black', help='Legend title font color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--legend-title-font-color', type=str, default='black', help='Legend title font color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--legend_title_font_weight', type=str, default='bold', choices=FONT_WEIGHT_OPTIONS, help='Legend title font weight. Options are \'normal\' and \'bold\'. Default is \'bold\'.'
+            '--legend-title-font-weight', type=str, default='bold', choices=FONT_WEIGHT_OPTIONS, help='Legend title font weight. Options are \'normal\' and \'bold\'. Default is \'bold\'.'
         )
         self.parser.add_argument(
-            '--legend_title_x_pixels', type=int, default=20, help='Horizontal space before legend title in pixels. Default is 20.'
+            '--legend-title-x-pixels', type=int, default=20, help='Horizontal space before legend title in pixels. Default is 20.'
         )
         self.parser.add_argument(
-            '--legend_title_y_pixels', type=int, default=30, help='Vertical space before legend title in pixels. Default is 30.'
+            '--legend-title-y-pixels', type=int, default=30, help='Vertical space before legend title in pixels. Default is 30.'
         )
         self.parser.add_argument(
-            '--legend_item_x_pixels', type=int, default=20, help='Horizontal space before first legend item in pixels. Default is 20.'
+            '--legend-item-x-pixels', type=int, default=20, help='Horizontal space before first legend item in pixels. Default is 20.'
         )
         self.parser.add_argument(
-            '--legend_item_y_pixels', type=int, default=20, help='Vertical space before first legend item in pixels. Default is 20.'
+            '--legend-item-y-pixels', type=int, default=20, help='Vertical space before first legend item in pixels. Default is 20.'
         )
         self.parser.add_argument(
-            '--legend_column_width_pixels', type=int, default=100, help='Horizontal space between legend columns in pixels. Default is 100.'
+            '--legend-column-width-pixels', type=int, default=100, help='Horizontal space between legend columns in pixels. Default is 100.'
         )
         self.parser.add_argument(
-            '--legend_column_height_pixels', type=int, default=30, help='Vertical space between legend rows in pixels. Default is 30.'
+            '--legend-column-height-pixels', type=int, default=30, help='Vertical space between legend rows in pixels. Default is 30.'
         )
         self.parser.add_argument(
-            '--legend_code_font_color', type=str, default='black', help='Font color for each legend item. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--legend-code-font-color', type=str, default='black', help='Font color for each legend item. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--legend_code_font_size', type=int, default=10, help='Font size for each legend item. Default is 10.'
+            '--legend-code-font-size', type=int, default=10, help='Font size for each legend item. Default is 10.'
         )
         self.parser.add_argument(
-            '--legend_box_line_color', type=str, default='black', help='Box line color for each legend item. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--legend-box-line-color', type=str, default='black', help='Box line color for each legend item. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--legend_box_line_width', type=int, default=1, help='Box line width for each legend item. Default is 1.'
+            '--legend-box-line-width', type=int, default=1, help='Box line width for each legend item. Default is 1.'
         )
 
         # PATTERN PARAMETERS
 
         self.parser.add_argument(
-            '--major_grid_color', type=str, default='black', help='Major grid color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--major-grid-color', type=str, default='black', help='Major grid color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--major_grid_step_pixels', type=int, default=100, help='Space between major gird lines in pixels. Default is 100.'
+            '--major-grid-step-pixels', type=int, default=100, help='Space between major gird lines in pixels. Default is 100.'
         )
         self.parser.add_argument(
-            '--major_grid_width', type=int, default=2, help='Major gird line width. Default is 2.'
+            '--major-grid-width', type=int, default=2, help='Major gird line width. Default is 2.'
         )
         self.parser.add_argument(
-            '--minor_grid_color', type=str, default='#323232', help='Minor grid color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'#323232\'.'
+            '--minor-grid-color', type=str, default='#323232', help='Minor grid color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'#323232\'.'
         )
         self.parser.add_argument(
-            '--minor_grid_step_pixels', type=int, dest='svg_pixels_per_unit', default=10, help='Space between minor gird lines in pixels. Default is 10.'
+            '--minor-grid-step-pixels', type=int, dest='svg_pixels_per_unit', default=10, help='Space between minor gird lines in pixels. Default is 10.'
         )
         self.parser.add_argument(
-            '--minor_grid_width', type=int, default=1, help='Minor gird line width. Default is 1.'
+            '--minor-grid-width', type=int, default=1, help='Minor gird line width. Default is 1.'
         )
         self.parser.add_argument(
-            '--coords_font_color', type=str, default='black', help='Coordinates color in outer margin. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--coords-font-color', type=str, default='black', help='Coordinates color in outer margin. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--coords_font_size', type=int, default=10, help='Coordinates font size. Default is 10.'
+            '--coords-font-size', type=int, default=10, help='Coordinates font size. Default is 10.'
         )
         self.parser.add_argument(
-            '--coords_step_units', type=int, default=10, help='Space between coordinate numbers in minor grid units. Default is 10.'
+            '--coords-step-units', type=int, default=10, help='Space between coordinate numbers in minor grid units. Default is 10.'
         )
         self.parser.add_argument(
-            '--coords_gap_pixels', type=int, default=2, help='Space between coordinates and chart in pixels. Default is 2.'
+            '--coords-gap-pixels', type=int, default=2, help='Space between coordinates and chart in pixels. Default is 2.'
         )
         self.parser.add_argument(
-            '--arrow_color', type=str, default='black', help='Arrow color in outer margin. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--arrow-color', type=str, default='black', help='Arrow color in outer margin. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--arrow_gap_pixels', type=int, default=2, help='Space before arrow and chart in pixels. Default is 2.'
+            '--arrow-gap-pixels', type=int, default=2, help='Space before arrow and chart in pixels. Default is 2.'
         )
         self.parser.add_argument(
-            '--symbol_color', type=str, default='black', help='Symbol color when parameter \'--no_symbols\' is not used. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--symbol-color', type=str, default='black', help='Symbol color when parameter \'--no-symbols\' is not used. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--symbol_line_width', type=int, default=1, help='Symbol line width when parameter \'--no_symbols\' is not used. Default is 1.'
+            '--symbol-line-width', type=int, default=1, help='Symbol line width when parameter \'--no-symbols\' is not used. Default is 1.'
+        )
+        self.parser.add_argument(
+            '--backstitch-line-width', type=int, default=2, help='Backstitch line width when parameter \'--backstitch-option\' is not \'none\'. Default is 2.'
         )
 
     def _postprocess_arguments(self):

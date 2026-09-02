@@ -10,8 +10,8 @@ DEFAULT_STITCHES_PER_ROW = 80
 
 def test_default_values(request):
     args = {
-        'n_colors': DEFAULT_N_COLORS,
-        'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
+        'n-colors': DEFAULT_N_COLORS,
+        'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
     }
     tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
@@ -19,8 +19,8 @@ def test_default_values(request):
 
 def test_method_euclidean(request):
     args = {
-        'n_colors': DEFAULT_N_COLORS,
-        'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
+        'n-colors': DEFAULT_N_COLORS,
+        'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
         'method': 'euclidean',
     }
     tmp_file = setup_method(request, INP_NAME, args)
@@ -29,8 +29,8 @@ def test_method_euclidean(request):
 
 def test_method_de76(request):
     args = {
-        'n_colors': DEFAULT_N_COLORS,
-        'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
+        'n-colors': DEFAULT_N_COLORS,
+        'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
         'method': 'de76',
     }
     tmp_file = setup_method(request, INP_NAME, args)
@@ -39,8 +39,8 @@ def test_method_de76(request):
 
 def test_n_colors_20(request):
     args = {
-        'n_colors': 20,
-        'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
+        'n-colors': 20,
+        'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
     }
     tmp_file = setup_method(request, INP_NAME, args)
     stitchit()
@@ -48,44 +48,44 @@ def test_n_colors_20(request):
 
 def test_all_args(request):
     args = {
-        'n_colors': 20,
-        'stitches_per_row': DEFAULT_STITCHES_PER_ROW,
-        'background_code': 211,
-        'backstitch_option': 'inverse',
-        'backstitch_code': 349,
-        'fabric_count': 20,
+        'n-colors': 20,
+        'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
+        'background-code': 211,
+        'backstitch-option': 'inverse',
+        'backstitch-code': 349,
+        'fabric-count': 20,
         'strands': 10,
-        'skein_length_meters': 10,
-        'strands_per_skein': 10,
-        'legend_title': 'Dummy title',
-        'legend_title_font_size': 30,
-        'legend_title_font_color': 'blue',
-        'legend_title_font_weight': 'normal',
-        'legend_title_x_pixels': 50,
-        'legend_title_y_pixels': 50,
-        'legend_item_x_pixels': 50,
-        'legend_item_y_pixels': 50,
-        'legend_column_width_pixels': 300,
-        'legend_column_height_pixels': 100,
-        'legend_code_font_color': '#0000ff',
-        'legend_code_font_size': 20,
-        'legend_box_line_color': '#ff0000',
-        'legend_box_line_width': 2,
-        'major_grid_step_pixels': 80,
-        'major_grid_color': "#6a00ff",
-        'major_grid_width': 4,
-        'minor_grid_step_pixels': 30,
-        'minor_grid_color': '#aaaaaa',
-        'minor_grid_width': 2,
-        'coords_font_size': 20,
-        'coords_font_color': '#00ff00',
-        'coords_step_units': 9,
-        'coords_gap_pixels': 7,
-        'arrow_color': "#ff9900",
-        'arrow_gap_pixels': 10,
-        'symbol_color': 'darkred',
-        'symbol_line_width': 2,
-        'backstitch_line_width': 3, 
+        'skein-length-meters': 10,
+        'strands-per-skein': 10,
+        'legend-title': 'Dummy title',
+        'legend-title-font-size': 30,
+        'legend-title-font-color': 'blue',
+        'legend-title-font-weight': 'normal',
+        'legend-title-x-pixels': 50,
+        'legend-title-y-pixels': 50,
+        'legend-item-x-pixels': 50,
+        'legend-item-y-pixels': 50,
+        'legend-column-width-pixels': 300,
+        'legend-column-height-pixels': 100,
+        'legend-code-font-color': '#0000ff',
+        'legend-code-font-size': 20,
+        'legend-box-line-color': '#ff0000',
+        'legend-box-line-width': 2,
+        'major-grid-step-pixels': 80,
+        'major-grid-color': "#6a00ff",
+        'major-grid-width': 4,
+        'minor-grid-step-pixels': 30,
+        'minor-grid-color': '#aaaaaa',
+        'minor-grid-width': 2,
+        'coords-font-size': 20,
+        'coords-font-color': '#00ff00',
+        'coords-step-units': 9,
+        'coords-gap-pixels': 7,
+        'arrow-color': "#ff9900",
+        'arrow-gap-pixels': 10,
+        'symbol-color': 'darkred',
+        'symbol-line-width': 2,
+        'backstitch-line-width': 3, 
     }
     tmp_file = setup_method(request, INP_NAME, args)
     stitchit()

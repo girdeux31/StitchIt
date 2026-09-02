@@ -61,7 +61,7 @@ def _setup_files(inp_name: Path, test_name: str):
 def _setup_args(ref_file: Path, args: dict[str, str | int | float]) -> None:
     """Set user input parameters as sys arguments"""
     del sys.argv[1:]  # reset args
-    args['input_file'] = str(ref_file)
+    args['input-file'] = str(ref_file)
     for key, value in args.items():
         sys.argv.append(f'--{key}')
         if value is not None:
