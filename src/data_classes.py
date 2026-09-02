@@ -85,7 +85,7 @@ class OtherConfig:
 class ThreadConfig:
     fabric_count: int = 14  # aida or squares per inch
     strands: int = 2  # strands used for stitching
-    skein_length: float = 8.0  # m
+    skein_length_meters: float = 8.0  # m
     strands_per_skein: int = 6  # strands in a skein
 
 @dataclass

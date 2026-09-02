@@ -3,12 +3,20 @@
 > [!WARNING]
 > WORK IN PROGRESS
 
-StitchIt can generates a cross stitch chart from an image with ease and free. Output formats include svg, png and pdf. Main features include:
+🧵/\/\/\✂️/\/\/\🪡/\/\/\🧵/\/\/\✂️/\/\/\🪡/\/\/\🧵/\/\/\✂️/\/\/\🪡
+🧵$${\color{red}XXX✂️ \color{green}XXX🪡 \color{blue}XXX}$$
+
+StitchIt can generates a cross stitch chart from an image with ease and free. Main features include:
 
 - User option for number of colors and stitches per row
+- DMC colors and symbols are used for a better experience
+- Legend with DMC codes and symbols is also produced
+- Used thread information is also shown (ready to purchase)
 - Background recognition
-- Backstitch (limited to background rim so far)
+- Backstitch (limited to background rim, so far)
+- CIEDE2000 color perception is used for the most accurate palette
 - Optionally, multiple format tweaks can be done to the final chart
+- Output formats include svg (vectorized image), png and pdf
 
 > [!NOTE]
 > StitchIt is developed with Python 3.10 and tested with pytest.
@@ -34,13 +42,19 @@ The following third-party modules are required.
 
 `python stitchit.py input_file n_colors stitches_per_row`
 
-Only 3 arguments are mandatory, see the [list of all available arguments](#sec-options).
+Only 3 parameters are mandatory, see the [list of all available options](#sec-options).
 
 - `input_file` (str): image to process
 - `n_colors` (int): number of colors
 - `stitches_per_row` (int): number of stitches (squares) per row
 
+For example:
+
+
+
 ## <a id="sec-recommendations"></a>Image recommendations
+
+## <a id="sec-thread"></a>Thread information
 
 ## <a id="sec-featuers"></a>Special features
 
@@ -53,25 +67,25 @@ Only 3 arguments are mandatory, see the [list of all available arguments](#sec-o
 In the table below there is a list of all available user options, along with the type, default value and a comment. Please, read carefully the following notes.
 
 > [!NOTE]
-> Only parameters `--input_file`, `--n_colors` and `--stitches_per_row` are mandatory. All others are optional (default is included in table).
+> Only options `--input_file`, `--n_colors` and `--stitches_per_row` are mandatory. All others are optional (defaults are included in table).
 
 > [!NOTE]
-> No value is needed for parameters `--no_colors`, `--no_symbols`,`--no_legend`, `--show_background`, `--no_svg`, `--no_png`, `--no_pdf`. Their effect is applied if they are present in the command line. That is way they do not have type or default values, their default is explained in comments.
+> No value is needed for options `--no_colors`, `--no_symbols`,`--no_legend`, `--show_background`, `--no_svg`, `--no_png`, `--no_pdf`. Their effect is applied if they are present in the command line. That is way they do not have type or default values. Their default behavior is explained in comments.
 
 > [!NOTE]
-> All parameters that end with `_color` ask for a color. Colors can be specified with names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
+> All options that end with `_color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
 
 > [!NOTE]
-> All parameters that end with `_code` (only `--background_code` and `--backstitch_code`) ask for a DMC code. See [available codes](https://artpatt.com/dmc-color-chart).
+> Options `--background_code`, `--backstitch_code` and `--backstitch_code_no_colors` ask for a DMC code. See [available codes](https://artpatt.com/dmc-color-chart).
 
 > [!NOTE]
-> All parameters that end with `_pixels` ask for a distance in pixels over the SVG file produced.
+> All options that end with `_pixels` ask for a distance in pixels over the SVG file produced.
 
-| Parameter | Type | Default | Comment |
-|-----------|------|---------|---------|
-| `--input_file` | `str` || Image file to convert. |
-| `--n_colors` | `int` || Colors to use in chart (backstitch colors are not included). Parameter must be between 2 and 100, both included. |
-| `--stitches_per_row` || `int` | Number of stitches (squares/pixels) per row in chart. Must be greater or equal than 10. |
+| **Parameter** | **Type** | **Default** | **Comment** |
+|---------------|----------|-------------|-------------|
+| `-i` or `--input_file` | `str` || Image file to convert. |
+| `-n` or `--n_colors` | `int` || Colors to use in chart (backstitch colors are not included). Parameter must be between 2 and 100, both included. |
+| `-s` or `--stitches_per_row` | `int` || Number of stitches/squares/pixels per row in chart. Must be greater or equal than 10. |
 | `--no_colors` ||| Produces chart without colors (color specified in parameter `--background_code` is used). By default colors are user. |
 | `--no_symbols` ||| Produces chart without symbols. By default symbols are user. |
 | `--no_legend` ||| Produces chart without legend. By default legend is shown. |
@@ -82,14 +96,14 @@ In the table below there is a list of all available user options, along with the
 | `--png_scale` | `float` | 2.0 | Scale factor for the png generated file if `--no_png` parameter is not used. |
 | `--method` | `str` | `de00` | Method to compute color distance. Options are: `euclidean`, `de76` (deltaE CIE76, like euclidean distance but with LAB coordinates), `de00` (deltaE CIELAB2000, more accurate method as it measure color difference as human perception). |
 | `--cleaner_option` | `str` | `strong` | Level of confetti (bad pixels) cleaning. Options are `none`, `moderate` (cleans isoleted pixels) and `strong` (same as `moderate` plus cleans pixels with just one diagonal neighbor). |
-| `--background_code` | `str` | `B5200'` | DMC code for background color when parameter `--show_background` is not used. |
+| `--background_code` | `str` | `B5200` | DMC code for background color when parameter `--show_background` is not used. |
 | `--backstitch_option` | `str` | `none` | Level of backstitching. Options are `none`, `constant` (backstitches with constant color between objects and background, color is defined by parameter `--backstitch_code`) and `inverse` (backstitches with inverse color between objects and background). |
 | `--backstitch_code` | `str` | `498` | DMC code for backstitches when parameter `--backstitch_option` is `constant`. |
-| `--backstitch_code_no_colors` | `str` | `310` | DMC code for backstitches when parameter `--backstitch_option` is not `none` and `--no_colors` is used. See available codes in https://artpatt.com/dmc-color-chart. |
+| `--backstitch_code_no_colors` | `str` | `310` | DMC code for backstitches when parameter `--backstitch_option` is not `none` and `--no_colors` is used. |
 | `--backstitch_line_width` | `int` | 2 | Backstitch line width when parameter `--backstitch_option` is not `none`. |
 | `--fabric_count` | `int` | 14 | AIDA number of squares per inch. Only used to compute thread usage. |
 | `--strands` | `int` | 2 | Strands used for stitching. Only used to compute thread usage. |
-| `--skein_length` | `float` | 8.0 | Skein length in meters. Only used to compute thread usage. |
+| `--skein_length_meters` | `float` | 8.0 | Skein length in meters. Only used to compute thread usage. |
 | `--strands_per_skein` | `int` | 6 | Strands in a skein. Only used to compute thread usage. |
 | `--legend_title` | `str` | `Mouliné DMC` | Legend title. |
 | `--legend_title_font_size` | `int` | 12 | Legend title font size. |
@@ -120,19 +134,22 @@ In the table below there is a list of all available user options, along with the
 | `--symbol_color` | `str` | `black` | Symbol color when parameter `--no_symbols` is not used. |
 | `--symbol_line_width` | `int` | 1 | Symbol line width when parameter `--no_symbols` is not used. |
 
+> [!WARNING]
+> Of course, you can produce a chart without colors, symbols and legend (with options `--no_colors`, `--no_symbols` and `--no_legend`), but then, you will get an empty chart.
+
 ## <a id="sec-bugs"></a>Known bugs and limitations
 
 ## <a id="sec-work"></a>Future work
 
-The following ideas can be implemented in the future. It is not planed to do so, but maybe someone will fork this.
+The following ideas can be implemented in the future. It is not planed to do so, but maybe someone will fork this repo.
 
-- Improve backstitch with inner rims and/or other options
-- Implement half and quarter stitches
+[ ] Improve backstitch with inner rims and/or other options
+[ ] Implement half and quarter stitches
 
-## <a id="sec-aknowledgement"></a>Aknowledgement
+## <a id="sec-acknowledgements"></a>Acknowledgements
 
-This repo is a fork, but it has been refactored in a 99.9%. See [original repo](https://github.com/PaulMakesStuff/Python_Cross_Stitch).
+This repo is a fork (see [original repo](https://github.com/PaulMakesStuff/Python_Cross_Stitch)), but it has been refactored in a 99.9%.
 
 ## <a id="sec-contact"></a>Contact
 
-Feel free to [contact me](mesado31@gmail.com) for any suggestion or bug.
+Feel free to [contact me](mailto:mesado31@gmail.com) for any suggestion or bug.

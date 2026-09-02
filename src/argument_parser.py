@@ -60,13 +60,13 @@ class ArgumentParser:
         # GENERAL PARAMETERS
 
         self.parser.add_argument(
-            '--input_file', type=str, help='Image file to convert.'
+            '-i', '--input_file', required=True, type=str, help='Image file to convert.'
         )
         self.parser.add_argument(
-            '--n_colors', type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included.'
+            '-n', '--n_colors', required=True, type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included.'
         )
         self.parser.add_argument(
-            '--stitches_per_row', type=int, help=f'Number of stitches (squares/pixels) per row in chart. Must be greater or equal than {MIN_STITCHES_PER_ROW}.'
+            '-s', '--stitches_per_row', required=True, type=int, help=f'Number of stitches/squares/pixels per row in chart. Must be greater or equal than {MIN_STITCHES_PER_ROW}.'
         )
         self.parser.add_argument(
             '--no_colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in parameter \'--background_code\' is used). By default colors are user.'
@@ -127,7 +127,7 @@ class ArgumentParser:
             '--strands', type=int, default=2, help='Strands used for stitching. Only used to compute thread usage. Default is 2.'
         )
         self.parser.add_argument(
-            '--skein_length', type=float, default=8.0, help='Skein length in meters. Only used to compute thread usage. Default is 8.0.'
+            '--skein_length_meters', type=float, default=8.0, help='Skein length in meters. Only used to compute thread usage. Default is 8.0.'
         )
         self.parser.add_argument(
             '--strands_per_skein', type=int, default=6, help='Strands in a skein. Only used to compute thread usage. Default is 6.'
@@ -295,7 +295,7 @@ class ArgumentParser:
         return ThreadConfig(
             fabric_count = self.args.fabric_count,  # number of squares (or stitches) per inch
             strands = self.args.strands,  # strand: hebra
-            skein_length = self.args.skein_length,  # skein: madeja  (EN to SP)
+            skein_length_meters = self.args.skein_length_meters,  # skein: madeja  (EN to SP)
             strands_per_skein = self.args.strands_per_skein,
         )
 

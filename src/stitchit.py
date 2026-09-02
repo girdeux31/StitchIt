@@ -6,6 +6,7 @@ from src.info_file import InfoFile
 # TODO:
 #  - change readme
 #  - order legend by #stitches
+#  - test png or other formats
 
 # FIX:
 #  - all colors are shown in legend even if not shown in chart (also with bs when option is inverse)
@@ -20,7 +21,7 @@ def stitchit():
 
     Usage:
 
-        python3 stitchit.py input_file n_colors stitches_per_row
+        python3 stitchit.py -i input_file -n n_colors -s stitches_per_row
 
     Arguments:
 

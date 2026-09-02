@@ -55,7 +55,7 @@ def test_all_args(request):
         'backstitch_code': 349,
         'fabric_count': 20,
         'strands': 10,
-        'skein_length': 10,
+        'skein_length_meters': 10,
         'strands_per_skein': 10,
         'legend_title': 'Dummy title',
         'legend_title_font_size': 30,

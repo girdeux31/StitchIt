@@ -46,7 +46,7 @@ class InfoFile:
             if color.show_in_legend is True:
                 stitches = np.sum(chart.pattern.array == color.idx)    # len([idx for row in pattern.dmc_pattern for idx in row if c_idx == idx])
                 length = stitches * self.length_per_stitch / CM_PER_M  # m
-                skeins = math.ceil(length / (self.thread_config.skein_length*self.thread_config.strands_per_skein/self.thread_config.strands))
+                skeins = math.ceil(length / (self.thread_config.skein_length_meters*self.thread_config.strands_per_skein/self.thread_config.strands))
                 error = ColorTools.compute_color_mse(chart.pattern, self.other_config.method, color.idx)
                 self.thread_info['code'].append(color.dmc_code)
                 self.thread_info['name'].append(color.dmc_name)
