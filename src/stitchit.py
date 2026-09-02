@@ -7,9 +7,6 @@ from src.info_file import InfoFile
 #  - order legend by #stitches
 #  - test png or other formats
 
-# FIX:
-#  - all colors are shown in legend even if not shown in chart (also with bs when option is inverse)
-
 def stitchit():
     """
     Generates a cross stitch pattern from an image.

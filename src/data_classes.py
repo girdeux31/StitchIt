@@ -25,6 +25,7 @@ class DMCColor:
         self.dmc = DMCDB()
         self._add_rgb()
         self.has_symbol = False
+        self.n_stitches = 0
 
     def _add_rgb(self) -> None:
         """Add DMC RGB info"""
@@ -46,6 +47,10 @@ class DMCColor:
             self.has_symbol = self.idx in IDX_TO_SYMBOL_CODE
             self.symbol_code = IDX_TO_SYMBOL_CODE.get(self.idx)
             self.fill_symbol = self.idx in SYMBOLS_TO_FILL
+
+    def add_n_stitches(self, stitches: int) -> None:
+        """Add n_stitches attribute"""
+        self.n_stitches = stitches
 
     def get_dmc_rgb_as_str(self) -> str:
         """Return DMC RGB as str, such as r,g,b"""

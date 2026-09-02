@@ -40,16 +40,15 @@ class Chart:
     def _generate_legend(self) -> None:
         """Generate legend as SVG next to pattern"""
         column = 1
-        _, pattern_height = self._get_pattern_size()
+        pattern_width, pattern_height = self._get_pattern_size()
         x_pos = self.legend_config.item_x_pixels
         y_pos = pattern_height + self.legend_config.title_y_pixels + self.legend_config.item_y_pixels
         title_x_pos = self.legend_config.title_x_pixels
         title_y_pos = pattern_height + self.legend_config.title_y_pixels
         self.composer.add_title(title_x_pos, title_y_pos, self.legend_config.title)
-        width, _ = self._get_pattern_size()
-        n_columns = int((width - self.legend_config.item_x_pixels) / self.legend_config.column_width_pixels)
+        n_columns = int((pattern_width - self.legend_config.item_x_pixels) / self.legend_config.column_width_pixels)
         for color in self.image.palette:
-            if color.show_in_legend is True:
+            if color.show_in_legend is True and color.n_stitches > 0:
                 self.composer.add_legend_item(color, x_pos, y_pos, self.pattern_config.svg_pixels_per_unit)
                 column += 1
                 if column <= n_columns:

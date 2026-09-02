@@ -1,4 +1,6 @@
-from src.data_classes import DMCColor
+import numpy as np
+
+from src.data_classes import DMCColor, Backstitch
 
 
 class Palette:
@@ -70,6 +72,15 @@ class Palette:
         """If possible add symbol to all colors (there is a limit of 11)"""
         for color in self.colors:
             color.add_symbol()
+
+    def set_n_stitches(self, array: np.ndarray[int], backstitches: list[Backstitch]) -> None:
+        """Set n_stitches attribute for each color"""
+        for color in self.colors:
+            if color.is_backstitch:
+                stitches = len([bs for bs in backstitches if bs.color.dmc_code == color.dmc_code])
+            else:
+                stitches = np.sum(array == color.idx)
+            color.add_n_stitches(stitches)
 
     @property
     def n_colors_in_legend(self) -> int:
