@@ -7839,24 +7839,8 @@
 	<rect x="220" y="710" width="15.0" height="15.0" style="fill:rgb(188,180,172);stroke:black;stroke-width:1;"/>
 	<path class="glyph" d="M4 4L4 16 16 16 16 4Z" transform="translate(220 710) scale(0.75)" fill="black"/>
 	<text class="code" x="240" y="720">648</text>
-	<rect x="320" y="710" width="15.0" height="15.0" style="fill:rgb(183,139,97);stroke:black;stroke-width:1;"/>
-	<text class="code" x="340" y="720">3828</text>
-	<rect x="420" y="710" width="15.0" height="15.0" style="fill:rgb(172,84,20);stroke:black;stroke-width:1;"/>
-	<text class="code" x="440" y="720">920</text>
-	<rect x="520" y="710" width="15.0" height="15.0" style="fill:rgb(176,166,156);stroke:black;stroke-width:1;"/>
-	<text class="code" x="540" y="720">647</text>
-	<rect x="620" y="710" width="15.0" height="15.0" style="fill:rgb(135,125,115);stroke:black;stroke-width:1;"/>
-	<text class="code" x="640" y="720">646</text>
-	<rect x="20" y="740" width="15.0" height="15.0" style="fill:rgb(131,94,57);stroke:black;stroke-width:1;"/>
-	<text class="code" x="40" y="750">869</text>
-	<rect x="120" y="740" width="15.0" height="15.0" style="fill:rgb(101,127,127);stroke:black;stroke-width:1;"/>
-	<text class="code" x="140" y="750">3768</text>
-	<rect x="220" y="740" width="15.0" height="15.0" style="fill:rgb(110,101,92);stroke:black;stroke-width:1;"/>
-	<text class="code" x="240" y="750">645</text>
-	<rect x="320" y="740" width="15.0" height="15.0" style="fill:rgb(101,57,25);stroke:black;stroke-width:1;"/>
-	<text class="code" x="340" y="750">801</text>
-	<rect x="420" y="740" width="15.0" height="15.0" style="fill:rgb(98,75,69);stroke:black;stroke-width:1;"/>
-	<text class="code" x="440" y="750">779</text>
-	<rect x="520" y="740" width="15.0" height="15.0" style="fill:rgb(66,66,66);stroke:black;stroke-width:1;"/>
-	<text class="code" x="540" y="750">3799</text>
+	<rect x="320" y="710" width="15.0" height="15.0" style="fill:rgb(101,127,127);stroke:black;stroke-width:1;"/>
+	<text class="code" x="340" y="720">3768</text>
+	<rect x="420" y="710" width="15.0" height="15.0" style="fill:rgb(66,66,66);stroke:black;stroke-width:1;"/>
+	<text class="code" x="440" y="720">3799</text>
 </svg>

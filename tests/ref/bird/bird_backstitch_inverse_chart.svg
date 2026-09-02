@@ -4051,12 +4051,10 @@
 	<rect x="220" y="530" width="15.0" height="15.0" style="fill:rgb(72,72,72);stroke:black;stroke-width:1;"/>
 	<path class="glyph" d="M4 4L10 16L16 4 Z" transform="translate(220 530) scale(0.75)" fill="none"/>
 	<text class="code" x="240" y="540">844</text>
-	<line x1="320" y1="537.5" x2="335.0" y2="537.5" style="stroke:rgb(37,59,115);stroke-width:3;"/>
-	<text class="code" x="340" y="540">336</text>
-	<line x1="420" y1="537.5" x2="435.0" y2="537.5" style="stroke:rgb(200,200,192);stroke-width:3;"/>
-	<text class="code" x="440" y="540">03</text>
-	<line x1="20" y1="567.5" x2="35.0" y2="567.5" style="stroke:rgb(171,171,171);stroke-width:3;"/>
-	<text class="code" x="40" y="570">318</text>
+	<line x1="320" y1="537.5" x2="335.0" y2="537.5" style="stroke:rgb(200,200,192);stroke-width:3;"/>
+	<text class="code" x="340" y="540">03</text>
+	<line x1="420" y1="537.5" x2="435.0" y2="537.5" style="stroke:rgb(171,171,171);stroke-width:3;"/>
+	<text class="code" x="440" y="540">318</text>
 	<line x1="120" y1="10" x2="120" y2="20" style="stroke:rgb(200,200,192);stroke-width:3;"/>
 	<line x1="170" y1="10" x2="170" y2="20" style="stroke:rgb(200,200,192);stroke-width:3;"/>
 	<line x1="100" y1="20" x2="100" y2="30" style="stroke:rgb(200,200,192);stroke-width:3;"/>

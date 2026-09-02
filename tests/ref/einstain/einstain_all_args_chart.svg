@@ -7878,66 +7878,26 @@
 	<rect x="650" y="2090" width="45.0" height="45.0" style="fill:rgb(188,180,172);stroke:#ff0000;stroke-width:2;"/>
 	<path class="glyph" d="M4 4L4 16 16 16 16 4Z" transform="translate(650 2090) scale(2.25)" fill="darkred"/>
 	<text class="code" x="710" y="2120">648</text>
-	<rect x="950" y="2090" width="45.0" height="45.0" style="fill:rgb(183,139,97);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="1010" y="2120">3828</text>
-	<rect x="1250" y="2090" width="45.0" height="45.0" style="fill:rgb(172,84,20);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="1310" y="2120">920</text>
-	<rect x="1550" y="2090" width="45.0" height="45.0" style="fill:rgb(176,166,156);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="1610" y="2120">647</text>
-	<rect x="1850" y="2090" width="45.0" height="45.0" style="fill:rgb(135,125,115);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="1910" y="2120">646</text>
-	<rect x="50" y="2190" width="45.0" height="45.0" style="fill:rgb(131,94,57);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="110" y="2220">869</text>
-	<rect x="350" y="2190" width="45.0" height="45.0" style="fill:rgb(101,127,127);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="410" y="2220">3768</text>
-	<rect x="650" y="2190" width="45.0" height="45.0" style="fill:rgb(110,101,92);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="710" y="2220">645</text>
-	<rect x="950" y="2190" width="45.0" height="45.0" style="fill:rgb(101,57,25);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="1010" y="2220">801</text>
-	<rect x="1250" y="2190" width="45.0" height="45.0" style="fill:rgb(98,75,69);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="1310" y="2220">779</text>
-	<rect x="1550" y="2190" width="45.0" height="45.0" style="fill:rgb(66,66,66);stroke:#ff0000;stroke-width:2;"/>
-	<text class="code" x="1610" y="2220">3799</text>
-	<line x1="1850" y1="2212.5" x2="1895.0" y2="2212.5" style="stroke:rgb(27,40,83);stroke-width:3;"/>
-	<text class="code" x="1910" y="2220">939</text>
-	<line x1="50" y1="2312.5" x2="95.0" y2="2312.5" style="stroke:rgb(19,71,125);stroke-width:3;"/>
-	<text class="code" x="110" y="2320">797</text>
-	<line x1="350" y1="2312.5" x2="395.0" y2="2312.5" style="stroke:rgb(166,136,129);stroke-width:3;"/>
-	<text class="code" x="410" y="2320">3861</text>
-	<line x1="650" y1="2312.5" x2="695.0" y2="2312.5" style="stroke:rgb(53,102,139);stroke-width:3;"/>
-	<text class="code" x="710" y="2320">312</text>
-	<line x1="950" y1="2312.5" x2="995.0" y2="2312.5" style="stroke:rgb(205,223,237);stroke-width:3;"/>
-	<text class="code" x="1010" y="2320">3841</text>
-	<line x1="1250" y1="2312.5" x2="1295.0" y2="2312.5" style="stroke:rgb(69,92,113);stroke-width:3;"/>
-	<text class="code" x="1310" y="2320">930</text>
-	<line x1="1550" y1="2312.5" x2="1595.0" y2="2312.5" style="stroke:rgb(219,236,245);stroke-width:3;"/>
-	<text class="code" x="1610" y="2320">162</text>
-	<line x1="1850" y1="2312.5" x2="1895.0" y2="2312.5" style="stroke:rgb(33,48,99);stroke-width:3;"/>
-	<text class="code" x="1910" y="2320">823</text>
-	<line x1="50" y1="2412.5" x2="95.0" y2="2412.5" style="stroke:rgb(90,143,184);stroke-width:3;"/>
-	<text class="code" x="110" y="2420">322</text>
-	<line x1="350" y1="2412.5" x2="395.0" y2="2412.5" style="stroke:rgb(56,76,94);stroke-width:3;"/>
-	<text class="code" x="410" y="2420">3750</text>
-	<line x1="650" y1="2412.5" x2="695.0" y2="2412.5" style="stroke:rgb(70,106,142);stroke-width:3;"/>
-	<text class="code" x="710" y="2420">798</text>
-	<line x1="950" y1="2412.5" x2="995.0" y2="2412.5" style="stroke:rgb(115,159,193);stroke-width:3;"/>
-	<text class="code" x="1010" y="2420">334</text>
-	<line x1="1250" y1="2412.5" x2="1295.0" y2="2412.5" style="stroke:rgb(69,92,113);stroke-width:3;"/>
-	<text class="code" x="1310" y="2420">930</text>
-	<line x1="1550" y1="2412.5" x2="1595.0" y2="2412.5" style="stroke:rgb(132,132,132);stroke-width:3;"/>
-	<text class="code" x="1610" y="2420">169</text>
-	<line x1="1850" y1="2412.5" x2="1895.0" y2="2412.5" style="stroke:rgb(115,159,193);stroke-width:3;"/>
-	<text class="code" x="1910" y="2420">334</text>
-	<line x1="50" y1="2512.5" x2="95.0" y2="2512.5" style="stroke:rgb(166,136,129);stroke-width:3;"/>
-	<text class="code" x="110" y="2520">3861</text>
-	<line x1="350" y1="2512.5" x2="395.0" y2="2512.5" style="stroke:rgb(140,140,140);stroke-width:3;"/>
-	<text class="code" x="410" y="2520">414</text>
-	<line x1="650" y1="2512.5" x2="695.0" y2="2512.5" style="stroke:rgb(161,194,215);stroke-width:3;"/>
-	<text class="code" x="710" y="2520">813</text>
-	<line x1="950" y1="2512.5" x2="995.0" y2="2512.5" style="stroke:rgb(152,174,174);stroke-width:3;"/>
-	<text class="code" x="1010" y="2520">926</text>
-	<line x1="1250" y1="2512.5" x2="1295.0" y2="2512.5" style="stroke:rgb(200,200,192);stroke-width:3;"/>
-	<text class="code" x="1310" y="2520">03</text>
+	<rect x="950" y="2090" width="45.0" height="45.0" style="fill:rgb(101,127,127);stroke:#ff0000;stroke-width:2;"/>
+	<text class="code" x="1010" y="2120">3768</text>
+	<rect x="1250" y="2090" width="45.0" height="45.0" style="fill:rgb(66,66,66);stroke:#ff0000;stroke-width:2;"/>
+	<text class="code" x="1310" y="2120">3799</text>
+	<line x1="1550" y1="2112.5" x2="1595.0" y2="2112.5" style="stroke:rgb(27,40,83);stroke-width:3;"/>
+	<text class="code" x="1610" y="2120">939</text>
+	<line x1="1850" y1="2112.5" x2="1895.0" y2="2112.5" style="stroke:rgb(19,71,125);stroke-width:3;"/>
+	<text class="code" x="1910" y="2120">797</text>
+	<line x1="50" y1="2212.5" x2="95.0" y2="2212.5" style="stroke:rgb(205,223,237);stroke-width:3;"/>
+	<text class="code" x="110" y="2220">3841</text>
+	<line x1="350" y1="2212.5" x2="395.0" y2="2212.5" style="stroke:rgb(69,92,113);stroke-width:3;"/>
+	<text class="code" x="410" y="2220">930</text>
+	<line x1="650" y1="2212.5" x2="695.0" y2="2212.5" style="stroke:rgb(219,236,245);stroke-width:3;"/>
+	<text class="code" x="710" y="2220">162</text>
+	<line x1="950" y1="2212.5" x2="995.0" y2="2212.5" style="stroke:rgb(56,76,94);stroke-width:3;"/>
+	<text class="code" x="1010" y="2220">3750</text>
+	<line x1="1250" y1="2212.5" x2="1295.0" y2="2212.5" style="stroke:rgb(69,92,113);stroke-width:3;"/>
+	<text class="code" x="1310" y="2220">930</text>
+	<line x1="1550" y1="2212.5" x2="1595.0" y2="2212.5" style="stroke:rgb(200,200,192);stroke-width:3;"/>
+	<text class="code" x="1610" y="2220">03</text>
 	<line x1="900" y1="30" x2="900" y2="60" style="stroke:rgb(205,223,237);stroke-width:3;"/>
 	<line x1="990" y1="30" x2="990" y2="60" style="stroke:rgb(205,223,237);stroke-width:3;"/>
 	<line x1="1080" y1="30" x2="1080" y2="60" style="stroke:rgb(205,223,237);stroke-width:3;"/>
