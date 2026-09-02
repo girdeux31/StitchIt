@@ -64,7 +64,7 @@ class InfoFile:
         f.write(f'  Strands for stitching: {self.thread_config.strands} strands\n')
         f.write(
             f'  Size (width x height): {self.pattern_size["cm"][0]:.2f}x{self.pattern_size["cm"][1]:.2f} (cm) or '
-            f'{self.pattern_size["inch"][0]:.2f}x{self.pattern_size["inch"][1]:.2f} (\'\')\n'
+            f'{self.pattern_size["inch"][0]:.2f}x{self.pattern_size["inch"][1]:.2f} (in)\n'
         )
         f.write(f'  Stitches (width x height): {self.pattern_size["width"]}x{self.pattern_size["height"]}\n')
         f.write('\n')

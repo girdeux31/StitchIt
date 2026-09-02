@@ -223,7 +223,7 @@ class ArgumentParser:
             '--symbol-line-width', type=int, default=1, help='Symbol line width when parameter \'--no-symbols\' is not used. Default is 1.'
         )
         self.parser.add_argument(
-            '--backstitch-line-width', type=int, default=2, help='Backstitch line width when parameter \'--backstitch-option\' is not \'none\'. Default is 2.'
+            '--backstitch-line-width', type=int, default=3, help='Backstitch line width when parameter \'--backstitch-option\' is not \'none\'. Default is 3.'
         )
 
     def _postprocess_arguments(self):

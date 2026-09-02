@@ -124,6 +124,6 @@ class PatternConfig:
     symbol_color: str = 'black'
     symbol_fill_color: str = 'black'
     symbol_line_width: int = 1
-    backstitch_line_width: int = 2
+    backstitch_line_width: int = 3
     svg_fill_color: str = 'white'
     is_svg_transparent: bool = True

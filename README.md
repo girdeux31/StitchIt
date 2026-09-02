@@ -58,17 +58,106 @@ That is, use 2 different DMC colors and 60 stitches in each row.
 
 | Original | Chart |
 |----------|-------|
-|<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<div style="background-color: white; display: inline-block;"><img src="examples/bird_chart.png" alt="Same bird as a cross stitch chart" width="320"></div>|
+|<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<img src="examples/bird_wobg_chart.png" alt="Same bird as a cross stitch chart" width="320">|
 
 ## <a id="sec-recommendations"></a>Image recommendations
 
+The following recommendations apply to input images:
+
+- Cartoonish images
+- Plain colors or slightly shaded
+- Few details
+- Homogeneous backgrounds
+- No gray-scale images
+
+For example, the image shown above, although a greater variety of colors is handled properly (increase `n-colors` accordingly). For example:
+
+`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80`
+
+| Original | Chart |
+|----------|-------|
+|<img src="examples/einstain.jpg" alt="Einstain as a cartoon, original image" width="300">|<img src="examples/einstain_default_chart.png" alt="Same einstain as a cross stitch chart" width="320">|
+
+Of course, you can use any image, but a the output of a real photography is not something you would stitch.
+
+| Original | Chart |
+|----------|-------|
+|<img src="examples/afghan.jpg" alt="Famous afghan girl, real photography, original image" width="300">|<img src="examples/afghan_chart.png" alt="Same girl as a cross stitch chart, not a good one particularly" width="320">|
+|<img src="examples/astronaut.jpg" alt="Astronaut on the moon, real photography, original image" width="300">|<img src="examples/astronaut_chart.png" alt="Same astronaut as a cross stitch chart, not a good one particularly" width="320">|
+
+If you must use a real photography, try to convert it first with your favorite AI agent. You can use this prompt:
+
+> I attached an image. Can you convert it to a cartoonish picture so I can run it through an image-to-cross-stitch-chart program? Use plain colors or slightly shaded, few details, and homogeneous backgrounds. If it is in gray-scale, try to colorize it first.
+
+| Original | Chart |
+|----------|-------|
+|<img src="examples/afghan_cartoon.jpg" alt="Same afghan girl as before but as a cartoon by AI agent" width="300">|<img src="examples/afghan_cartoon_chart.png" alt="Same girl as a cross stitch chart, much better than before" width="320">|
+
 ## <a id="sec-thread"></a>Thread information
+
+Beside the cross stitch chart, a file (txt format) with design and thread information is generated. For example, for the first image shown above (`bird.jpg`):
+
+```
+Design information:
+
+  Fabric count or Aida count: 14 (ct or stitches per inch)
+  Strands for stitching: 2 strands
+  Size (width x height): 10.89x8.53 (cm) or 4.29x3.36 (in)
+  Stitches (width x height): 60x47
+
+Thread information:
+
+  DMC code  DMC color              DMC RGB       Stitches    Length (m)    Skeins     MSE
+----------  ---------------------  ----------  ----------  ------------  --------  ------
+       726  Light Topaz            253,215,85         628         11.30         1  0.5451
+      3799  Very Dark Pewter Gray  66,66,66           466          8.39         1  0.0060
+```
+
+This includes approx design real dimensions, thread usage information (based on AIDA number, see `--fabric-count` option), skeins to purchase and color MSE (error with respect to real image).
 
 ## <a id="sec-featuers"></a>Special features
 
+Among all optional options, there are two that is worth explaining in its own section.
+
 ### <a id="sec-bg"></a>Background
 
+Image background representation can be controlled with `--show-background`. By default it is not use, that means that the image background is automatically detected and left as part of the Aida cloth. Besides:
+
+- Color given by `--background-code` is used in chart
+- No symbol is given to these stitches
+- It is not shown in legend
+
+If you do not want this behavior, then include option `--show-background` in the command line. For example:
+
+`python3 stitchit.py -i examples/bird.jpg -n 3 -s 60 --show-background`
+
+| Default | With `--show-background` |
+|----------|-------|
+|<img src="examples/bird_wobg_chart.png" alt="Cross stitch chart of a bird" width="320">|<img src="examples/bird_wbg_chart.png" alt="Same cross stitch chart with background (--show-background is used)" width="320">|
+
+> [!WARNING]
+> When `--show-background` is present (not the default behavior), the background takes up one color. Thus, to produce the same chart as the default behavior (background as Aida cloth) option `--n-colors` (or `-n`) must be increase in 1 unit.
+
+Background color is detected as the mode of the image outer border.
+
 ### <a id="sec-bs"></a>Backstitch
+
+Backstitch is controlled with `--backstitch-option`. So far, only backstitch between objects and background is produced. It has 3 different options:
+
+- `none`: no backstitch is included in chart
+- `constant`: backstitch with constant color (given by `--backstitch-code`) is included
+- `inverse`: backstitch with object inverse color is included
+
+For example:
+
+`python3 src/stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --background-code 165`
+`python3 src/stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --background-code 165`
+
+| `--backstitch-option constant` | `--backstitch-option inverse` |
+|------------|-----------|
+|<img src="examples/einstain_cbs_chart.png" alt="Einstain chart with constant backstitching" width="320">|<img src="examples/einstain_ibs_chart.png" alt="Einstain chart with inverse backstitching" width="320">|
+
+Additional control over backstitches is given by `--backstitch-code` and `--backstitch-line-width`. Backstitch colors are also included in legend.
 
 ## <a id="sec-options"></a>User options
 
@@ -140,8 +229,8 @@ In the table below there is a list of all available user options, along with the
 | `--arrow-color` | `str` | `black` | Arrow color in outer margin. |
 | `--arrow-gap-pixels` | `int` | 2 | Space before arrow and chart in pixels. |
 | `--symbol-color` | `str` | `black` | Symbol color when parameter `--no-symbols` is not used. |
-| `--symbol-line_width` | `int` | 1 | Symbol line width when parameter `--no-symbols` is not used. |
-| `--backstitch_line_width` | `int` | 2 | Backstitch line width when parameter `--backstitch-option` is not `none`. |
+| `--symbol-line-width` | `int` | 1 | Symbol line width when parameter `--no-symbols` is not used. |
+| `--backstitch-line-width` | `int` | 3 | Backstitch line width when parameter `--backstitch-option` is not `none`. |
 
 > [!WARNING]
 > Of course, you can produce a chart without colors, symbols and legend (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you will get an empty chart.
