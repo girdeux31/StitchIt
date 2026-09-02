@@ -50,7 +50,7 @@ def test_all_args(request):
     args = {
         'n-colors': 20,
         'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
-        'background-code': 211,
+        'aida-color': '#E3CBE3',
         'backstitch-option': 'inverse',
         'backstitch-code': 349,
         'fabric-count': 20,

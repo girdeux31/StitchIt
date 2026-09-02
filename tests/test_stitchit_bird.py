@@ -59,11 +59,11 @@ def test_all_false(request):
     stitchit()
     assert_output(INP_NAME, tmp_file)
 
-def test_show_background(request):
+def test_no_aida(request):
     args = {
         'n-colors': DEFAULT_N_COLORS,
         'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
-        'show-background': None,
+        'no-aida': None,
     }
     tmp_file = setup_method(request, INP_NAME, args)
     stitchit()

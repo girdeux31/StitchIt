@@ -2,7 +2,7 @@ Design information:
 
   Fabric count or Aida count: 14 (ct or stitches per inch)
   Strands for stitching: 2 strands
-  Size (width x height): 1.81x1.45 (cm) or 0.71x0.57 ('')
+  Size (width x height): 1.81x1.45 (cm) or 0.71x0.57 (in)
   Stitches (width x height): 10x8
 
 Thread information:
