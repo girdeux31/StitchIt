@@ -4,7 +4,6 @@ from src.info_file import InfoFile
 
 
 # TODO:
-#  - change readme
 #  - order legend by #stitches
 #  - test png or other formats
 
@@ -22,7 +21,7 @@ def stitchit():
     Arguments:
 
         - input_file (str): image to process
-        - n_colors (int): number of colors to use to stitch
+        - n_colors (int): number of DMC colors
         - stitches_per_row (int): number of stitches (squares) per row
     """
     # Process input arguments

@@ -1,8 +1,5 @@
 # <a id="sec-top"></a>StitchIt
 
-> [!WARNING]
-> WORK IN PROGRESS
-
 🧵/\\/\\/\\✂️/\\/\\/\\🪡/\\/\\/\\🧵/\\/\\/\\✂️/\\/\\/\\🪡/\\/\\/\\🧵/\\/\\/\\✂️/\\/\\/\\🪡
 
 StitchIt generates a cross stitch chart from an image for free. Main features include:
@@ -10,11 +7,11 @@ StitchIt generates a cross stitch chart from an image for free. Main features in
 - User option for number of colors and stitches per row
 - DMC colors and symbols are used for a better experience
 - Legend with DMC codes and symbols is also produced
-- Used thread information is also shown (ready to purchase)
-- Background recognition
+- Thread information is also shown (ready to purchase)
+- Aida simulation (image background replaced)
 - Backstitch (limited to background-objects border, so far)
 - CIEDE2000 color perception is used for the most accurate palette
-- Optionally, multiple format tweaks can be done to the final chart
+- Optionally, multiple format tweaks for the chart
 - Output formats include svg (vectorized image), png and pdf
 
 > [!NOTE]
@@ -41,14 +38,14 @@ The following third-party modules are required.
 
 `python stitchit.py -i input_file -n n_colors -s stitches_per_row`
 
+> [!WARNING]
+> If you clone the repo, then call the main script as `python src/stitchit.py`.
+
 Only 3 parameters are mandatory, see the [list of all available options](#sec-options).
 
 - `input_file` (str): image to process
-- `n_colors` (int): number of colors
+- `n_colors` (int): number of DMC colors
 - `stitches_per_row` (int): number of stitches (squares) per row
-
-> [!WARNING]
-> If you clone the repo, then call the main script as `python src/stitchit.py`.
 
 For example:
 
@@ -70,7 +67,7 @@ The following recommendations apply to input images:
 - Homogeneous backgrounds
 - No gray-scale images
 
-For example, the image shown above, although a greater variety of colors is handled properly (increase `n-colors` accordingly). For example:
+The previous image is a good one but it is rather simple. A greater variety of colors is handled properly (increase `n-colors` accordingly). For example:
 
 `python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80`
 
@@ -78,7 +75,7 @@ For example, the image shown above, although a greater variety of colors is hand
 |----------|-------|
 |<img src="examples/einstain.jpg" alt="Einstain as a cartoon, original image" width="300">|<img src="examples/einstain_default_chart.png" alt="Same einstain as a cross stitch chart" width="320">|
 
-Of course, you can use any image, but the output of a real photography is not something you would stitch.
+You can use any image, but the output of a real photography is not something you would stitch.
 
 | Original | Chart |
 |----------|-------|
@@ -113,7 +110,7 @@ Thread information:
       3799  Very Dark Pewter Gray  66,66,66           466          8.39         1  0.0060
 ```
 
-This includes approx design real dimensions, thread usage information (based on AIDA number, see `--fabric-count`), skeins to purchase and color MSE (error with respect to real image).
+This includes approx design real dimensions, thread usage information (based on Aida number, see `--fabric-count`), skeins to purchase and color MSE (error with respect to real image).
 
 ## <a id="sec-featuers"></a>Special features
 
@@ -123,9 +120,9 @@ Among all optional options, there are two that is worth explaining in its own se
 
 By default, image background is automatically detected and left as part of the Aida cloth. Besides:
 
-- Color given by `--aida-color` is used in chart
+- Color given by `--aida-color` is used in chart (default is white)
 - No symbol is given to those stitches
-- Color is not shown in legend
+- Aida color is not shown in legend
 
 However, image background can be rendered as stitches with `--no-aida`. For example:
 
@@ -150,7 +147,7 @@ Backstitch is controlled with `--backstitch-option`. So far, only backstitch bet
 
 For example:
 
-`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --aida-color #EFF4A4`
+`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --backstitch-code 498 --aida-color #EFF4A4`
 
 `python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --aida-color #EFF4A4`
 
@@ -158,7 +155,7 @@ For example:
 |------------|-----------|
 |<img src="examples/einstain_cbs_chart.png" alt="Einstain chart with constant backstitching" width="320">|<img src="examples/einstain_ibs_chart.png" alt="Einstain chart with inverse backstitching" width="320">|
 
-Additional control over backstitches is given by `--backstitch-code` and `--backstitch-line-width`. Backstitch colors are also included in legend.
+Additional control over backstitches is given by `--backstitch-code` (if `--backstitch-option` is `constant`) and `--backstitch-line-width`. Backstitch colors are also included in legend.
 
 ## <a id="sec-options"></a>User options
 
@@ -168,13 +165,13 @@ In the table below there is a list of all available user options, along with the
 > Only options `--input-file` (or `-i`), `--n-colors` (or `-n`) and `--stitches-per-row` (or `-s`) are mandatory. All others are optional (defaults are included in table).
 
 > [!NOTE]
-> No value is needed for options `--no-colors`, `--no-symbols`,`--no-legend`, `--no-aida`, `--no-svg`, `--no-png`, `--no-pdf`. Their effect is applied if they are present in the command line. That is way they don't have type or default values. Their default behavior is explained in comments.
+> No value is needed for options `--no-colors`, `--no-symbols`,`--no-legend`, `--no-aida`, `--no-svg`, `--no-png` and `--no-pdf`. Their effect is applied if they are present in the command line. That's way they don't have type or default values. Their default behavior is explained in comments.
 
 > [!NOTE]
-> Options `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available codes](https://artpatt.com/dmc-color-chart).
+> Options `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available DMC codes](https://artpatt.com/dmc-color-chart).
 
 > [!NOTE]
-> All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
+> All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available CSS4 colors](https://www.w3.org/TR/css-color-4/#named-colors).
 
 > [!NOTE]
 > All options that end with `-pixels` ask for a distance in pixels over the SVG file produced.
@@ -182,23 +179,23 @@ In the table below there is a list of all available user options, along with the
 | **Parameter** | **Type** | **Default** | **Comment** |
 |---------------|----------|-------------|-------------|
 | `-i` or `--input-file` | `str` || Image file to convert. Required. |
-| `-n` or `--n-colors` | `int` || Colors to use in chart (backstitch colors are not included). Parameter must be between 2 and 100, both included. Required. |
+| `-n` or `--n-colors` | `int` || DMC colors to use in chart (backstitch colors are not included). Parameter must be between 2 and 100, both included. Required. |
 | `-s` or `--stitches-per-row` | `int` || Number of stitches/squares/pixels per row in chart. Must be greater or equal than 10. Required. |
-| `--no-colors` ||| Produces chart without colors (color specified in `--aida-color` is used). By default colors are user. |
-| `--no-symbols` ||| Produces chart without symbols. By default symbols are user. |
+| `--no-colors` ||| Produces chart without colors (color specified in `--aida-color` is used). By default colors are used. |
+| `--no-symbols` ||| Produces chart without symbols. By default symbols are used. |
 | `--no-legend` ||| Produces chart without legend. By default legend is shown. |
-| `--no-aida` ||| Image background is rendered as more stitches in chart if option is present. By default Aida is shown, that is, stitches detected as background are drawn with color specified in `--aida-color`, without symbols and its color is not shown in legend (simulating Aida cloth). Background is detected as the mode of outer image borders. |
+| `--no-aida` ||| Image background is rendered as more stitches in chart if this option is present. By default Aida is shown, that is, stitches detected as background are drawn with color specified in `--aida-color`, without symbols and its color is not shown in legend (simulating Aida cloth). Background is detected as the mode of outer image borders. |
 | `--no-svg` ||| Don't save chart as svg file. By default a svg file is generated. |
 | `--no-png` ||| Don't save chart as png file. By default a png file is generated. |
 | `--no-pdf` ||| Don't save chart as pdf file. By default a pdf file is generated. |
 | `--png-scale` | `float` | 2.0 | Scale factor for the png generated file if `--no-png` is not used. |
 | `--method` | `str` | `de00` | Method to compute color distance. Options are: `euclidean`, `de76` (deltaE CIE76, like euclidean distance but with LAB coordinates), `de00` (deltaE CIELAB2000, more accurate method as it measure color difference as human perception). |
 | `--cleaner-option` | `str` | `strong` | Level of confetti (bad pixels) cleaning. Options are `none`, `moderate` (cleans isoleted pixels) and `strong` (same as `moderate` plus cleans pixels with just one diagonal neighbor). |
-| `--aida-color` | `str` | `white` | Color for Aida cloth when `--no-aida` is not used (default). |
+| `--aida-color` | `str` | `white` | Color for Aida cloth when `--no-aida` is not used (default). Take into account that it is drawn in chart as the most similar DMC color. |
 | `--backstitch-option` | `str` | `none` | Level of backstitching. Options are `none`, `constant` (backstitches with constant color between objects and background, color is defined by `--backstitch-code`) and `inverse` (backstitches with inverse color between objects and background). |
 | `--backstitch-code` | `str` | `498` | DMC code for backstitches when `--backstitch-option` is `constant`. |
 | `--backstitch-code-no-colors` | `str` | `310` | DMC code for backstitches when `--backstitch-option` is not `none` and `--no-colors` is used. |
-| `--fabric-count` | `int` | 14 | AIDA number of squares per inch. Only used to compute thread usage. |
+| `--fabric-count` | `int` | 14 | Aida number of squares per inch. Only used to compute thread usage. |
 | `--strands` | `int` | 2 | Strands used for stitching. Only used to compute thread usage. |
 | `--skein-length-meters` | `float` | 8.0 | Skein length in meters. Only used to compute thread usage. |
 | `--strands-per-skein` | `int` | 6 | Strands in a skein. Only used to compute thread usage. |
@@ -234,7 +231,7 @@ In the table below there is a list of all available user options, along with the
 | `--backstitch-line-width` | `int` | 3 | Backstitch line width when `--backstitch-option` is not `none`. |
 
 > [!WARNING]
-> Of course, you can produce a chart without colors, symbols and legend (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you will get an empty chart.
+> A chart without colors, symbols and legend can be generated (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you will get an empty chart.
 
 ## <a id="sec-work"></a>Future work
 
@@ -245,7 +242,7 @@ The following ideas can be implemented in the future. It is not planed to do so,
 
 ## <a id="sec-acknowledgements"></a>Acknowledgements
 
-This repo is a fork (see [original repo](https://github.com/PaulMakesStuff/Python_Cross_Stitch)), but it has been refactored in a 99.9%.
+This repo is a fork (see [original repo](https://github.com/PaulMakesStuff/Python_Cross_Stitch)), but it has been refactored in a 99.9% and substantially extended.
 
 ## <a id="sec-contact"></a>Contact
 

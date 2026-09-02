@@ -63,22 +63,22 @@ class ArgumentParser:
             '-i', '--input-file', required=True, type=str, help='Image file to convert. Required.'
         )
         self.parser.add_argument(
-            '-n', '--n-colors', required=True, type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included. Required.'
+            '-n', '--n-colors', required=True, type=int, help=f'DMC colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included. Required.'
         )
         self.parser.add_argument(
             '-s', '--stitches-per-row', required=True, type=int, help=f'Number of stitches/squares/pixels per row in chart. Must be greater or equal than {MIN_STITCHES_PER_ROW}. Required.'
         )
         self.parser.add_argument(
-            '--no-colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in \'--aida-color\' is used). By default colors are user.'
+            '--no-colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in \'--aida-color\' is used). By default colors are used.'
         )
         self.parser.add_argument(
-            '--no-symbols', dest='show_symbols', action='store_false', help='Produces chart without symbols. By default symbols are user.'
+            '--no-symbols', dest='show_symbols', action='store_false', help='Produces chart without symbols. By default symbols are used.'
         )
         self.parser.add_argument(
             '--no-legend', dest='show_legend', action='store_false', help='Produces chart without legend. By default legend is shown.'
         )
         self.parser.add_argument(
-            '--no-aida', dest='show_aida', action='store_false', help='Image background is rendered as more stitches in chart if option is present. By default Aida is shown, that is, stitches detected as background are drawn with color specified in `--aida-color`, without symbols and its color is not shown in legend (simulating Aida cloth). Background is detected as the mode of outer image borders.'
+            '--no-aida', dest='show_aida', action='store_false', help='Image background is rendered as more stitches in chart if this option is present. By default Aida is shown, that is, stitches detected as background are drawn with color specified in `--aida-color`, without symbols and its color is not shown in legend (simulating Aida cloth). Background is detected as the mode of outer image borders.'
         )
         self.parser.add_argument(
             '--no-svg', dest='save_as_svg', action='store_false', help='Do not save chart as svg file. By default a svg file is generated.'
@@ -102,7 +102,7 @@ class ArgumentParser:
             '--cleaner-option', type=str, default='strong', choices=CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'
         )
         self.parser.add_argument(
-            '--aida-color', type=str, default='white', help='Color for Aida cloth when \'--no-aida\' is not used (default). Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'B5200\' (snow white).'
+            '--aida-color', type=str, default='white', help='Color for Aida cloth when \'--no-aida\' is not used (default). Take into account that it is drawn in chart as the most similar DMC color. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'white\'.'
         )
         self.parser.add_argument(
             '--backstitch-option', type=str, default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\', \'constant\' (backstitches with constant color between objects and background, color is defined by \'--backstitch-code\') and \'inverse\' (backstitches with inverse color between objects and background). Default is \'none\'.'
@@ -118,7 +118,7 @@ class ArgumentParser:
 
         fabric_count_options = list(FABRIC_COUNT_TO_STITCH_LENGTH.keys())
         self.parser.add_argument(
-            '--fabric-count', type=int, default=14, choices=fabric_count_options, help='AIDA number of squares per inch. Only used to compute thread usage. Default is 14.'
+            '--fabric-count', type=int, default=14, choices=fabric_count_options, help='Aida number of squares per inch. Only used to compute thread usage. Default is 14.'
         )
         self.parser.add_argument(
             '--strands', type=int, default=2, help='Strands used for stitching. Only used to compute thread usage. Default is 2.'
