@@ -151,6 +151,7 @@ Backstitch is controlled with `--backstitch-option`. So far, only backstitch bet
 For example:
 
 `python3 src/stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --background-code 165`
+
 `python3 src/stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --background-code 165`
 
 | `--backstitch-option constant` | `--backstitch-option inverse` |
@@ -170,19 +171,19 @@ In the table below there is a list of all available user options, along with the
 > No value is needed for options `--no-colors`, `--no-symbols`,`--no-legend`, `--show-background`, `--no-svg`, `--no-png`, `--no-pdf`. Their effect is applied if they are present in the command line. That is way they do not have type or default values. Their default behavior is explained in comments.
 
 > [!NOTE]
-> All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
+> Options `--background-code`, `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available codes](https://artpatt.com/dmc-color-chart).
 
 > [!NOTE]
-> Options `--background-code`, `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available codes](https://artpatt.com/dmc-color-chart).
+> All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available colors](https://www.w3.org/TR/css-color-4/#named-colors).
 
 > [!NOTE]
 > All options that end with `-pixels` ask for a distance in pixels over the SVG file produced.
 
 | **Parameter** | **Type** | **Default** | **Comment** |
 |---------------|----------|-------------|-------------|
-| `-i` or `--input-file` | `str` || Image file to convert. |
-| `-n` or `--n-colors` | `int` || Colors to use in chart (backstitch colors are not included). Parameter must be between 2 and 100, both included. |
-| `-s` or `--stitches-per-row` | `int` || Number of stitches/squares/pixels per row in chart. Must be greater or equal than 10. |
+| `-i` or `--input-file` | `str` || Image file to convert. Required. |
+| `-n` or `--n-colors` | `int` || Colors to use in chart (backstitch colors are not included). Parameter must be between 2 and 100, both included. Required. |
+| `-s` or `--stitches-per-row` | `int` || Number of stitches/squares/pixels per row in chart. Must be greater or equal than 10. Required. |
 | `--no-colors` ||| Produces chart without colors (color specified in parameter `--background-code` is used). By default colors are user. |
 | `--no-symbols` ||| Produces chart without symbols. By default symbols are user. |
 | `--no-legend` ||| Produces chart without legend. By default legend is shown. |
@@ -235,14 +236,12 @@ In the table below there is a list of all available user options, along with the
 > [!WARNING]
 > Of course, you can produce a chart without colors, symbols and legend (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you will get an empty chart.
 
-## <a id="sec-bugs"></a>Known bugs and limitations
-
 ## <a id="sec-work"></a>Future work
 
 The following ideas can be implemented in the future. It is not planed to do so, but maybe someone will fork this repo.
 
-[ ] Improve backstitch with inner rims and/or other options
-[ ] Implement half and quarter stitches
+- [ ] Improve backstitch with inner rims and/or other options
+- [ ] Implement half and quarter stitches
 
 ## <a id="sec-acknowledgements"></a>Acknowledgements
 
