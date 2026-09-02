@@ -88,8 +88,8 @@ class Image:
         4. Convert the image to a np array"""
         self._import_image()  # pil_image is always width,height / cols,rows / x,y
         self._resize()
-        self.general_config.n_colors += 1 if self.general_config.ignore_background is True else 0  # add 1 color because bg color wont be shown in legend
+        self.general_config.n_colors += 1 if self.general_config.show_aida is True else 0  # add 1 color because aida color wont be shown in legend
         self._set_dmc_palette()
         self._quantize()
         if self.general_config.show_colors is False:
-            self.palette.replace_all_colors_by_code(self.other_config.background_code)
+            self.palette.replace_all_colors_by_rgb(self.other_config.aida_color)

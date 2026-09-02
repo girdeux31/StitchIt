@@ -28,18 +28,17 @@ class DMCColor:
 
     def _add_rgb(self) -> None:
         """Add DMC RGB info"""
-        if self.img_rgb is not None:
+        if self.img_rgb is None:
+            c_info = self.dmc.get_color_by_code(self.dmc_code)
+        else:  # by rgb
             c_info = self.dmc.get_most_similar_color(self.img_rgb, self.method)
             self.dmc_code = c_info['code']
-        else:  # by code
-            c_info = self.dmc.get_color_by_code(self.dmc_code)
         self.dmc_rgb = c_info['rgb']
         self.dmc_name = c_info['name']
 
-    def replace_color_by_code(self, code: int | str) -> None:
-        """Replace dmc_rgb, dmc_name (but no dmc_code), just used if show_colors is False"""
-        c_info = self.dmc.get_color_by_code(code)
-        self.dmc_rgb = c_info['rgb']
+    def replace_dmc_rgb(self, rgb: tuple[int]) -> None:
+        """Replace dmc_rgb, just used if show_colors is False"""
+        self.dmc_rgb = rgb
 
     def add_symbol(self) -> None:
         """Associate symbol to color"""
@@ -66,7 +65,7 @@ class GeneralConfig:
     show_colors: bool = True
     show_symbols: bool = True
     show_legend: bool = True
-    ignore_background: bool = True
+    show_aida: bool = True
     save_formats: list[str] | None = None
     png_scale: float = 2.0
 
@@ -75,7 +74,7 @@ class OtherConfig:
     method: str = 'de00'  # 'euclidean', 'de76', 'de00'
     clean_confetti_wout_neighbors: bool = True
     clean_confetti_w1_diagonal_neighbor: bool = True
-    background_code: str | int = 'B5200'
+    aida_color: str = 'white'
     show_backstitch: bool = False
     backstitch_option: str = 'constant'  # 'none', 'constant', 'inverse'
     backstitch_code: str | int = 498  # red

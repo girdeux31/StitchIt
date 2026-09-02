@@ -60,16 +60,16 @@ class ArgumentParser:
         # GENERAL PARAMETERS
 
         self.parser.add_argument(
-            '-i', '--input-file', required=True, type=str, help='Image file to convert.'
+            '-i', '--input-file', required=True, type=str, help='Image file to convert. Required.'
         )
         self.parser.add_argument(
-            '-n', '--n-colors', required=True, type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included.'
+            '-n', '--n-colors', required=True, type=int, help=f'Colors to use in chart (backstitch colors are not included). Parameter must be between {N_COLOR_RANGE[0]} and {N_COLOR_RANGE[1]}, both included. Required.'
         )
         self.parser.add_argument(
-            '-s', '--stitches-per-row', required=True, type=int, help=f'Number of stitches/squares/pixels per row in chart. Must be greater or equal than {MIN_STITCHES_PER_ROW}.'
+            '-s', '--stitches-per-row', required=True, type=int, help=f'Number of stitches/squares/pixels per row in chart. Must be greater or equal than {MIN_STITCHES_PER_ROW}. Required.'
         )
         self.parser.add_argument(
-            '--no-colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in parameter \'--background-code\' is used). By default colors are user.'
+            '--no-colors', dest='show_colors', action='store_false', help='Produces chart without colors (color specified in \'--aida-color\' is used). By default colors are user.'
         )
         self.parser.add_argument(
             '--no-symbols', dest='show_symbols', action='store_false', help='Produces chart without symbols. By default symbols are user.'
@@ -78,7 +78,7 @@ class ArgumentParser:
             '--no-legend', dest='show_legend', action='store_false', help='Produces chart without legend. By default legend is shown.'
         )
         self.parser.add_argument(
-            '--show-background', dest='ignore_background', action='store_false', help='Stitches detected as background are drawn with color specified in parameter \'--background-code\', without symbols and its color is not shown in legend. Background is detected as the mode of outer rim in input file. By default background is ignored.'
+            '--no-aida', dest='show_aida', action='store_false', help='Image background is rendered as more stitches in chart if option is present. By default Aida is shown, that is, stitches detected as background are drawn with color specified in `--aida-color`, without symbols and its color is not shown in legend (simulating Aida cloth). Background is detected as the mode of outer image borders.'
         )
         self.parser.add_argument(
             '--no-svg', dest='save_as_svg', action='store_false', help='Do not save chart as svg file. By default a svg file is generated.'
@@ -90,7 +90,7 @@ class ArgumentParser:
             '--no-pdf', dest='save_as_pdf', action='store_false', help='Do not save chart as pdf file. By default a pdf file is generated.'
         )
         self.parser.add_argument(
-            '--png-scale', type=float, default=2.0, help='Scale factor for the png generated file if \'--no-png\' parameter is not used. Default is \'2.0\'.'
+            '--png-scale', type=float, default=2.0, help='Scale factor for the png generated file if \'--no-png\' is not used. Default is \'2.0\'.'
         )
 
         # OTHER PARAMETERS
@@ -102,16 +102,16 @@ class ArgumentParser:
             '--cleaner-option', type=str, default='strong', choices=CLEANER_OPTIONS, help='Level of confetti (bad pixels) cleaning. Options are \'none\', \'moderate\' (cleans isoleted pixels) and \'strong\' (same as \'moderate\' plus cleans pixels with just one diagonal neighbor). Dafault is \'strong\'.'
         )
         self.parser.add_argument(
-            '--background-code', type=str, default='B5200', help='DMC code for background color when parameter \'--show-background\' is not used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'B5200\' (snow white).'
+            '--aida-color', type=str, default='white', help='Color for Aida cloth when \'--no-aida\' is not used (default). Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'B5200\' (snow white).'
         )
         self.parser.add_argument(
-            '--backstitch-option', type=str, default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\', \'constant\' (backstitches with constant color between objects and background, color is defined by parameter \'--backstitch-code\') and \'inverse\' (backstitches with inverse color between objects and background). Default is \'none\'.'
+            '--backstitch-option', type=str, default='none', choices=BACKSTITCH_OPTIONS, help='Level of backstitching. Options are \'none\', \'constant\' (backstitches with constant color between objects and background, color is defined by \'--backstitch-code\') and \'inverse\' (backstitches with inverse color between objects and background). Default is \'none\'.'
         )
         self.parser.add_argument(
-            '--backstitch-code', type=str, default='498', help='DMC code for backstitches when parameter \'--backstitch-option\' is \'constant\'. See available codes in https://artpatt.com/dmc-color-chart. Default is \'498\' (dark red).'
+            '--backstitch-code', type=str, default='498', help='DMC code for backstitches when \'--backstitch-option\' is \'constant\'. See available codes in https://artpatt.com/dmc-color-chart. Default is \'498\' (dark red).'
         )
         self.parser.add_argument(
-            '--backstitch-code-no-colors', type=str, default='310', help='DMC code for backstitches when parameter \'--backstitch-option\' is not \'none\' and \'--no-colors\' is used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'310\' (black).'
+            '--backstitch-code-no-colors', type=str, default='310', help='DMC code for backstitches when \'--backstitch-option\' is not \'none\' and \'--no-colors\' is used. See available codes in https://artpatt.com/dmc-color-chart. Default is \'310\' (black).'
         )
 
         # THREAD PARAMETERS
@@ -217,18 +217,19 @@ class ArgumentParser:
             '--arrow-gap-pixels', type=int, default=2, help='Space before arrow and chart in pixels. Default is 2.'
         )
         self.parser.add_argument(
-            '--symbol-color', type=str, default='black', help='Symbol color when parameter \'--no-symbols\' is not used. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
+            '--symbol-color', type=str, default='black', help='Symbol color when \'--no-symbols\' is not used. Colors can be specified with names as \'gray\' or HEX codes as \'#808080\'. See available colors in https://www.w3.org/TR/css-color-4/#named-colors. Default is \'black\'.'
         )
         self.parser.add_argument(
-            '--symbol-line-width', type=int, default=1, help='Symbol line width when parameter \'--no-symbols\' is not used. Default is 1.'
+            '--symbol-line-width', type=int, default=1, help='Symbol line width when \'--no-symbols\' is not used. Default is 1.'
         )
         self.parser.add_argument(
-            '--backstitch-line-width', type=int, default=3, help='Backstitch line width when parameter \'--backstitch-option\' is not \'none\'. Default is 3.'
+            '--backstitch-line-width', type=int, default=3, help='Backstitch line width when \'--backstitch-option\' is not \'none\'. Default is 3.'
         )
 
     def _postprocess_arguments(self):
         """Tune some arguments depending on user options"""
         self.args.input_file = Path(self.args.input_file)
+        self.args.aida_color = ImageColor.getrgb(self.args.aida_color)  # from CSS name or hex to RGB
         self.args.show_backstitch = True if self.args.backstitch_option != 'none' else False
         self.args.clean_confetti_wout_neighbors = True if self.args.cleaner_option in ['moderate', 'strong'] else False
         self.args.clean_confetti_w1_diagonal_neighbor = True if self.args.cleaner_option == 'strong' else False
@@ -278,7 +279,7 @@ class ArgumentParser:
             show_colors = self.args.show_colors,
             show_symbols = self.args.show_symbols,
             show_legend = self.args.show_legend,
-            ignore_background = self.args.ignore_background,
+            show_aida = self.args.show_aida,
             save_formats = self.args.save_formats,
             png_scale = self.args.png_scale,
         )
@@ -289,7 +290,7 @@ class ArgumentParser:
             method = self.args.method,
             clean_confetti_wout_neighbors = self.args.clean_confetti_wout_neighbors,
             clean_confetti_w1_diagonal_neighbor = self.args.clean_confetti_w1_diagonal_neighbor,
-            background_code = self.args.background_code,
+            aida_color = self.args.aida_color,
             show_backstitch = self.args.show_backstitch,
             backstitch_option = self.args.backstitch_option,
             backstitch_code = self.args.backstitch_code,

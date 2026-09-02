@@ -7,14 +7,9 @@ from src.info_file import InfoFile
 #  - change readme
 #  - order legend by #stitches
 #  - test png or other formats
-#  - replace --show-background by --show_aida (ignore_background=True) and --background-code by --aida_color
 
 # FIX:
 #  - all colors are shown in legend even if not shown in chart (also with bs when option is inverse)
-
-# FUTURE WORK:
-#  - improve backstitch
-#  - half and quarter stitches
 
 def stitchit():
     """

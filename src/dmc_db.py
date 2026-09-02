@@ -25,7 +25,7 @@ class DMCDB:
                 dmc_code = row[0]
                 dmc_name = row[1]
                 hex_code = row[2]
-                rgb = ImageColor.getcolor(hex_code, 'RGB')
+                rgb = ImageColor.getrgb(hex_code)
                 dmc_dict[dmc_code] = {'rgb': rgb, 'name': dmc_name}
 
         return dmc_dict

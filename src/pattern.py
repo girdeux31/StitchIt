@@ -29,12 +29,12 @@ class Pattern:
     def _change_background_index(self) -> None:
         """Set color index of background to special index"""
         self.bg_idx = self._get_background_idx()
-        if self.general_config.ignore_background is True:
+        if self.general_config.show_aida is True:
             self.array[self.array==self.bg_idx] = BACKGROUND_INDEX  # change idx in pattern
             self.palette.remove_color_by_idx(self.bg_idx)  # remove old bg color
-            self.palette.add_color_by_code(
+            self.palette.add_color_by_rgb(
                 BACKGROUND_INDEX,
-                self.other_config.background_code,
+                self.other_config.aida_color,
                 show_in_legend=False
             )  # add bg color
             self.bg_idx = BACKGROUND_INDEX  # change bg idx

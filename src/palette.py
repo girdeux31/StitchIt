@@ -61,10 +61,10 @@ class Palette:
             raise ValueError(f'Color with index \'{c_idx}\' not found')
         del self.colors[list_idx[0]]
 
-    def replace_all_colors_by_code(self, code: int | str) -> None:
-        """Replace all colors by dmc code, do no call this before quantize"""
+    def replace_all_colors_by_rgb(self, rgb: tuple[int]) -> None:
+        """Replace dmv_rgb in all colors, do no call this before quantize"""
         for color in self.colors:
-            color.replace_color_by_code(code)
+            color.replace_dmc_rgb(rgb)
 
     def add_symbols(self) -> None:
         """If possible add symbol to all colors (there is a limit of 11)"""
