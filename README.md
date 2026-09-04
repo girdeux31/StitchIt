@@ -14,16 +14,16 @@ StitchIt generates a cross stitch chart from an image for free. Main features in
 - Optionally, multiple format tweaks for the chart
 - Output formats include svg (vectorized image), png and pdf
 
-> [!NOTE]
+> **NOTE**
 > StitchIt is developed with Python 3.10 and tested with pytest.
 
 ## <a id="sec-install"></a>Install
 
-Direclty from PyPI. It will create an entrypoint to call the main script if you write `stitchit` in the terminal.
+Directly from PyPI.
 
 `pip install stitchit`
 
-The following third-party modules are required.
+It will create an entrypoint to call the main script if you write `stitchit` in the terminal. The following third-party modules are required.
 
 - pillow>=12.2.0
 - cairosvg>=2.9.0
@@ -39,8 +39,8 @@ You could also clone the GitHub repository with:
 
 `stitchit -i input_file -n n_colors -s stitches_per_row`
 
-> [!WARNING]
-> If you clone the repo, then call the main script as `python src/stitchit`.
+> **WARNING**
+> If you clone the repo, then call the main script as `python src/stitchit` from the project root.
 
 Only 3 parameters are mandatory, see the [list of all available options](#sec-options).
 
@@ -56,7 +56,7 @@ That is, use 2 different DMC colors and 60 stitches in each row.
 
 | Original | Chart |
 |----------|-------|
-|<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<img src="examples/bird_aida_chart.png" alt="Same bird as a cross stitch chart" width="320">|
+|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/bird.jpg" alt="A bird, original image" width="300">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/bird_aida_chart.png" alt="Same bird as a cross stitch chart" width="320">|
 
 ## <a id="sec-recommendations"></a>Image recommendations
 
@@ -74,14 +74,14 @@ The previous image is a good one but it is rather simple. A greater variety of c
 
 | Original | Chart |
 |----------|-------|
-|<img src="examples/einstain.jpg" alt="Einstain as a cartoon, original image" width="300">|<img src="examples/einstain_default_chart.png" alt="Same einstain as a cross stitch chart" width="320">|
+|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/einstain.jpg" alt="Einstain as a cartoon, original image" width="300">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/einstain_default_chart.png" alt="Same einstain as a cross stitch chart" width="320">|
 
 You can use any image, but the output of a real photography is not something you would stitch.
 
 | Original | Ugly chart |
 |----------|-------|
-|<img src="examples/afghan.jpg" alt="Famous afghan girl, real photography, original image" width="300">|<img src="examples/afghan_chart.png" alt="Same girl as a cross stitch chart, not a good one particularly" width="320">|
-|<img src="examples/astronaut.jpg" alt="Astronaut on the moon, real photography, original image" width="300">|<img src="examples/astronaut_chart.png" alt="Same astronaut as a cross stitch chart, not a good one particularly" width="320">|
+|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/afghan.jpg" alt="Famous afghan girl, real photography, original image" width="300">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/afghan_chart.png" alt="Same girl as a cross stitch chart, not a good one particularly" width="320">|
+|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/astronaut.jpg" alt="Astronaut on the moon, real photography, original image" width="300">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/astronaut_chart.png" alt="Same astronaut as a cross stitch chart, not a good one particularly" width="320">|
 
 If you must use a real photography, try to convert it first with your favorite AI tool. You can use this prompt:
 
@@ -89,7 +89,7 @@ If you must use a real photography, try to convert it first with your favorite A
 
 | Original | Chart |
 |----------|-------|
-|<img src="examples/afghan_cartoon.jpg" alt="Same afghan girl as before but as a cartoon by AI agent" width="300">|<img src="examples/afghan_cartoon_chart.png" alt="Same girl as a cross stitch chart, much better than before" width="320">|
+|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/afghan_cartoon.jpg" alt="Same afghan girl as before but as a cartoon by AI agent" width="300">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/afghan_cartoon_chart.png" alt="Same girl as a cross stitch chart, much better than before" width="320">|
 
 ## <a id="sec-thread"></a>Thread information
 
@@ -131,9 +131,9 @@ However, image background can be rendered as stitches with `--no-aida`. For exam
 
 | Default | With `--no-aida` |
 |----------|-------|
-|<img src="examples/bird_aida_chart.png" alt="Cross stitch chart of a bird" width="320">|<img src="examples/bird_noaida_chart.png" alt="Same cross stitch chart with background (`--no-aida` is used)" width="320">|
+|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/bird_aida_chart.png" alt="Cross stitch chart of a bird" width="320">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/bird_noaida_chart.png" alt="Same cross stitch chart with background (`--no-aida` is used)" width="320">|
 
-> [!WARNING]
+> **WARNING**
 > When `--no-aida` is present (not the default behavior), the image background takes up one color. Thus, to produce the same chart as the default behavior (background as Aida cloth) option `--n-colors` (or `-n`) must be increase by 1.
 
 Background color is detected as the mode of the image outer border.
@@ -154,7 +154,7 @@ For example:
 
 | `--backstitch-option constant` | `--backstitch-option inverse` |
 |------------|-----------|
-|<img src="examples/einstain_cbs_chart.png" alt="Einstain chart with constant backstitching" width="320">|<img src="examples/einstain_ibs_chart.png" alt="Einstain chart with inverse backstitching" width="320">|
+|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/einstain_cbs_chart.png" alt="Einstain chart with constant backstitching" width="320">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/einstain_ibs_chart.png" alt="Einstain chart with inverse backstitching" width="320">|
 
 Additional control over backstitches is given by `--backstitch-code` (if `--backstitch-option` is `constant`) and `--backstitch-line-width`. Backstitch colors are also included in legend. Note that colors in legend are sorted according to the number of stitches (first cross stitches, then backstitches).
 
@@ -162,22 +162,22 @@ Additional control over backstitches is given by `--backstitch-code` (if `--back
 
 In the table below there is a list of all available user options, along with the type, default value and a comment. Please, read carefully the following notes.
 
-> [!NOTE]
+> **NOTE**
 > Only options `--input-file` (or `-i`), `--n-colors` (or `-n`) and `--stitches-per-row` (or `-s`) are mandatory. All others are optional (defaults are included in table).
 
-> [!NOTE]
+> **NOTE**
 > No value is needed for options `--no-colors`, `--no-symbols`,`--no-legend`, `--no-aida`, `--no-svg`, `--no-png` and `--no-pdf`. Their effect is applied if they are present in the command line. That's way they don't have type or default values. Their default behavior is explained in comments.
 
-> [!NOTE]
+> **NOTE**
 > Options `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available DMC codes](https://artpatt.com/dmc-color-chart).
 
-> [!NOTE]
+> **NOTE**
 > All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `"#808080"`. See [available CSS4 colors](https://www.w3.org/TR/css-color-4/#named-colors).
 
-> [!WARNING]
+> **WARNING**
 > Double quotes must be used if HEX code is used as color, otherwise the terminal thinks it is a comment since it has the character `#`.
 
-> [!NOTE]
+> **NOTE**
 > All options that end with `-pixels` ask for a distance in pixels over the SVG file produced.
 
 | **Parameter** | **Type** | **Default** | **Comment** |
@@ -234,7 +234,7 @@ In the table below there is a list of all available user options, along with the
 | `--symbol-line-width` | `int` | 1 | Symbol line width when `--no-symbols` is not used. |
 | `--backstitch-line-width` | `int` | 3 | Backstitch line width when `--backstitch-option` is not `none`. |
 
-> [!WARNING]
+> **WARNING**
 > A chart without colors, symbols and legend can be generated (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you will get an empty chart.
 
 ## <a id="sec-work"></a>Future work
