@@ -71,4 +71,4 @@ class Pattern:
         if self.other_config.show_backstitch is True:
             self._set_backstitches()
 
-        self.palette.set_n_stitches(self.array, self.backstitches)
+        self.palette.sort_palette_by_n_stitches(self.array, self.backstitches)

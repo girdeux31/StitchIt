@@ -73,7 +73,7 @@ class Palette:
         for color in self.colors:
             color.add_symbol()
 
-    def set_n_stitches(self, array: np.ndarray[int], backstitches: list[Backstitch]) -> None:
+    def _set_n_stitches(self, array: np.ndarray[int], backstitches: list[Backstitch]) -> None:
         """Set n_stitches attribute for each color"""
         for color in self.colors:
             if color.is_backstitch:
@@ -81,6 +81,18 @@ class Palette:
             else:
                 stitches = np.sum(array == color.idx)
             color.add_n_stitches(stitches)
+
+    def sort_palette_by_n_stitches(self, array: np.ndarray[int], backstitches: list[Backstitch]) -> None:
+        """
+        Sort colors in palette according to #stitches (so they are sorted in legend),
+        first cross stitch colors then backstitch colors
+        """
+        self._set_n_stitches(array, backstitches)
+        cs_colors = [color for color in self.colors if color.is_backstitch is False]
+        bs_colors = [color for color in self.colors if color.is_backstitch is True]
+        cs_colors.sort(key=lambda color: color.n_stitches, reverse=True)
+        bs_colors.sort(key=lambda color: color.n_stitches, reverse=True)
+        self.colors = cs_colors + bs_colors
 
     @property
     def n_colors_in_legend(self) -> int:
