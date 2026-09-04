@@ -14,7 +14,7 @@ StitchIt generates a cross stitch chart from an image for free. Main features in
 - Optionally, multiple format tweaks for the chart
 - Output formats include svg (vectorized image), png and pdf
 
-> **NOTE**
+> [!NOTE]
 > StitchIt is developed with Python 3.10 and tested with pytest.
 
 ## <a id="sec-install"></a>Install
@@ -39,7 +39,7 @@ You could also clone the GitHub repository with:
 
 `stitchit -i input_file -n n_colors -s stitches_per_row`
 
-> **WARNING**
+> [!WARNING]
 > If you clone the repo, then call the main script as `python src/stitchit` from the project root.
 
 Only 3 parameters are mandatory, see the [list of all available options](#sec-options).
@@ -133,7 +133,7 @@ However, image background can be rendered as stitches with `--no-aida`. For exam
 |----------|-------|
 |<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/bird_aida_chart.png" alt="Cross stitch chart of a bird" width="320">|<img src="https://raw.githubusercontent.com/girdeux31/stitchit/main/examples/bird_noaida_chart.png" alt="Same cross stitch chart with background (`--no-aida` is used)" width="320">|
 
-> **WARNING**
+> [!WARNING]
 > When `--no-aida` is present (not the default behavior), the image background takes up one color. Thus, to produce the same chart as the default behavior (background as Aida cloth) option `--n-colors` (or `-n`) must be increase by 1.
 
 Background color is detected as the mode of the image outer border.
@@ -162,22 +162,22 @@ Additional control over backstitches is given by `--backstitch-code` (if `--back
 
 In the table below there is a list of all available user options, along with the type, default value and a comment. Please, read carefully the following notes.
 
-> **NOTE**
+> [!NOTE]
 > Only options `--input-file` (or `-i`), `--n-colors` (or `-n`) and `--stitches-per-row` (or `-s`) are mandatory. All others are optional (defaults are included in table).
 
-> **NOTE**
+> [!NOTE]
 > No value is needed for options `--no-colors`, `--no-symbols`,`--no-legend`, `--no-aida`, `--no-svg`, `--no-png` and `--no-pdf`. Their effect is applied if they are present in the command line. That's way they don't have type or default values. Their default behavior is explained in comments.
 
-> **NOTE**
+> [!NOTE]
 > Options `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available DMC codes](https://artpatt.com/dmc-color-chart).
 
-> **NOTE**
+> [!NOTE]
 > All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `"#808080"`. See [available CSS4 colors](https://www.w3.org/TR/css-color-4/#named-colors).
 
-> **WARNING**
+> [!WARNING]
 > Double quotes must be used if HEX code is used as color, otherwise the terminal thinks it is a comment since it has the character `#`.
 
-> **NOTE**
+> [!NOTE]
 > All options that end with `-pixels` ask for a distance in pixels over the SVG file produced.
 
 | **Parameter** | **Type** | **Default** | **Comment** |
@@ -234,7 +234,7 @@ In the table below there is a list of all available user options, along with the
 | `--symbol-line-width` | `int` | 1 | Symbol line width when `--no-symbols` is not used. |
 | `--backstitch-line-width` | `int` | 3 | Backstitch line width when `--backstitch-option` is not `none`. |
 
-> **WARNING**
+> [!WARNING]
 > A chart without colors, symbols and legend can be generated (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you will get an empty chart.
 
 ## <a id="sec-work"></a>Future work

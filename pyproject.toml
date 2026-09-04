@@ -9,7 +9,7 @@ authors = [
   { name="Carles Mesado", email="mesado31@gmail.com" },
 ]
 description = "StitchIt generates a cross stitch chart from an image for free"
-readme = "README.md"
+readme = "README.pypi.md"
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",

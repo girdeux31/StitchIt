@@ -6,3 +6,5 @@ Makefile
 .coverage
 src/*.egg-info
 how_to_run.txt
+prepare_readme_pypi.py
+README.pypi.md
