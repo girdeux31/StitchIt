@@ -3,9 +3,6 @@ from src.chart import Chart
 from src.info_file import InfoFile
 
 
-# TODO:
-#  - test png or other formats
-
 def stitchit():
     """
     Generates a cross stitch pattern from an image.

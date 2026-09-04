@@ -49,7 +49,7 @@ Only 3 parameters are mandatory, see the [list of all available options](#sec-op
 
 For example:
 
-`python3 stitchit.py -i examples/bird.jpg -n 2 -s 60`
+`python stitchit.py -i examples/bird.jpg -n 2 -s 60`
 
 That is, use 2 different DMC colors and 60 stitches in each row.
 
@@ -69,7 +69,7 @@ The following recommendations apply to input images:
 
 The previous image is a good one but it is rather simple. A greater variety of colors is handled properly (increase `n-colors` accordingly). For example:
 
-`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80`
+`python stitchit.py -i examples/einstain.jpg -n 5 -s 80`
 
 | Original | Chart |
 |----------|-------|
@@ -77,12 +77,12 @@ The previous image is a good one but it is rather simple. A greater variety of c
 
 You can use any image, but the output of a real photography is not something you would stitch.
 
-| Original | Chart |
+| Original | Ugly chart |
 |----------|-------|
 |<img src="examples/afghan.jpg" alt="Famous afghan girl, real photography, original image" width="300">|<img src="examples/afghan_chart.png" alt="Same girl as a cross stitch chart, not a good one particularly" width="320">|
 |<img src="examples/astronaut.jpg" alt="Astronaut on the moon, real photography, original image" width="300">|<img src="examples/astronaut_chart.png" alt="Same astronaut as a cross stitch chart, not a good one particularly" width="320">|
 
-If you must use a real photography, try to convert it first with your favorite AI agent. You can use this prompt:
+If you must use a real photography, try to convert it first with your favorite AI tool. You can use this prompt:
 
 > I attached an image. Can you convert it to a cartoonish picture so I can run it through an image-to-cross-stitch-chart program? Use plain colors or slightly shaded, few details, and homogeneous backgrounds. If it is in gray-scale, try to colorize it first.
 
@@ -126,7 +126,7 @@ By default, image background is automatically detected and left as part of the A
 
 However, image background can be rendered as stitches with `--no-aida`. For example:
 
-`python3 stitchit.py -i examples/bird.jpg -n 3 -s 60 --no-aida`
+`python stitchit.py -i examples/bird.jpg -n 3 -s 60 --no-aida`
 
 | Default | With `--no-aida` |
 |----------|-------|
@@ -142,14 +142,14 @@ Background color is detected as the mode of the image outer border.
 Backstitch is controlled with `--backstitch-option`. So far, only backstitch between objects and background is produced. It has 3 different options:
 
 - `none`: no backstitch is included in chart
-- `constant`: backstitch with constant color (given by `--backstitch-code`) is included
-- `inverse`: backstitch with object inverse color is included
+- `constant`: backstitch with constant color (given by `--backstitch-code`)
+- `inverse`: backstitch with object inverse color (most similar DMC color)
 
 For example:
 
-`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --backstitch-code 498 --aida-color "#EFF4A4"`
+`python stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --backstitch-code 498 --aida-color "#EFF4A4"`
 
-`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --aida-color "#EFF4A4"`
+`python stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --aida-color "#EFF4A4"`
 
 | `--backstitch-option constant` | `--backstitch-option inverse` |
 |------------|-----------|
@@ -174,7 +174,7 @@ In the table below there is a list of all available user options, along with the
 > All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `"#808080"`. See [available CSS4 colors](https://www.w3.org/TR/css-color-4/#named-colors).
 
 > [!WARNING]
-> Double quotes must be used if HEX code is used as color, otherwise the terminal thinks it is a comment since it has the character `#`
+> Double quotes must be used if HEX code is used as color, otherwise the terminal thinks it is a comment since it has the character `#`.
 
 > [!NOTE]
 > All options that end with `-pixels` ask for a distance in pixels over the SVG file produced.
@@ -238,7 +238,7 @@ In the table below there is a list of all available user options, along with the
 
 ## <a id="sec-work"></a>Future work
 
-The following ideas can be implemented in the future. It is not planed to do so, but maybe someone will fork this repo.
+The following ideas can be implemented in the future. It is not planned to do so, but maybe someone will fork this repo.
 
 - [ ] Improve backstitch with inner borders and/or other options
 - [ ] Implement half and quarter stitches
