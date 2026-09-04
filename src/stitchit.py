@@ -5,7 +5,6 @@ from src.info_file import InfoFile
 
 # TODO:
 #  - test png or other formats
-#  - update images in readme according to legend changes
 
 def stitchit():
     """

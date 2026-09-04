@@ -55,7 +55,7 @@ That is, use 2 different DMC colors and 60 stitches in each row.
 
 | Original | Chart |
 |----------|-------|
-|<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<img src="examples/bird_wobg_chart.png" alt="Same bird as a cross stitch chart" width="320">|
+|<img src="examples/bird.jpg" alt="A bird, original image" width="300">|<img src="examples/bird_aida_chart.png" alt="Same bird as a cross stitch chart" width="320">|
 
 ## <a id="sec-recommendations"></a>Image recommendations
 
@@ -130,7 +130,7 @@ However, image background can be rendered as stitches with `--no-aida`. For exam
 
 | Default | With `--no-aida` |
 |----------|-------|
-|<img src="examples/bird_wobg_chart.png" alt="Cross stitch chart of a bird" width="320">|<img src="examples/bird_wbg_chart.png" alt="Same cross stitch chart with background (`--no-aida` is used)" width="320">|
+|<img src="examples/bird_aida_chart.png" alt="Cross stitch chart of a bird" width="320">|<img src="examples/bird_noaida_chart.png" alt="Same cross stitch chart with background (`--no-aida` is used)" width="320">|
 
 > [!WARNING]
 > When `--no-aida` is present (not the default behavior), the image background takes up one color. Thus, to produce the same chart as the default behavior (background as Aida cloth) option `--n-colors` (or `-n`) must be increase by 1.
@@ -147,15 +147,15 @@ Backstitch is controlled with `--backstitch-option`. So far, only backstitch bet
 
 For example:
 
-`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --backstitch-code 498 --aida-color #EFF4A4`
+`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --backstitch-code 498 --aida-color "#EFF4A4"`
 
-`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --aida-color #EFF4A4`
+`python3 stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --aida-color "#EFF4A4"`
 
 | `--backstitch-option constant` | `--backstitch-option inverse` |
 |------------|-----------|
 |<img src="examples/einstain_cbs_chart.png" alt="Einstain chart with constant backstitching" width="320">|<img src="examples/einstain_ibs_chart.png" alt="Einstain chart with inverse backstitching" width="320">|
 
-Additional control over backstitches is given by `--backstitch-code` (if `--backstitch-option` is `constant`) and `--backstitch-line-width`. Backstitch colors are also included in legend.
+Additional control over backstitches is given by `--backstitch-code` (if `--backstitch-option` is `constant`) and `--backstitch-line-width`. Backstitch colors are also included in legend. Note that colors in legend are sorted according to the number of stitches (first cross stitches, then backstitches).
 
 ## <a id="sec-options"></a>User options
 
@@ -171,7 +171,10 @@ In the table below there is a list of all available user options, along with the
 > Options `--backstitch-code` and `--backstitch-code-no-colors` ask for a DMC code. See [available DMC codes](https://artpatt.com/dmc-color-chart).
 
 > [!NOTE]
-> All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `#808080`. See [available CSS4 colors](https://www.w3.org/TR/css-color-4/#named-colors).
+> All options that end with `-color` ask for a color. Colors can be specified with CSS4 names as `gray` or HEX codes as `"#808080"`. See [available CSS4 colors](https://www.w3.org/TR/css-color-4/#named-colors).
+
+> [!WARNING]
+> Double quotes must be used if HEX code is used as color, otherwise the terminal thinks it is a comment since it has the character `#`
 
 > [!NOTE]
 > All options that end with `-pixels` ask for a distance in pixels over the SVG file produced.
