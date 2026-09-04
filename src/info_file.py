@@ -1,13 +1,14 @@
 import math
-import numpy as np
-
 from pathlib import Path
+
 from tabulate import tabulate
 
 from src.chart import Chart
 from src.color_tools import ColorTools
+from src.constants import (CM_PER_INCH, CM_PER_M,
+                           FABRIC_COUNT_TO_STITCH_LENGTH, TABLE_FORMAT,
+                           TABLE_HEADER)
 from src.data_classes import OtherConfig, ThreadConfig
-from src.constants import TABLE_HEADER, TABLE_FORMAT, FABRIC_COUNT_TO_STITCH_LENGTH, CM_PER_INCH, CM_PER_M
 
 
 class InfoFile:

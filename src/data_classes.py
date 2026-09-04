@@ -1,8 +1,8 @@
-from pathlib import Path
 from dataclasses import dataclass
+from pathlib import Path
 
-from src.dmc_db import DMCDB
 from src.constants import IDX_TO_SYMBOL_CODE, SYMBOLS_TO_FILL
+from src.dmc_db import DMCDB
 
 
 @dataclass

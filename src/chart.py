@@ -1,10 +1,11 @@
 import math
 from pathlib import Path
 
-from src.image import Image
 from src.composer import Composer
+from src.data_classes import (GeneralConfig, LegendConfig, OtherConfig,
+                              PatternConfig)
+from src.image import Image
 from src.pattern import Pattern
-from src.data_classes import GeneralConfig, OtherConfig, LegendConfig, PatternConfig
 
 
 class Chart:

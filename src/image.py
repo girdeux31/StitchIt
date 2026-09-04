@@ -1,11 +1,10 @@
 import numpy as np
-
 from PIL import Image as PILImage
 
-from src.palette import Palette
 from src.color_tools import ColorTools
-from src.data_classes import GeneralConfig, OtherConfig
 from src.constants import METHOD_TO_COLOR_THRESHOLD
+from src.data_classes import GeneralConfig, OtherConfig
+from src.palette import Palette
 
 
 class Image:

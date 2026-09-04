@@ -1,20 +1,15 @@
 import argparse
-
-from PIL import ImageColor
 from pathlib import Path
 from warnings import warn
 
-from src.data_classes import GeneralConfig, OtherConfig, ThreadConfig, LegendConfig, PatternConfig
-from src.constants import (
-    MIN_STITCHES_PER_ROW,
-    MAX_STITCHES_PER_ROW_RECOMMENDED,
-    METHOD_OPTIONS,
-    CLEANER_OPTIONS,
-    BACKSTITCH_OPTIONS,
-    FONT_WEIGHT_OPTIONS,
-    N_COLOR_RANGE,
-    FABRIC_COUNT_TO_STITCH_LENGTH,
-)
+from PIL import ImageColor
+
+from src.constants import (BACKSTITCH_OPTIONS, CLEANER_OPTIONS,
+                           FABRIC_COUNT_TO_STITCH_LENGTH, FONT_WEIGHT_OPTIONS,
+                           MAX_STITCHES_PER_ROW_RECOMMENDED, METHOD_OPTIONS,
+                           MIN_STITCHES_PER_ROW, N_COLOR_RANGE)
+from src.data_classes import (GeneralConfig, LegendConfig, OtherConfig,
+                              PatternConfig, ThreadConfig)
 
 
 def is_valid_color(value):

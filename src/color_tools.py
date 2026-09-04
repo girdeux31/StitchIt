@@ -1,6 +1,6 @@
 import math
 
-from skimage.color import rgb2lab, deltaE_cie76, deltaE_ciede2000
+from skimage.color import deltaE_cie76, deltaE_ciede2000, rgb2lab
 
 
 class ColorTools:

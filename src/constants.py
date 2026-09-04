@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 MIN_STITCHES_PER_ROW = 10
 MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
 BACKGROUND_INDEX = 255  # must be between n_colors and 255 inclusive since pattern is uint8
