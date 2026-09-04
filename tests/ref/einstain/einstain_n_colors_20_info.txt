@@ -11,13 +11,13 @@ Thread information:
 ----------  -----------------------  -----------  ----------  ------------  --------  -------
        739  Ultra Very Light Tan     248,228,200         765         13.77         1   8.0159
       3854  Medium Autumn Gold       242,175,104         612         11.02         1   0.0520
-       924  Very Dark Gray Green     86,106,106          321          5.78         1   0.1121
-      3853  Dark Autumn Gold         242,151,70          167          3.01         1   0.1932
        938  Ultra Dark Coffee Brown  54,31,14            416          7.49         1   0.0138
+       924  Very Dark Gray Green     86,106,106          321          5.78         1   0.1121
+       648  Light Beaver Gray        188,180,172         238          4.28         1   0.3503
+      3853  Dark Autumn Gold         242,151,70          167          3.01         1   0.1932
         07  Driftwood                192,168,136          85          1.53         1   0.0174
+      3799  Very Dark Pewter Gray    66,66,66             69          1.24         1   1.6109
       3371  Black Brown              30,17,8              32          0.58         1   0.6500
       3855  Light Autumn Gold        250,211,150          32          0.58         1   2.3869
        435  Very Light Brown         184,119,72            7          0.13         1   7.5457
-       648  Light Beaver Gray        188,180,172         238          4.28         1   0.3503
       3768  Dark Gray Green          101,127,127           4          0.07         1  10.2432
-      3799  Very Dark Pewter Gray    66,66,66             69          1.24         1   1.6109

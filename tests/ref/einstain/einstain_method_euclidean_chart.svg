@@ -7939,19 +7939,19 @@
 	<path d="M4 4L10 16L16 4 Z" stroke="black" stroke-width="2" fill="black" transform="translate(405.0 -2) scale(0.6666666666666666)"/>
 	<path d="M4 4L16 10L4 16 Z" stroke="black" stroke-width="2" fill="black" transform="translate(-2 315.0) scale(0.6666666666666666)"/>
 	<text class="title" x="20" y="660">Mouliné DMC</text>
-	<rect x="20" y="680" width="15.0" height="15.0" style="fill:rgb(247,187,119);stroke:black;stroke-width:1;"/>
-	<path class="glyph" d="M4 16L16 4M4 10L 16 10" transform="translate(20 680) scale(0.75)" fill="none"/>
-	<text class="code" x="40" y="690">3827</text>
-	<rect x="120" y="680" width="15.0" height="15.0" style="fill:rgb(86,106,106);stroke:black;stroke-width:1;"/>
-	<path class="glyph" d="M7 7L7 13 13 13 13 7Z" transform="translate(120 680) scale(0.75)" fill="black"/>
-	<text class="code" x="140" y="690">924</text>
-	<rect x="220" y="680" width="15.0" height="15.0" style="fill:rgb(245,236,203);stroke:black;stroke-width:1;"/>
-	<path class="glyph" d="M4 4L10 16L16 4 Z" transform="translate(220 680) scale(0.75)" fill="none"/>
-	<text class="code" x="240" y="690">677</text>
-	<rect x="320" y="680" width="15.0" height="15.0" style="fill:rgb(220,156,86);stroke:black;stroke-width:1;"/>
-	<path class="glyph" d="M4 4L16 16M4 16 L16 4" transform="translate(320 680) scale(0.75)" fill="none"/>
-	<text class="code" x="340" y="690">977</text>
-	<rect x="420" y="680" width="15.0" height="15.0" style="fill:rgb(220,196,170);stroke:black;stroke-width:1;"/>
-	<path class="glyph" d="M4 4L4 16 16 16 16 4Z" transform="translate(420 680) scale(0.75)" fill="none"/>
-	<text class="code" x="440" y="690">613</text>
+	<rect x="20" y="680" width="15.0" height="15.0" style="fill:rgb(86,106,106);stroke:black;stroke-width:1;"/>
+	<path class="glyph" d="M7 7L7 13 13 13 13 7Z" transform="translate(20 680) scale(0.75)" fill="black"/>
+	<text class="code" x="40" y="690">924</text>
+	<rect x="120" y="680" width="15.0" height="15.0" style="fill:rgb(245,236,203);stroke:black;stroke-width:1;"/>
+	<path class="glyph" d="M4 4L10 16L16 4 Z" transform="translate(120 680) scale(0.75)" fill="none"/>
+	<text class="code" x="140" y="690">677</text>
+	<rect x="220" y="680" width="15.0" height="15.0" style="fill:rgb(247,187,119);stroke:black;stroke-width:1;"/>
+	<path class="glyph" d="M4 16L16 4M4 10L 16 10" transform="translate(220 680) scale(0.75)" fill="none"/>
+	<text class="code" x="240" y="690">3827</text>
+	<rect x="320" y="680" width="15.0" height="15.0" style="fill:rgb(220,196,170);stroke:black;stroke-width:1;"/>
+	<path class="glyph" d="M4 4L4 16 16 16 16 4Z" transform="translate(320 680) scale(0.75)" fill="none"/>
+	<text class="code" x="340" y="690">613</text>
+	<rect x="420" y="680" width="15.0" height="15.0" style="fill:rgb(220,156,86);stroke:black;stroke-width:1;"/>
+	<path class="glyph" d="M4 4L16 16M4 16 L16 4" transform="translate(420 680) scale(0.75)" fill="none"/>
+	<text class="code" x="440" y="690">977</text>
 </svg>

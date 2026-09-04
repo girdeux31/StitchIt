@@ -9,8 +9,8 @@ Thread information:
 
   DMC code  DMC color              DMC RGB        Stitches    Length (m)    Skeins      MSE
 ----------  ---------------------  -----------  ----------  ------------  --------  -------
-      3827  Pale Golden Brown      247,187,119         525          9.45         1   1.0210
        924  Very Dark Gray Green   86,106,106         1013         18.23         1  12.6071
        677  Very Light Old Gold    245,236,203         702         12.64         1   8.8675
-       977  Light Golden Brown     220,156,86          211          3.80         1   1.3886
+      3827  Pale Golden Brown      247,187,119         525          9.45         1   1.0210
        613  Very Light Drab Brown  220,196,170         354          6.37         1   8.8870
+       977  Light Golden Brown     220,156,86          211          3.80         1   1.3886
