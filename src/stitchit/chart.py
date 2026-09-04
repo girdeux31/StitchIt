@@ -1,11 +1,11 @@
 import math
 from pathlib import Path
 
-from src.composer import Composer
-from src.data_classes import (GeneralConfig, LegendConfig, OtherConfig,
-                              PatternConfig)
-from src.image import Image
-from src.pattern import Pattern
+from src.stitchit.composer import Composer
+from src.stitchit.data_classes import (GeneralConfig, LegendConfig,
+                                       OtherConfig, PatternConfig)
+from src.stitchit.image import Image
+from src.stitchit.pattern import Pattern
 
 
 class Chart:

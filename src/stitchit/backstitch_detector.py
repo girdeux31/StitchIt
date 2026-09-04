@@ -1,9 +1,9 @@
 import numpy as np
 
-from src.color_tools import ColorTools
-from src.constants import (BACKGROUND_INDEX, BACKSTITCH_INDEX,
-                           INVERSE_BACKSTITCH_DELTA_INDEX)
-from src.data_classes import Backstitch, DMCColor
+from src.stitchit.color_tools import ColorTools
+from src.stitchit.constants import (BACKGROUND_INDEX, BACKSTITCH_INDEX,
+                                    INVERSE_BACKSTITCH_DELTA_INDEX)
+from src.stitchit.data_classes import Backstitch, DMCColor
 
 
 class BackstitchDetector:

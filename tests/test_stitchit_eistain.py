@@ -1,12 +1,13 @@
 from pathlib import Path
-from src.stitchit import stitchit
 
 from base_test import assert_output, setup_method
 
+from src.stitchit.cli import main
 
 INP_NAME = Path('einstain.jpg')
 DEFAULT_N_COLORS = 5
 DEFAULT_STITCHES_PER_ROW = 80
+
 
 def test_default_values(request):
     args = {
@@ -14,7 +15,7 @@ def test_default_values(request):
         'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_method_euclidean(request):
@@ -24,7 +25,7 @@ def test_method_euclidean(request):
         'method': 'euclidean',
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_method_de76(request):
@@ -34,7 +35,7 @@ def test_method_de76(request):
         'method': 'de76',
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_n_colors_20(request):
@@ -43,7 +44,7 @@ def test_n_colors_20(request):
         'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_all_args(request):
@@ -88,5 +89,5 @@ def test_all_args(request):
         'backstitch-line-width': 3, 
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)

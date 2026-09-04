@@ -1,5 +1,3 @@
-from pathlib import Path
-
 MIN_STITCHES_PER_ROW = 10
 MAX_STITCHES_PER_ROW_RECOMMENDED = 125  # TODO check why waves takes so much less than bird
 BACKGROUND_INDEX = 255  # must be between n_colors and 255 inclusive since pattern is uint8
@@ -8,7 +6,7 @@ INVERSE_BACKSTITCH_DELTA_INDEX = 100
 CM_PER_INCH = 2.54  # cm/inch
 CM_PER_M = 100  # cm/m
 TABLE_FORMAT = 'simple'
-CSV_FILE = Path('data/dmc_db.csv')
+CSV_REL_PATH = 'data/dmc_db.csv'
 
 METHOD_OPTIONS = ['euclidean', 'de76', 'de00']
 CLEANER_OPTIONS = ['none', 'moderate', 'strong']

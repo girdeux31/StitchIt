@@ -1,12 +1,13 @@
 from pathlib import Path
-from src.stitchit import stitchit
 
 from base_test import assert_output, setup_method
 
+from src.stitchit.cli import main
 
 INP_NAME = Path('bird.jpg')
 DEFAULT_N_COLORS = 3
 DEFAULT_STITCHES_PER_ROW = 60
+
 
 def test_default_values(request):
     args = {
@@ -14,7 +15,7 @@ def test_default_values(request):
         'stitches-per-row': DEFAULT_STITCHES_PER_ROW,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_no_colors(request):
@@ -24,7 +25,7 @@ def test_no_colors(request):
         'no-colors': None,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_no_symbols(request):
@@ -34,7 +35,7 @@ def test_no_symbols(request):
         'no-symbols': None,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_no_legend(request):
@@ -44,7 +45,7 @@ def test_no_legend(request):
         'no-legend': None,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_all_false(request):
@@ -56,7 +57,7 @@ def test_all_false(request):
         'no-legend': None,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_no_aida(request):
@@ -66,7 +67,7 @@ def test_no_aida(request):
         'no-aida': None,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_backstitch_constant(request):
@@ -76,7 +77,7 @@ def test_backstitch_constant(request):
         'backstitch-option': 'constant',
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_backstitch_inverse(request):
@@ -86,7 +87,7 @@ def test_backstitch_inverse(request):
         'backstitch-option': 'inverse',
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_min_values(request):
@@ -95,7 +96,7 @@ def test_min_values(request):
         'stitches-per-row': 10,
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_cleaner_moderate(request):
@@ -105,7 +106,7 @@ def test_cleaner_moderate(request):
         'cleaner-option': 'moderate',
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)
 
 def test_cleaner_none(request):
@@ -115,5 +116,5 @@ def test_cleaner_none(request):
         'cleaner-option': 'none',
     }
     tmp_file = setup_method(request, INP_NAME, args)
-    stitchit()
+    main()
     assert_output(INP_NAME, tmp_file)

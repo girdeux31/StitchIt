@@ -1,12 +1,11 @@
 import os
-import sys
 import shutil
-
+import sys
 from pathlib import Path
 
+REF_PATH = Path(__file__).parent / 'ref'
+TMP_PATH = Path(__file__).parent / 'tmp'
 
-REF_PATH = Path('tests/ref')
-TMP_PATH = Path('tests/tmp')
 
 def compare_files(file_a: Path, file_b: Path):
     """Return True if files match, False otherwise"""
@@ -56,6 +55,7 @@ def _setup_files(inp_name: Path, test_name: str):
     tmp_name = f'{inp_name.stem}_{test_name}{inp_name.suffix}'
     ref_file = REF_PATH / inp_name
     tmp_file = TMP_PATH / inp_name.stem / tmp_name
+    os.makedirs(tmp_file.parent, exist_ok=True)  # create tmp dir
     return ref_file, tmp_file
 
 def _setup_args(ref_file: Path, args: dict[str, str | int | float]) -> None:

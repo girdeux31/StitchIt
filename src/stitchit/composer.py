@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from src.backstitch_detector import Backstitch
-from src.data_classes import DMCColor, LegendConfig, PatternConfig
-from src.svg import SVG
+from src.stitchit.backstitch_detector import Backstitch
+from src.stitchit.data_classes import DMCColor, LegendConfig, PatternConfig
+from src.stitchit.svg import SVG
 
 
 class Composer:

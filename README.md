@@ -19,27 +19,28 @@ StitchIt generates a cross stitch chart from an image for free. Main features in
 
 ## <a id="sec-install"></a>Install
 
-> [!IMPORTANT]
-> Package soon available in PyPI.
+Direclty from PyPI. It will create an entrypoint to call the main script if you write `stitchit` in the terminal.
 
-Meanwhile, clone the GitHub repository with:
-
-`gh repo clone girdeux31/StitchIt`
+`pip install stitchit`
 
 The following third-party modules are required.
 
-- pillow==12.2.0
-- cairosvg==2.9.0
-- tabulate==0.10.0
+- pillow>=12.2.0
+- cairosvg>=2.9.0
+- tabulate>=0.10.0
 - scikit-image>=0.22.0
 - numpy>=1.24.3
 
+You could also clone the GitHub repository with:
+
+`gh repo clone girdeux31/StitchIt`
+
 ## <a id="sec-guide"></a>Quick guide
 
-`python stitchit.py -i input_file -n n_colors -s stitches_per_row`
+`stitchit -i input_file -n n_colors -s stitches_per_row`
 
 > [!WARNING]
-> If you clone the repo, then call the main script as `python src/stitchit.py`.
+> If you clone the repo, then call the main script as `python src/stitchit`.
 
 Only 3 parameters are mandatory, see the [list of all available options](#sec-options).
 
@@ -49,7 +50,7 @@ Only 3 parameters are mandatory, see the [list of all available options](#sec-op
 
 For example:
 
-`python stitchit.py -i examples/bird.jpg -n 2 -s 60`
+`stitchit -i examples/bird.jpg -n 2 -s 60`
 
 That is, use 2 different DMC colors and 60 stitches in each row.
 
@@ -69,7 +70,7 @@ The following recommendations apply to input images:
 
 The previous image is a good one but it is rather simple. A greater variety of colors is handled properly (increase `n-colors` accordingly). For example:
 
-`python stitchit.py -i examples/einstain.jpg -n 5 -s 80`
+`stitchit -i examples/einstain.jpg -n 5 -s 80`
 
 | Original | Chart |
 |----------|-------|
@@ -126,7 +127,7 @@ By default, image background is automatically detected and left as part of the A
 
 However, image background can be rendered as stitches with `--no-aida`. For example:
 
-`python stitchit.py -i examples/bird.jpg -n 3 -s 60 --no-aida`
+`stitchit -i examples/bird.jpg -n 3 -s 60 --no-aida`
 
 | Default | With `--no-aida` |
 |----------|-------|
@@ -147,9 +148,9 @@ Backstitch is controlled with `--backstitch-option`. So far, only backstitch bet
 
 For example:
 
-`python stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --backstitch-code 498 --aida-color "#EFF4A4"`
+`stitchit -i examples/einstain.jpg -n 5 -s 80 --backstitch-option constant --backstitch-code 498 --aida-color "#EFF4A4"`
 
-`python stitchit.py -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --aida-color "#EFF4A4"`
+`stitchit -i examples/einstain.jpg -n 5 -s 80 --backstitch-option inverse --aida-color "#EFF4A4"`
 
 | `--backstitch-option constant` | `--backstitch-option inverse` |
 |------------|-----------|

@@ -1,15 +1,15 @@
-from src.argument_parser import ArgumentParser
-from src.chart import Chart
-from src.info_file import InfoFile
+from src.stitchit.argument_parser import ArgumentParser
+from src.stitchit.chart import Chart
+from src.stitchit.info_file import InfoFile
 
 
-def stitchit():
+def main():
     """
     Generates a cross stitch pattern from an image.
 
     Usage:
 
-        python3 stitchit.py -i input_file -n n_colors -s stitches_per_row
+        python3 src/stitchit -i input_file -n n_colors -s stitches_per_row
 
     Arguments:
 
@@ -43,4 +43,4 @@ def stitchit():
 
 if __name__ == '__main__':
 
-    stitchit()    
+    main()    

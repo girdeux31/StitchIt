@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.data_classes import Backstitch, DMCColor
+from src.stitchit.data_classes import Backstitch, DMCColor
 
 
 class Palette:

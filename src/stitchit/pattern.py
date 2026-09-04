@@ -1,11 +1,11 @@
 import numpy as np
 from PIL import Image as PILImage
 
-from src.backstitch_detector import BackstitchDetector
-from src.confetti_cleaner import ConfettiCleaner
-from src.constants import BACKGROUND_INDEX
-from src.data_classes import GeneralConfig, OtherConfig
-from src.image import Image
+from src.stitchit.backstitch_detector import BackstitchDetector
+from src.stitchit.confetti_cleaner import ConfettiCleaner
+from src.stitchit.constants import BACKGROUND_INDEX
+from src.stitchit.data_classes import GeneralConfig, OtherConfig
+from src.stitchit.image import Image
 
 
 class Pattern:

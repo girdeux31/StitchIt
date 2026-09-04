@@ -1,16 +1,18 @@
 import csv
+from pathlib import Path
 
 from PIL import ImageColor
 
-from src.color_tools import ColorTools
-from src.constants import CSV_FILE
+from src.stitchit.color_tools import ColorTools
+from src.stitchit.constants import CSV_REL_PATH
 
 
 class DMCDB:
     
     def __init__(self):
         """Init object"""
-        self.dmc_dict = self._read_info_from_csv(CSV_FILE)
+        csv_file = Path(__file__).parent / CSV_REL_PATH
+        self.dmc_dict = self._read_info_from_csv(csv_file)
 
     def _read_info_from_csv(self, csv_file: str) -> dict[str, dict[str, tuple | str]]:
         """Read CSV file with DMC info"""

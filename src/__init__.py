@@ -1,6 +1,0 @@
-__name__ = 'stitchit'
-__version__ = '1.0.0'
-__summary__ = 'Generates a cross stitch pattern from an image'
-__author__ = 'Carles Mesado'
-__email__ = 'mesado31@gmail.com'
-__dependencies__ = 'pillow, cairosvg, scikit-image, numpy, tabulate'

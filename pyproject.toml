@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=84"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stitchit"
+version = "1.0.0"
+authors = [
+  { name="Carles Mesado", email="mesado31@gmail.com" },
+]
+description = "StitchIt generates a cross stitch chart from an image for free"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Operating System :: OS Independent",
+    "Topic :: Multimedia :: Graphics",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+  "pillow>=12.2.0",
+  "cairosvg>=2.9.0",
+  "tabulate>=0.10.0",
+  "scikit-image>=0.22.0",
+  "numpy>=1.24.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/girdeux31/StitchIt"
+Issues = "https://github.com/girdeux31/StitchIt/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "isort",
+]
+
+[project.scripts]
+stitchit = "stitchit.cli:main"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+stitchit = ["data/*"]

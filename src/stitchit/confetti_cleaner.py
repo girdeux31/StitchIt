@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.data_classes import OtherConfig
+from src.stitchit.data_classes import OtherConfig
 
 
 class ConfettiCleaner:
