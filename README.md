@@ -199,7 +199,7 @@ In the table below there is a list of all available user options, along with the
 | `--backstitch-option` | `str` | `none` | Level of backstitching. Options are `none`, `constant` (backstitches with constant color between objects and background, color is defined by `--backstitch-code`) and `inverse` (backstitches with inverse color between objects and background). |
 | `--backstitch-code` | `str` | `498` | DMC code for backstitches when `--backstitch-option` is `constant`. |
 | `--backstitch-code-no-colors` | `str` | `310` | DMC code for backstitches when `--backstitch-option` is not `none` and `--no-colors` is used. |
-| `--fabric-count` | `int` | 14 | Aida number of squares per inch. Only used to compute thread usage. |
+| `--fabric-count` | `int` | 14 | Aida number or squares per inch. Only used to compute thread usage. |
 | `--strands` | `int` | 2 | Strands used for stitching. Only used to compute thread usage. |
 | `--skein-length-meters` | `float` | 8.0 | Skein length in meters. Only used to compute thread usage. |
 | `--strands-per-skein` | `int` | 6 | Strands in a skein. Only used to compute thread usage. |
@@ -219,23 +219,23 @@ In the table below there is a list of all available user options, along with the
 | `--legend-box-line-width` | `int` | 1 | Box line width for each legend item. |
 | `--svg-fill-color` | `str` | `none` | SVG background color (outside chart). Use `none` for transparent color. |
 | `--major-grid-color` | `str` | `black` | Major grid color. |
-| `--major-grid-step-pixels` | `int` | 100 | Space between major gird lines in pixels. |
-| `--major-grid-width` | `int` | 2 | Major gird line width. |
+| `--major-grid-step-pixels` | `int` | 100 | Space between major grid lines in pixels. |
+| `--major-grid-width` | `int` | 2 | Major grid line width. |
 | `--minor-grid-color` | `str` | `#323232` | Minor grid color. Default is `#323232`. |
-| `--minor-grid-step-pixels` | `int` | 10 | Space between minor gird lines in pixels. |
-| `--minor-grid-width` | `int` | 1 | Minor gird line width. |
+| `--minor-grid-step-pixels` | `int` | 10 | Space between minor grid lines in pixels. |
+| `--minor-grid-width` | `int` | 1 | Minor grid line width. |
 | `--coords-font-color` | `str` | `black` | Coordinates color in outer margin. |
 | `--coords-font-size` | `int` | 10 | Coordinates font size. |
 | `--coords-step-units` | `int` | 10 | Space between coordinate numbers in minor grid units. |
 | `--coords-gap-pixels` | `int` | 2 | Space between coordinates and chart in pixels. |
 | `--arrow-color` | `str` | `black` | Arrow color in outer margin. |
-| `--arrow-gap-pixels` | `int` | 2 | Space before arrow and chart in pixels. |
+| `--arrow-gap-pixels` | `int` | 2 | Space between arrow and chart in pixels. |
 | `--symbol-color` | `str` | `black` | Symbol color when `--no-symbols` is not used. |
 | `--symbol-line-width` | `int` | 1 | Symbol line width when `--no-symbols` is not used. |
 | `--backstitch-line-width` | `int` | 3 | Backstitch line width when `--backstitch-option` is not `none`. |
 
 > [!WARNING]
-> A chart without colors, symbols and legend can be generated (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you will get an empty chart.
+> A chart without colors, symbols and legend can be generated (with options `--no-colors`, `--no-symbols` and `--no-legend`), but then, you'll get an empty chart.
 
 ## <a id="sec-work"></a>Future work
 

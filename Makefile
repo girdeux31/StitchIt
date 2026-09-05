@@ -41,7 +41,19 @@ upload:  ## Upload package to real pypi
 clean:  ## Clean trash
 	@rm -rf "dist"
 	@rm -rf "src/${project_name}.egg-info"
-	
+
+.PHONY: install-local
+install-local: uninstall  ## Install package locally
+	@/usr/bin/pip install dist/${project_name}*.whl
+
+.PHONY: install
+install: uninstall  ## Install package from pypi
+	@/usr/bin/pip install ${project_name}
+
+.PHONY: uninstall
+uninstall:  ## Uninstall package
+	@/usr/bin/pip uninstall -y ${project_name}
+
 .PHONE: all
-all: build upload clean  ## Generate package, upload to real pypi and clean
+all: build upload clean install  ## Generate package, upload to real pypi, clean and install
 
